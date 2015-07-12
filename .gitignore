@@ -26,3 +26,11 @@
 *.exe
 *.out
 *.app
+
+dependencies/*
+*/intermediate/*
+*.log
+*.tlog
+*.sdf
+*.idb
+*.xdc
