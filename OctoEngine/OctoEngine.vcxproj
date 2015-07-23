@@ -86,16 +86,25 @@
     <None Include="OctoEngine\standard.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\OctoEngine\buffer.cpp" />
-    <ClCompile Include="src\OctoEngine\shader.cpp" />
-    <ClCompile Include="src\OctoEngine\vertexarray.cpp" />
+    <ClCompile Include="src\OctoEngine\resources\resource.cpp" />
+    <ClCompile Include="src\OctoEngine\resources\resourcemanager.cpp" />
+    <ClCompile Include="src\OctoEngine\graphics\buffer.cpp" />
+    <ClCompile Include="src\OctoEngine\graphics\shader.cpp" />
+    <ClCompile Include="src\OctoEngine\graphics\vertexarray.cpp" />
     <ClCompile Include="src\OctoEngine\window.cpp" />
+    <ClCompile Include="src\OctoEngine\resources\textureloader.cpp" />
+    <ClCompile Include="src\OctoEngine\resources\texture.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\OctoEngine\buffer.h" />
-    <ClInclude Include="src\OctoEngine\shader.h" />
-    <ClInclude Include="src\OctoEngine\vertexarray.h" />
+    <ClInclude Include="src\OctoEngine\resources\resource.h" />
+    <ClInclude Include="src\OctoEngine\resources\resourcemanager.h" />
+    <ClInclude Include="src\OctoEngine\resources\resourceloader.h" />
+    <ClInclude Include="src\OctoEngine\graphics\buffer.h" />
+    <ClInclude Include="src\OctoEngine\graphics\shader.h" />
+    <ClInclude Include="src\OctoEngine\graphics\vertexarray.h" />
     <ClInclude Include="src\OctoEngine\window.h" />
+    <ClInclude Include="src\OctoEngine\resources\textureloader.h" />
+    <ClInclude Include="src\OctoEngine\resources\texture.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

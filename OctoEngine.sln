@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OctoEngine", "OctoEngine\OctoEngine.vcxproj", "{13DEA400-9630-44DB-B859-E78AD0C59955}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OctoEngineTester", "EngineTester\EngineTester.vcxproj", "{25FCBFD8-013C-4069-9405-62A0888159A2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{13DEA400-9630-44DB-B859-E78AD0C59955} = {13DEA400-9630-44DB-B859-E78AD0C59955}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

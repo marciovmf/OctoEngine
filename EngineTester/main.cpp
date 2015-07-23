@@ -1,14 +1,19 @@
 #include <iostream>
+#include <memory>
+
 #include <glm/vec3.hpp>
 
 #include <OctoEngine/window.h>
-#include <OctoEngine/shader.h>
-#include <OctoEngine/buffer.h>
-#include <OctoEngine/vertexarray.h>
-
-#define GLEW_STATIC
+#include <OctoEngine/graphics/shader.h>
+#include <OctoEngine/graphics/buffer.h>
+#include <OctoEngine/graphics/vertexarray.h>
+#include <OctoEngine/resources/resource.h>
+#include <OctoEngine/resources/resourcemanager.h>
+#include <OctoEngine/resources/textureloader.h>
+#include <OctoEngine/resources/texture.h>
 
 using namespace octo;
+using namespace resources;
 
 int main(int argc, char** argv)
 {
@@ -41,11 +46,16 @@ int main(int argc, char** argv)
 	GLushort indices[] { 0, 1, 2, 2, 3, 0 };
 	graphics::Buffer* indexBuffer = new graphics::Buffer(indices, 6, 1, graphics::Buffer::INDEX_DATA);
 
+	// Test Resource Manager
+	ResourceManager::initialize();
+	ResourceManager::registerLoader<Texture>(new TextureLoader());
+	TextureResource texturePtr = ResourceManager::get<Texture>("octopus.jpg");
+	TextureResource texturePtr2 = ResourceManager::get<Texture>("octopus.jpg");
+	TextureResource texturePtr3 = ResourceManager::get<Texture>("octopus.jpg");
 
-
+	// \Test Resource Manager
+	
 	glViewport(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-
-
 
 	while (!gameWindow.shouldClose())
 	{

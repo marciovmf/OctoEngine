@@ -44,6 +44,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)Dependencies\glfw-3.0.4\include;$(SolutionDir)Dependencies\glew-1.12.0\include;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\soil\src;$(SolutionDir)OctoEngine\src;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)Dependencies\glfw-3.0.4\lib-msvc120;$(SolutionDir)Dependencies\glew-1.12.0\lib\Release\Win32;$(SolutionDir)Dependencies\soil\lib;$(SolutionDir)OctoEngine\lib;$(LibraryPath)</LibraryPath>
+    <IgnoreImportLibrary>true</IgnoreImportLibrary>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -59,8 +60,11 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>OctoEngine.lib;glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>OctoEngine.lib;glfw3.lib;glfw3dll.lib;glew32s.lib;opengl32.lib;soil.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
