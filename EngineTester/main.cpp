@@ -1,84 +1,93 @@
+
+#define GLM_FORCE_RADIANS 1
+
 #include <iostream>
 #include <memory>
 
-#include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include <OctoEngine/window.h>
 #include <OctoEngine/graphics/shader.h>
-#include <OctoEngine/graphics/buffer.h>
-#include <OctoEngine/graphics/vertexarray.h>
 #include <OctoEngine/resources/resource.h>
 #include <OctoEngine/resources/resourcemanager.h>
 #include <OctoEngine/resources/textureloader.h>
 #include <OctoEngine/resources/texture.h>
+#include <OctoEngine/graphics/vertex.h>
+#include <OctoEngine/graphics/mesh.h>
+
+#include <regex>
 
 using namespace octo;
 using namespace resources;
 
 int main(int argc, char** argv)
 {
-
 	const int VIEWPORT_WIDTH = 640;
 	const int VIEWPORT_HEIGHT = 480;
 
 	octo::core::Window gameWindow(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "OctoEngine");
 	octo::graphics::Shader* shader = new octo::graphics::Shader("test.vert", "test.frag");
 
-	// Sprite 1
-	GLfloat  vertices[]{-0.5, -0.5, 0.0, -0.5, 0.5, 0.0, 0.5, 0.5, 0.0, 0.5, -0.5, 0.0};
-	GLfloat colors[] {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0	};
-	octo::graphics::VertexArray* sprite1 = new octo::graphics::VertexArray();
-	octo::graphics::Buffer* vertexBuffer = new octo::graphics::Buffer(vertices, 3 * 4, 3);
-	octo::graphics::Buffer* colorBuffer = new octo::graphics::Buffer(colors, 3 * 4, 3);
-	sprite1->addBuffer(vertexBuffer, 0);
-	sprite1->addBuffer(colorBuffer, 1);
+	graphics::Vertex vertexData[]{
+		// front
+		graphics::Vertex(glm::vec3(1.0, -1.0, 1.0), glm::vec3(1.0f, 0.0f, 0.0f), glm::vec2(0.0f, 0.0f)), // 0
+			graphics::Vertex(glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)), // 1
+			graphics::Vertex(glm::vec3(-1.0, -1.0, 1.0), glm::vec3(0.0f, 0.0f, 1.0f), glm::vec2(1.0f, 1.0f)), // 2
+			graphics::Vertex(glm::vec3(-1.0, 1.0, 1.0), glm::vec3(1.0f, 1.0f, 0.0f), glm::vec2(0.0f, 1.0f)), // 3
+			graphics::Vertex(glm::vec3(1.0, 1.0, -1.0), glm::vec3(0.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)), // 4
+			graphics::Vertex(glm::vec3(-1.0, 1.0, -1.0), glm::vec3(1.0f, 0.0f, 1.0f), glm::vec2(0.0f, 1.0f)),// 5
+			graphics::Vertex(glm::vec3(1.0, -1.0, -1.0), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec2(0.0f, 0.0f)), // 6
+			graphics::Vertex(glm::vec3(-1.0, -1.0, -1.0), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec2(1.0f, 0.0f)), // 7
+	};
 
-	// Sprite 2
-	GLfloat  vertices2[]{-1.0, -1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0};
-	GLfloat colors2[]  {  1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-	octo::graphics::VertexArray* sprite2 = new octo::graphics::VertexArray();
-	octo::graphics::Buffer* vertexBuffer2 = new octo::graphics::Buffer(vertices2, 3 * 4, 3);
-	octo::graphics::Buffer* colorBuffer2 = new octo::graphics::Buffer(colors2, 3 * 4, 3);
-	sprite2->addBuffer(vertexBuffer2, 0);
-	sprite2->addBuffer(colorBuffer2, 1);
+	GLuint indices[]{
+		1, 3, 2, 2, 0, 1,
+			3, 1, 4, 4, 5, 3,
+			6, 7, 5, 5, 4, 6,
+			7, 6, 0, 0, 2, 7,
+			7, 2, 3, 3, 5, 7,
+			0, 6, 4, 4, 1, 0,
+	};
 
-	// indices
-	GLushort indices[] { 0, 1, 2, 2, 3, 0 };
-	graphics::Buffer* indexBuffer = new graphics::Buffer(indices, 6, 1, graphics::Buffer::INDEX_DATA);
+	graphics::Mesh* mesh = new graphics::Mesh(vertexData,
+		sizeof(vertexData) / sizeof(graphics::Vertex),
+		indices,
+		sizeof(indices) / sizeof(GLuint));
 
-	// Test Resource Manager
-	ResourceManager::initialize();
-	ResourceManager::registerLoader<Texture>(new TextureLoader());
-	TextureResource texturePtr = ResourceManager::get<Texture>("octopus.jpg");
-	TextureResource texturePtr2 = ResourceManager::get<Texture>("octopus.jpg");
-	TextureResource texturePtr3 = ResourceManager::get<Texture>("octopus.jpg");
+	// Set up Projection
+	glm::mat4 projectionMatrix = glm::perspective(glm::radians(45.0f), (float)(VIEWPORT_WIDTH / VIEWPORT_HEIGHT), 0.1f, 100.0f);
 
-	// \Test Resource Manager
-	
+	// Set up view transformations
+	glm::mat4 viewMatrix;
+	viewMatrix = glm::translate(viewMatrix, glm::vec3(0.0f, 0.2f, -8.0f));
+	//viewMatrix = glm::rotate(viewMatrix, -15.0f, glm::vec3(1.0f, 0.0f, 0.0f));
+
+	// Set up Model transformations
+	glm::mat4 modelMatrix;
+	modelMatrix = glm::translate(modelMatrix, glm::vec3(0, 0, 0));
+
 	glViewport(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
 
+	glEnable(GL_CULL_FACE);
+	glEnable(GL_DEPTH_TEST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+
+
+	gameWindow.setClearColor(glm::vec3(0.3f, 0.3f, 0.3f));
 	while (!gameWindow.shouldClose())
 	{
 		gameWindow.clear();
-		shader->Bind();
 
-		sprite1->bind();
-		indexBuffer->bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_SHORT, 0);
-		indexBuffer->unbind();
-		sprite1->unbind();
-
-		sprite2->bind();
-		indexBuffer->bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_SHORT, 0);
-		indexBuffer->unbind();
-		sprite2->unbind();
-
-		shader->Unbind();
+		modelMatrix = glm::rotate(modelMatrix, 0.001f * (float)sin(glfwGetTime()) * 2, glm::vec3(1.0f, -1.0f, 0));
+		mesh->render(*shader, modelMatrix, viewMatrix, projectionMatrix);
 		gameWindow.update();
 	}
-
-
 
 	delete shader;
 	return 0;

@@ -1,8 +1,6 @@
 #pragma once
 
 
-#define RESOURCEUID_DECL unsigned short int m_resourceUID;
-
 namespace octo {
 
 	namespace resources {

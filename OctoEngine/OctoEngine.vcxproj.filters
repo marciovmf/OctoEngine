@@ -22,12 +22,6 @@
     <ClCompile Include="src\OctoEngine\window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OctoEngine\graphics\buffer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OctoEngine\graphics\vertexarray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OctoEngine\graphics\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,15 +37,15 @@
     <ClCompile Include="src\OctoEngine\resources\textureloader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OctoEngine\graphics\vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\graphics\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\window.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctoEngine\graphics\buffer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctoEngine\graphics\vertexarray.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\graphics\shader.h">
@@ -70,6 +64,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\resources\textureloader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\graphics\vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\graphics\mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

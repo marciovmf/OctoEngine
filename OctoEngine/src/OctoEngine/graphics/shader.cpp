@@ -69,6 +69,11 @@ namespace octo {
 			return glGetAttribLocation(m_ShaderProgram, attribute);
 		}
 
+		void Shader::SetUniform(const GLchar* uniform, GLint value) const
+		{
+			glUniform1i(GetUniformLocation(uniform), value);
+		}
+
 		void Shader::SetUniform(const GLchar* uniform, glm::vec2 value) const
 		{
 			glUniform2f(GetUniformLocation(uniform), value.x, value.y);
@@ -92,6 +97,11 @@ namespace octo {
 		void Shader::SetUniform(const GLchar* uniform, GLuint value) const
 		{
 			glUniform1i(GetUniformLocation(uniform), value);
+		}
+
+		void Shader::SetUniform(const GLchar* uniform, glm::mat4 value) const
+		{
+			glUniformMatrix4fv(GetUniformLocation(uniform), 1, GL_FALSE, glm::value_ptr(value));
 		}
 
 		std::unique_ptr<std::string> LoadShaderSource(const char* fileName)

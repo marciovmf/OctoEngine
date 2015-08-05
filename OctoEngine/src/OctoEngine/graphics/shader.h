@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <string>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace octo {
 	namespace graphics {
@@ -16,11 +17,13 @@ namespace octo {
 			GLuint GetUniformLocation(const GLchar* uniform) const;
 			GLuint GetAttributeLocation(const GLchar* attribute) const;
 
+			void SetUniform(const GLchar* uniform, GLint value) const;
 			void SetUniform(const GLchar* uniform, glm::vec2 value) const;
 			void SetUniform(const GLchar* uniform, glm::vec3 value) const;
 			void SetUniform(const GLchar* uniform, glm::vec4 value) const;
 			void SetUniform(const GLchar* uniform, GLfloat value) const;
 			void SetUniform(const GLchar* uniform, GLuint value) const;
+			void SetUniform(const GLchar* uniform, glm::mat4 value) const;
 
 		private:
 			GLuint m_VertexShader;

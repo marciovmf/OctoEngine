@@ -4,15 +4,12 @@
 
 namespace octo {
 	namespace resources {
-
-		
-
 		class ResourceLoader
 		{
-			public:
+		public:
 			ResourceLoader(){};
 			virtual ~ResourceLoader(){};
-		
+
 			virtual Resource* loadResource(const char* resourceName) = 0;
 
 		};
