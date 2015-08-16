@@ -1,85 +1,17 @@
-#include <iostream>
-#include <memory>
 
-#include <glm/vec3.hpp>
+#define GLM_FORCE_RADIANS 1
 
-#include <OctoEngine/window.h>
-#include <OctoEngine/graphics/shader.h>
-#include <OctoEngine/graphics/buffer.h>
-#include <OctoEngine/graphics/vertexarray.h>
-#include <OctoEngine/resources/resource.h>
-#include <OctoEngine/resources/resourcemanager.h>
-#include <OctoEngine/resources/textureloader.h>
-#include <OctoEngine/resources/texture.h>
-
-using namespace octo;
-using namespace resources;
+#include <OctoEngine/core/gameengine.h>
+#include "TestGame.h"
 
 int main(int argc, char** argv)
 {
+	octo::core::GameEngine* engine = new octo::core::GameEngine();
+	TestGame* game = new TestGame();
 
-	const int VIEWPORT_WIDTH = 640;
-	const int VIEWPORT_HEIGHT = 480;
+	engine->run(800, 600, "OctoEngine test game", *game);
 
-	octo::core::Window gameWindow(VIEWPORT_WIDTH, VIEWPORT_HEIGHT, "OctoEngine");
-	octo::graphics::Shader* shader = new octo::graphics::Shader("test.vert", "test.frag");
-
-	// Sprite 1
-	GLfloat  vertices[]{-0.5, -0.5, 0.0, -0.5, 0.5, 0.0, 0.5, 0.5, 0.0, 0.5, -0.5, 0.0};
-	GLfloat colors[] {1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0, 0.0	};
-	octo::graphics::VertexArray* sprite1 = new octo::graphics::VertexArray();
-	octo::graphics::Buffer* vertexBuffer = new octo::graphics::Buffer(vertices, 3 * 4, 3);
-	octo::graphics::Buffer* colorBuffer = new octo::graphics::Buffer(colors, 3 * 4, 3);
-	sprite1->addBuffer(vertexBuffer, 0);
-	sprite1->addBuffer(colorBuffer, 1);
-
-	// Sprite 2
-	GLfloat  vertices2[]{-1.0, -1.0, 0.0, -1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0};
-	GLfloat colors2[]  {  1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 0.0};
-	octo::graphics::VertexArray* sprite2 = new octo::graphics::VertexArray();
-	octo::graphics::Buffer* vertexBuffer2 = new octo::graphics::Buffer(vertices2, 3 * 4, 3);
-	octo::graphics::Buffer* colorBuffer2 = new octo::graphics::Buffer(colors2, 3 * 4, 3);
-	sprite2->addBuffer(vertexBuffer2, 0);
-	sprite2->addBuffer(colorBuffer2, 1);
-
-	// indices
-	GLushort indices[] { 0, 1, 2, 2, 3, 0 };
-	graphics::Buffer* indexBuffer = new graphics::Buffer(indices, 6, 1, graphics::Buffer::INDEX_DATA);
-
-	// Test Resource Manager
-	ResourceManager::initialize();
-	ResourceManager::registerLoader<Texture>(new TextureLoader());
-	TextureResource texturePtr = ResourceManager::get<Texture>("octopus.jpg");
-	TextureResource texturePtr2 = ResourceManager::get<Texture>("octopus.jpg");
-	TextureResource texturePtr3 = ResourceManager::get<Texture>("octopus.jpg");
-
-	// \Test Resource Manager
-	
-	glViewport(0, 0, VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-
-	while (!gameWindow.shouldClose())
-	{
-		gameWindow.clear();
-		shader->Bind();
-
-		sprite1->bind();
-		indexBuffer->bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_SHORT, 0);
-		indexBuffer->unbind();
-		sprite1->unbind();
-
-		sprite2->bind();
-		indexBuffer->bind();
-		glDrawElements(GL_TRIANGLES, indexBuffer->getCount(), GL_UNSIGNED_SHORT, 0);
-		indexBuffer->unbind();
-		sprite2->unbind();
-
-		shader->Unbind();
-		gameWindow.update();
-	}
-
-
-
-	delete shader;
+	delete engine;
+	delete game;
 	return 0;
 }

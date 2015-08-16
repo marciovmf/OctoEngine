@@ -5,26 +5,16 @@
 #include <memory>
 #include "resourceloader.h"
 #include "resource.h"
+#include "texture.h"
 
 namespace octo {
 	namespace resources {
 
 		//class Resource;
+		typedef std::shared_ptr<Resource> ResourcePtr;
 
 		class ResourceManager
 		{
-		// Public Methods
-		public:
-			// Gets a resource of type T identifyed by the name in resourceName
-			template <typename T> static std::shared_ptr<T> get(const char* resourceName);
-			// Try to release a resource identifyed by the name in resourceName
-			void Release(const char* resourceName);
-
-			// Register a Loader class for a given type. Returns false if there is already a loader getistered for the same type;
-			template <typename T> bool static registerLoader(const ResourceLoader* loader);
-
-			// Returns true it there is a loader set up for the given type. False otherwise.
-			template <typename T> bool hasLoaderForType() const;
 
 		// Private Members
 		private:
@@ -39,9 +29,17 @@ namespace octo {
 			static void initialize();
 			static void Destroy();
 
+			// Register a Loader class for a given type. Returns false if there is already a loader getistered for the same type;
 			template <typename T> static bool registerLoader(ResourceLoader* const loader);
-			template <typename T> static std::shared_ptr<T> ResourceManager::get(const char* resourceName);
-			//static inline ResourceManager& getInstance() { return *ResourceManager::m_Instance; }
+
+			// Gets a resource of type T identifyed by the name in resourceName
+			template <typename T> static std::shared_ptr<T> get(const char* resourceName);
+
+			// Returns true it there is a loader set up for the given type. False otherwise.
+			template <typename T> bool hasLoaderForType() const;
+			
+			// Releases a resource pointer AND removes it from the cache if it is nobe being referenced anymore
+			static bool ReleaseResource(ResourcePtr& resourcePtr);
 		};
 
 		template <typename T>
@@ -63,8 +61,7 @@ namespace octo {
 
 			return true;
 		}
-
-		// Gets a resource of type T identifyed by the name in resourceName
+	
 		template <typename T>
 		std::shared_ptr<T> ResourceManager::get(const char* resourceName)
 		{
@@ -100,6 +97,12 @@ namespace octo {
 			// Return the resource
 			return sharedResPtr;
 			
+		}
+
+		template <typename T>
+		bool ResourceManager::hasLoaderForType() const
+		{
+			return (m_Loaders.find(typeid(T)) != m_Loaders.end());
 		}
 	}
 }
