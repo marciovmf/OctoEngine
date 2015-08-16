@@ -1,9 +1,10 @@
 #pragma once
 #define GLEW_STATIC
-#include <GL/glew.h>	// include GLEW and new version of GL on Windows
-#include <GLFW/glfw3.h> // GLFW helper library
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 #include <string>
 #include <glm/vec3.hpp>
+#include <glm/vec2.hpp>
 
 namespace octo {
 	namespace core {
