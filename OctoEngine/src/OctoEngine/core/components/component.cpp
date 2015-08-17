@@ -4,13 +4,18 @@ namespace octo
 {
 	namespace core {
 
-		Component::Component() : gameObject(nullptr)
+		Component::Component() : gameObject(nullptr), m_Enabled(true)
 		{
 		}
 
 		Component::~Component()
 		{
 			destroy();
+		}
+
+		void Component::setEnabled(bool state)
+		{
+			m_Enabled = state;
 		}
 
 		void Component::setGameObject(GameObject* gameObject)
@@ -27,14 +32,15 @@ namespace octo
 
 		}
 
-		void Component::render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix)
+		void Component::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
-
 		}
 
 		void Component::destroy()
 		{
 
 		}
+	
+	
 	}
 }

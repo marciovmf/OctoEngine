@@ -18,7 +18,7 @@ namespace octo{
 
 		public:
 			MeshRenderer(graphics::Shader* shader, graphics::Mesh* mesh);
-			void render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix) override;
+			void render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix) override;
 			void setMesh(graphics::Mesh* mesh);
 			graphics::Mesh& getMesh();
 			void setShader(graphics::Shader* shader);

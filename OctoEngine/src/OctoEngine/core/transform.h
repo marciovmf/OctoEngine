@@ -6,10 +6,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 using namespace glm;
+#define FORCE_TRANSFORM_MATRIX_RECALCULATION 0
 
 namespace octo
 {
 	namespace core {
+
+
 
 		class Transform
 		{
@@ -46,7 +49,13 @@ namespace octo
 
 			// Returns TRUE if this transform changed since the last time the flag was set to 'false';
 			//A change to the transform can be anything that can cause its matrix to be recalculated
-			bool hasChanged() { return m_HasChanged; }
+			bool hasChanged() {
+#ifdef 	FORCE_TRANSFORM_MATRIX_RECALCULATION
+				return true;
+#else
+				return m_HasChanged;
+#endif
+			}
 
 			// Updates the transform
 			// It also sets HasChanged to false
