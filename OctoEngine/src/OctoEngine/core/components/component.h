@@ -12,7 +12,7 @@ namespace octo
 		{
 		protected:
 			GameObject* gameObject;
-			bool m_Enabled;
+
 		public:
 			Component();
 			virtual ~Component();
@@ -22,11 +22,8 @@ namespace octo
 			// lifecycle methods
 			virtual void start();
 			virtual void update();
-			virtual void render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
+			virtual void render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix);
 			virtual void destroy();
-
-			void setEnabled(bool state);
-			inline bool isEnabled() { return m_Enabled; }
 		};
 
 	}

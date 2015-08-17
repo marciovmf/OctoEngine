@@ -3,7 +3,6 @@
 #include "../../graphics/shader.h"
 #include "../../core/gameobject.h"
 #include <glm/glm.hpp>
-#include <iostream>
 
 namespace octo{
 	namespace core {
@@ -32,7 +31,7 @@ namespace octo{
 			return *m_Shader;
 		}
 
-		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
+		void MeshRenderer::render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix)
 		{
 			m_Shader->bind();
 

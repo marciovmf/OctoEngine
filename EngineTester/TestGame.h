@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -17,7 +17,6 @@ namespace octo {
 		class Transform;
 		class GameObject;
 		class MeshRenderer;
-		class Camera;
 	}
 }
 
@@ -30,17 +29,13 @@ private:
 	octo::core::GameObject* m_GameObject1;
 	octo::core::GameObject* m_GameObject2;
 	octo::core::GameObject* m_GameObject3;
-	octo::core::GameObject* m_CameraGameObject;
-	
 
 	octo::core::MeshRenderer* m_meshRenderer1;
 	octo::core::MeshRenderer* m_meshRenderer2;
 	octo::core::MeshRenderer* m_meshRenderer3;
 
-	//glm::mat4 m_ProjectionMatrix;
-	//glm::mat4 m_ViewMatrix;
-
-	octo::core::Camera* m_Camera;
+	glm::mat4 m_ProjectionMatrix;
+	glm::mat4 m_ViewMatrix;
 
 public:
 	TestGame();

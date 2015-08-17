@@ -61,9 +61,6 @@
     <ClCompile Include="src\OctoEngine\core\components\meshrenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OctoEngine\core\components\camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\graphics\shader.h">
@@ -109,9 +106,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\core\components\meshrenderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctoEngine\core\components\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

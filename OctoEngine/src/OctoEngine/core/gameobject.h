@@ -9,7 +9,6 @@ namespace octo
 	namespace core {
 
 		class Component;
-		class Camera;
 
 		class GameObject
 		{
@@ -18,7 +17,6 @@ namespace octo
 			std::string* m_Name;
 			std::vector <GameObject* >* m_Children;
 			std::vector<Component* >* m_Components;
-			bool m_Enabled;
 
 		public:
 			GameObject();
@@ -36,19 +34,14 @@ namespace octo
 			// remove component
 			void removeComponent(Component* component);
 			// get all children
-			inline std::vector<GameObject*>& getChildren() const { return *m_Children; }
 			// get all components
-			inline std::vector<Component*>& getComponents() const { return *m_Components; }
 			// get a specific child
 			// get a specific component
 			// get the number of components
 			// get the number of children
 
 			void update();
-			//void render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix);
-			void render(Camera& camera);
-			void setEnabled(bool state);
-			inline bool isEnabled() { return m_Enabled; }
+			void render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix);
 		};
 
 	}

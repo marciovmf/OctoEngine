@@ -2,22 +2,17 @@
 
 #include "window.h"
 #include <string>
-#include <glm/vec3.hpp>
 
 namespace octo {
 
 	namespace core {
 
 		class Game;
-		class GameObject;
-		class Camera;
 
 		class GameEngine
 		{
 		private:
-			GameObject* const m_RootGameObject;
 			Window* m_Window;
-			Camera* m_MainCamera;
 		public:
 
 			// Core methods
@@ -27,14 +22,8 @@ namespace octo {
 
 			// Window facade methods
 
-			int getWindowWidth() const;
-			int getWindowHeight() const;
-			void setClearColor(glm::vec3& color);
-
-			void AddGameObject(GameObject* const gameObject);
-
-			void setMainCamera(Camera* mainCamera);
-			inline Camera& getMainCamera() { return *m_MainCamera; }
+				inline int getWindowWidth() const { return m_Window->getWidth(); }
+			inline int getWindowHeight() const { return m_Window->getHeight(); }
 		};
 	}
 }

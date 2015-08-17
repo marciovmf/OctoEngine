@@ -48,6 +48,7 @@ namespace octo
 				m_ParentMatrix = m_Parent->getTransformationMatrix();
 
 			mat4 transformations; // Identity
+
 			
 			// Translation
 			transformations = glm::translate(transformations, m_Position);
