@@ -9,6 +9,7 @@
 #include <OctoEngine/graphics/vertex.h>
 #include <OctoEngine/core/gameobject.h>
 #include <OctoEngine/core/components/meshrenderer.h>
+#include <OctoEngine/core/components/camera.h>
 
 #include <glm/vec2.hpp>
 #include <glm/gtc/constants.hpp>
@@ -63,10 +64,10 @@ void TestGame::OnStart()
 	m_Shader = new octo::graphics::Shader("test.vert", "test.frag");
 
 	// Set up Projection
-	m_ProjectionMatrix =
-		glm::perspective(glm::radians(45.0f),
-		(float)(engine->getWindowWidth() / engine->getWindowHeight()),
-		0.1f, 1000.0f);
+	//m_ProjectionMatrix =
+	//	glm::perspective(glm::radians(45.0f),
+	//	(float)(engine->getWindowWidth() / engine->getWindowHeight()),
+	//	0.1f, 1000.0f);
 
 	// Create the meshe
 	m_Mesh = new octo::graphics::Mesh(vertices, indices);
@@ -94,40 +95,43 @@ void TestGame::OnStart()
 	m_meshRenderer3 = new octo::core::MeshRenderer(m_Shader, m_Mesh);
 	m_GameObject3->addComponent(m_meshRenderer3);
 
-
 	// Parent the child objects to the Root object
 	m_GameObject1->addChild(m_GameObject2);
 	m_GameObject1->addChild(m_GameObject3);
 
-	// Set up view transformations
-	m_ViewMatrix = glm::translate(m_ViewMatrix, glm::vec3(0.0f, 0.0f, -190));
+	// Create the CAMERA
+	m_CameraGameObject = new octo::core::GameObject();
+	m_CameraGameObject->setName(new std::string("Camera"));
+	m_Camera = new octo::core::Camera(0.1f, 1000.0f, (float) (engine->getWindowWidth() / engine->getWindowHeight()), 45.0f);
+	m_CameraGameObject->addComponent(m_Camera);
 
+	// Place the camera
+	m_CameraGameObject->getTransform().translate(glm::vec3(0.0f, 0.0f, -190));
+
+	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
+	engine->AddGameObject(m_CameraGameObject);
+	engine->AddGameObject(m_GameObject1);
+	engine->setMainCamera(m_Camera);
 }
 
+double frameTime = 0;
 void TestGame::OnUpdate()
 {
 
 	double startTime = glfwGetTime();
+	
 	float t = (float)sin(glfwGetTime());
 	float f = t;
 	// make some transformations on the game objects
 	m_GameObject1->getTransform().setPosition(glm::vec3(0, t, 0));
-	m_GameObject1->getTransform().rotate(glm::vec3(glm::radians(t / 64),- glm::radians(t / 8), -glm::radians(t / 32)));
-	m_GameObject2->getTransform().rotate(glm::vec3(0, 0, glm::radians(t/2)));
-	
-	m_GameObject3->getTransform().setScale(glm::vec3(f,f,f));
+	m_GameObject1->getTransform().rotate(glm::vec3(glm::radians(t / 8), -glm::radians(t / 2), -glm::radians(1 * frameTime)));
+	m_GameObject2->getTransform().rotate(glm::vec3(0, 0, glm::radians(t / 2)));
 
-	// Render the game objects
-	m_GameObject1->render(m_ProjectionMatrix, m_ViewMatrix);
-	m_GameObject2->render(m_ProjectionMatrix, m_ViewMatrix);
-	m_GameObject3->render(m_ProjectionMatrix, m_ViewMatrix);
+	m_GameObject3->getTransform().setScale(glm::vec3(f, f, f));
 
-	// Update
-	m_GameObject1->update();
 	double frameTime = (glfwGetTime() - startTime);
 
-
-	std::cout << frameTime << std::endl;
+	//std::cout << frameTime << std::endl;
 }
 
 void TestGame::OnFinish()
@@ -135,9 +139,15 @@ void TestGame::OnFinish()
 	delete m_GameObject1;
 	delete m_GameObject2;
 	delete m_GameObject3;
+	delete m_CameraGameObject;
 
 	delete m_Mesh;
 	delete m_Shader;
+	delete m_Camera;
+
+	delete m_meshRenderer1;
+	delete m_meshRenderer2;
+	delete m_meshRenderer3;
 
 	std::cout << "Game Finished!" << std::endl;
 }

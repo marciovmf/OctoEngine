@@ -1,5 +1,6 @@
 #include "gameobject.h"
 #include "components/component.h"
+#include "components/camera.h"
 #include <algorithm>
 
 #define DEFAULT_GAME_OBJECT_NAME "GameObject"
@@ -8,7 +9,7 @@ namespace octo
 {
 	namespace core {
 
-		GameObject::GameObject()
+		GameObject::GameObject() : m_Enabled(true)
 		{
 			m_Children = new std::vector<GameObject*>();
 			m_Components = new std::vector<Component*>();
@@ -36,7 +37,7 @@ namespace octo
 		void GameObject::addChild(GameObject* child)
 		{
 			m_Children->push_back(child);
-			
+
 			// Child transformations depends on this object transformations
 			child->m_Trasnform->setParent(this->m_Trasnform);
 		}
@@ -80,29 +81,48 @@ namespace octo
 		void GameObject::update()
 		{
 
-			// Update all child game objects
-			for (GameObject* gameObject : *m_Children)
-			{
-				gameObject->update();
-			}
-
-			// Update all comonents
-			for (Component* component : *m_Components)
-			{
-				component->update();
-			}
-
 			// Update the transform
 			m_Trasnform->update();
-		}
 
-		void GameObject::render(glm::mat4& projectionMatrix, glm::mat4& viewMatrix)
-		{
-			// Render all comonents
+			// Update all active child game objects
+			for (GameObject* gameObject : *m_Children)
+			{
+				if (gameObject->m_Enabled)
+					gameObject->update();
+			}
+
+			// Update all active comonents
 			for (Component* component : *m_Components)
 			{
-				component->render(projectionMatrix, viewMatrix);
+				if (component->isEnabled())
+					component->update();
 			}
+
+
+		}
+
+
+
+		//void GameObject::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
+		void GameObject::render(Camera& camera)
+		{
+
+			// Render child objects
+			for (GameObject* child : *m_Children)
+			{
+				if (child->m_Enabled)
+				{
+					child->render(camera);
+				}
+			}
+
+			// Render all components
+			for (Component* component : *m_Components){
+				if (component->isEnabled()){
+					component->render(camera.getProjectionMatrix(), camera.getViewMatrix());
+				}
+			}
+
 		}
 	}
 }
