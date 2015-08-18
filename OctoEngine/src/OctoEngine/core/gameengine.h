@@ -23,7 +23,7 @@ namespace octo {
 			// Core methods
 			GameEngine();
 			~GameEngine();
-			void run(int width, int height, std::string title, Game& game);
+			void run(int width, int height, std::string title, Game& game, int monitor = -1);
 
 			// Window facade methods
 

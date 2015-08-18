@@ -16,7 +16,8 @@ namespace octo {
 			int m_Width;
 			int m_Height;
 		public:
-			Window(int width, int height, const std::string& title);
+			//Window(int width, int height, const std::string& title);
+			Window(int width, int height, const std::string& title, int monitorID =-1);
 			inline int getWidth() const { return m_Width; }
 			inline int getHeight() const { return m_Height; }
 			inline int shouldClose() const { return glfwWindowShouldClose(m_Window); }

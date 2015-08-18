@@ -27,15 +27,15 @@ private:
 	octo::graphics::Shader* m_Shader;
 	octo::graphics::Mesh* m_Mesh;
 
-	octo::core::GameObject* m_GameObject1;
-	octo::core::GameObject* m_GameObject2;
-	octo::core::GameObject* m_GameObject3;
-	octo::core::GameObject* m_CameraGameObject;
+	//octo::core::GameObject* m_GameObject1;
+	//octo::core::GameObject* m_GameObject2;
+	//octo::core::GameObject* m_GameObject3;
+	//octo::core::GameObject* m_CameraGameObject;
 	
 
-	octo::core::MeshRenderer* m_meshRenderer1;
+	/*octo::core::MeshRenderer* m_meshRenderer1;
 	octo::core::MeshRenderer* m_meshRenderer2;
-	octo::core::MeshRenderer* m_meshRenderer3;
+	octo::core::MeshRenderer* m_meshRenderer3;*/
 
 	//glm::mat4 m_ProjectionMatrix;
 	//glm::mat4 m_ViewMatrix;

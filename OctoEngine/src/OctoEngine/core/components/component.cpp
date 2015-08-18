@@ -1,4 +1,6 @@
 #include "component.h"
+#include "../gameobject.h"
+#include <iostream>
 
 namespace octo
 {
@@ -18,9 +20,9 @@ namespace octo
 			m_Enabled = state;
 		}
 
-		void Component::setGameObject(GameObject* gameObject)
+		void Component::setGameObject(GameObject* hostGameObject)
 		{
-			this->gameObject = gameObject;
+			gameObject = hostGameObject;
 		}
 
 		void Component::start()
@@ -38,7 +40,8 @@ namespace octo
 
 		void Component::destroy()
 		{
-
+			std::string name = gameObject->getName();
+			std::cout << "Destroying component @" << name << std::endl;
 		}
 	
 	

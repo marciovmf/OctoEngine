@@ -7,7 +7,9 @@ namespace octo {
 #define MAJOR_GL_VERSION 3
 #define MINOR_GL_VERSION 2
 
-		Window::Window(int width, int height, const std::string& title)
+
+		//Window::Window(int width, int height, const std::string& title)
+		Window::Window(int width, int height, const std::string& title, int monitorID)
 			: m_Width(width), m_Height(height)
 		{
 			
@@ -28,8 +30,21 @@ namespace octo {
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 			glfwSetErrorCallback(Window::errorCallback);
+			
 			// Create the window
-			m_Window = glfwCreateWindow(width, height, title.c_str(), NULL, NULL);
+
+			int monitorCount;
+			GLFWmonitor** monitorList =   glfwGetMonitors(&monitorCount);
+
+			if (monitorID > monitorCount - 1)
+			{
+				std::cerr << "Monitor " << monitorID << " is not a valid monitor." << std::endl;
+				monitorID = -1;
+			}
+
+			m_Window = glfwCreateWindow(width, height, title.c_str(), 
+				((monitorID > -1) ? monitorList[monitorID] : NULL), 
+				NULL);
 
 			if (!m_Window) {
 				fprintf(stderr, "ERROR: could not open window with GLFW3\n");
@@ -46,6 +61,7 @@ namespace octo {
 			const GLubyte* version = glGetString(GL_VERSION); // version as a string
 			printf("Renderer: %s\n", renderer);
 			printf("OpenGL version supported %s\n", version);
+			printf("Running in %s .\n", (monitorID > -1 ? "FullScreen mode" : "Windowd mode"));
 		}
 
 		Window::~Window()

@@ -2,6 +2,7 @@
 #include "components/component.h"
 #include "components/camera.h"
 #include <algorithm>
+#include <iostream>
 
 #define DEFAULT_GAME_OBJECT_NAME "GameObject"
 
@@ -19,7 +20,20 @@ namespace octo
 
 		GameObject::~GameObject()
 		{
+			for (Component* i : *m_Components)
+			{
+				delete i;
+			}
+
+			for (GameObject* i : *m_Children)
+			{
+				delete i;
+			}
+			
+			std::cout << "Destroying game object: " << *m_Name << std::endl;
+
 			delete m_Children;
+			delete m_Components;
 			delete m_Name;
 		}
 
@@ -77,10 +91,26 @@ namespace octo
 				component->setGameObject(nullptr);
 		}
 
+
+		// Initialize all components
+		void GameObject::initializeComponents()
+		{
+			for (GameObject* i : *m_Children)
+			{
+				i->initializeComponents();
+			}
+
+			for (Component* i : *m_Components)
+			{
+				i->start();
+			}
+
+			std::cout << "Game object " << m_Name->c_str() << " initialized." << std::endl;
+		}
+
 		// Updates this game object
 		void GameObject::update()
 		{
-
 			// Update the transform
 			m_Trasnform->update();
 
@@ -101,7 +131,9 @@ namespace octo
 
 		}
 
-
+		void GameObject::setEnabled(bool state){
+			m_Enabled = state;
+		}
 
 		//void GameObject::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		void GameObject::render(Camera& camera)
@@ -122,7 +154,6 @@ namespace octo
 					component->render(camera.getProjectionMatrix(), camera.getViewMatrix());
 				}
 			}
-
 		}
 	}
 }

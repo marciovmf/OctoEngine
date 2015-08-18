@@ -17,7 +17,7 @@ namespace octo
 			Component();
 			virtual ~Component();
 
-			void setGameObject(GameObject* gameObject);
+			void setGameObject(GameObject* hostGameObject);
 
 			// lifecycle methods
 			virtual void start();

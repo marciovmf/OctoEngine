@@ -9,7 +9,7 @@ namespace octo {
 		Camera::Camera() :
 			Component()
 		{
-			setCameraFrustum(0.1f, 1000.0f, 1.7f, 45.0f);
+			setCameraFrustum(0.1f, 1000.0f, 16/9, 4.5f);
 		}
 
 		Camera::Camera(float near, float far, float ratio, float fov) :
@@ -24,14 +24,11 @@ namespace octo {
 
 		const glm::mat4& Camera::getViewMatrix()
 		{
-
-
-			//if ( gameObject->getTransform().hasChanged() ) 
 			Transform& t = gameObject->getTransform();
 
 			// Does not recalculate the matrix if no changes were made on the transform
-			//if (!t.hasChanged())
-			//	return m_ViewMatrix;
+			if (!t.hasChanged())
+				return m_ViewMatrix;
 
 
 			mat4 transformations; // Identity
@@ -59,7 +56,7 @@ namespace octo {
 			m_AspectRatio = ratio;
 
 			m_ProjectionMatrix =
-				glm::perspective(glm::radians(m_FOV), m_AspectRatio, m_Near, m_Far);
+				glm::perspective(m_FOV, m_AspectRatio, m_Near, m_Far);
 		}
 	}
 }

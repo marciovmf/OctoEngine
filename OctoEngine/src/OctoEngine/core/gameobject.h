@@ -13,7 +13,7 @@ namespace octo
 
 		class GameObject
 		{
-		private:
+		private:		
 			Transform* m_Trasnform;
 			std::string* m_Name;
 			std::vector <GameObject* >* m_Children;
@@ -22,7 +22,7 @@ namespace octo
 
 		public:
 			GameObject();
-			~GameObject();
+			virtual ~GameObject();
 
 			inline Transform& getTransform() { return *m_Trasnform;  }
 			const std::string& getName() const;
@@ -31,6 +31,7 @@ namespace octo
 			void addChild(GameObject* child);
 			void removeChild(GameObject* child);
 			
+			void initializeComponents();
 			// add component
 			void addComponent(Component* component);
 			// remove component

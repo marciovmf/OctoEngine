@@ -24,18 +24,21 @@ namespace octo {
 			delete m_RootGameObject;
 		}
 
-		void GameEngine::run(int width, int height, std::string title, Game& game)
+		void GameEngine::run(int width, int height, std::string title, Game& game, int monitor)
 		{
 			// Give to the game a reference to this class
 			game.setEngine(this);
 
 			// Initialize the game window and the graphics system
-			m_Window = new Window(width, height, title);
+			m_Window = new Window(width, height, title, monitor);
 			// Setup viewport
 			glViewport(0, 0, width, height);
 
 			// Allows the game to make its own initializations
 			game.OnStart();
+
+			// Initialize all gameObjects created by the game
+			m_RootGameObject->initializeComponents();
 
 			// Run the main loop
 			while (!m_Window->shouldClose())

@@ -17,7 +17,7 @@ void main()
 {
 
 	gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(vPosition,1.0);
-	vertexColor = vec4(vPosition, 1.0f);
+	vertexColor = vec4(vPosition + 0.5, 1.0f);
 	//textCoord = vTextCoord;
 
 	//gl_Position  =  vec4(vPosition,1.0);
