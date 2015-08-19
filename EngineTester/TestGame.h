@@ -46,7 +46,7 @@ public:
 	TestGame();
 	~TestGame();
 	void OnStart() override;
-	void OnUpdate() override;
+	//void OnUpdate() override;
 	void OnFinish() override;
 };
 

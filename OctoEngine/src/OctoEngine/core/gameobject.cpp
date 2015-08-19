@@ -91,7 +91,6 @@ namespace octo
 				component->setGameObject(nullptr);
 		}
 
-
 		// Initialize all components
 		void GameObject::initializeComponents()
 		{

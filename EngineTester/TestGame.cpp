@@ -85,6 +85,7 @@ void TestGame::OnStart()
 	m_GameObject3->getTransform().rotate(glm::vec3(90, 0.5, 90));
 	m_GameObject3->addComponent(new octo::core::MeshRenderer(m_Shader, m_Mesh));
 
+
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();
 	m_CameraGameObject->setName(new std::string("Camera"));
@@ -106,10 +107,10 @@ void TestGame::OnStart()
 	
 }
 
-double frameTime = 0;
-void TestGame::OnUpdate()
-{
-}
+
+//void TestGame::OnUpdate()
+//{
+//}
 
 void TestGame::OnFinish()
 {

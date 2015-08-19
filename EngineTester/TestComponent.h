@@ -2,7 +2,8 @@
 #include <OctoEngine\core\components\component.h>
 #include <OctoEngine\core\transform.h>
 #include <OctoEngine\core\gameobject.h>
-
+#include <OctoEngine\core\time.h>
+#include <iomanip>
 class TestComponent :
 	public octo::core::Component
 {
@@ -33,13 +34,21 @@ public:
 		child2 = children[1];
 	}
 
+
 	void update() override
 	{
+		double deltaTime = octo::core::Time::getDeltaTime();
 		octo::core::Transform& transform = this->gameObject->getTransform();
-		transform.rotate(glm::vec3(glm::radians(0.05), -glm::radians(1.0), -glm::radians(0.5)));
+		transform.rotate(
+			glm::vec3(0.0, 
+			glm::radians(180.0) * deltaTime, 
+			glm::radians(30.0) * deltaTime));
 		
 		//child1->getTransform().rotate(glm::vec3(0, 0, glm::radians(5.0)));
-		child2->getTransform().rotate(glm::vec3(glm::radians(2.0), 0, glm::radians(-1.0)));
+		child2->getTransform().rotate(glm::vec3(
+			0,
+			glm::radians(90.0) * deltaTime,
+			glm::radians(-360.0) * deltaTime));
 	}
 
 	void destroy() override

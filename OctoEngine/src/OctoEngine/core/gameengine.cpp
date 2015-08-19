@@ -4,6 +4,7 @@
 #include "components/camera.h"
 #include <iostream>
 #include <string>
+#include "time.h"
 
 namespace octo {
 
@@ -24,10 +25,14 @@ namespace octo {
 			delete m_RootGameObject;
 		}
 
+		double oneSecond = 0;
+		int frameCount = 0;
 		void GameEngine::run(int width, int height, std::string title, Game& game, int monitor)
 		{
 			// Give to the game a reference to this class
 			game.setEngine(this);
+
+			core::Time::initialize();
 
 			// Initialize the game window and the graphics system
 			m_Window = new Window(width, height, title, monitor);
@@ -43,13 +48,18 @@ namespace octo {
 			// Run the main loop
 			while (!m_Window->shouldClose())
 			{
-				m_Window->clear();
-				game.OnUpdate();
+
+				// Start the frame time
+				Time::setFrameStartTime();
+
+				// Update the game
+				//game.OnUpdate();
 
 				// Update all game objects and components
 				m_RootGameObject->update();
 
 				// Render all game objects
+				m_Window->clear();
 				if (m_MainCamera != nullptr)
 				{
 					m_RootGameObject->render(*m_MainCamera);
@@ -61,10 +71,27 @@ namespace octo {
 
 				// Update the window events and swap buffers
 				m_Window->update();
+
+				// End frame time
+				Time::setFrameEndTime();
+
+				double deltaTime = Time::getDeltaTime();
+				//std::cout << deltaTime << std::endl;
+
+				oneSecond += deltaTime;
+				frameCount++;
+				if (oneSecond >= 1)
+				{
+					// keep the exceeding time if any
+					oneSecond = oneSecond - 1;
+					std::cout << frameCount << std::endl;
+					frameCount = 0;
+				}
 			}
 
 			// Let the game do its own cleanup
 			game.OnFinish();
+			core::Time::destroy();
 		}
 
 		// Window Facade methods

@@ -23,7 +23,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v120</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -48,6 +48,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(ProjectDir)lib\</OutDir>
+    <IntDir>$(ProjectDir)lib\intermediate\</IntDir>
+    <TargetExt>.lib</TargetExt>
+    <IncludePath>$(SolutionDir)Dependencies\glfw-3.0.4\include;$(SolutionDir)Dependencies\glew-1.12.0\include;$(SolutionDir)Dependencies\glm;$(SolutionDir)Dependencies\soil\src;$(SolutionDir)Dependencies\tinyxml2;$(SolutionDir)Dependencies\assimp\include;$(IncludePath)$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\glfw-3.0.4\lib-msvc120;$(SolutionDir)Dependencies\glew-1.12.0\lib\Release\Win32;$(SolutionDir)Dependencies\soil\lib;$(SolutionDir)Dependencies\tinyxml2\lib;$(SolutionDir)Dependencies\assimp\lib32;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -77,6 +82,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableEnhancedInstructionSet>StreamingSIMDExtensions2</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -105,6 +113,7 @@
     <ClCompile Include="src\OctoEngine\resources\texture.cpp" />
     <ClCompile Include="src\OctoEngine\graphics\vertex.cpp" />
     <ClCompile Include="src\OctoEngine\core\transform.cpp" />
+    <ClCompile Include="src\OctoEngine\core\time.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\core\components\camera.h" />
@@ -113,6 +122,7 @@
     <ClInclude Include="src\OctoEngine\core\Game.h" />
     <ClInclude Include="src\OctoEngine\core\gameobject.h" />
     <ClInclude Include="src\OctoEngine\core\gameengine.h" />
+    <ClInclude Include="src\OctoEngine\core\octoengine.h" />
     <ClInclude Include="src\OctoEngine\graphics\mesh.h" />
     <ClInclude Include="src\OctoEngine\resources\resource.h" />
     <ClInclude Include="src\OctoEngine\resources\resourcemanager.h" />
@@ -123,6 +133,7 @@
     <ClInclude Include="src\OctoEngine\resources\texture.h" />
     <ClInclude Include="src\OctoEngine\graphics\vertex.h" />
     <ClInclude Include="src\OctoEngine\core\transform.h" />
+    <ClInclude Include="src\OctoEngine\core\time.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
