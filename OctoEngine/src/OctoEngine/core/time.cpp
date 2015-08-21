@@ -13,7 +13,7 @@ namespace octo {
 		Time*  Time::m_Instance = nullptr;
 
 		Time::Time()
-			: m_TimeScale(0),
+			: m_TimeScale(1),
 			m_FrameDeltaTime(0),
 			m_GameStartTime(std::chrono::high_resolution_clock::now())
 		{
@@ -44,7 +44,8 @@ namespace octo {
 		long long Time::getElapsedGameTime()
 		{
 			__TIME_INITIALIZATION_ASSERTION__
-				return 0;
+				//TODO: Implement this, considering the timeScale;
+				return -1;
 		}
 
 		void Time::setFrameStartTime()
@@ -67,10 +68,32 @@ namespace octo {
 
 		}
 
+		void Time::setTimeScale(double scale)
+		{
+			Time::m_Instance->m_TimeScale = scale;
+		}
+
+		double Time::getTimeScale()
+		{
+			return Time::m_Instance->m_TimeScale;
+		}
+
 		double Time::getDeltaTime()
 		{
 			__TIME_INITIALIZATION_ASSERTION__
-				return Time::m_Instance->m_FrameDeltaTime;
+
+			double delta = Time::m_Instance->m_FrameDeltaTime * Time::m_Instance->m_TimeScale;
+#ifdef DEBUG
+			// If the delta time is too big, this may indicate that we are returning from a breakpoint.
+			// So, to keep things sane, frame-lock this frame time.
+			if (delta > 1.0 / 10.0)		// 
+				delta = 1.0 / 30.0;
+#endif
+			
+
+			// If delta is too big, it means we may be returning from a breakpoint. In this case,
+			// returns a resonable delta value for this frame
+			return delta;
 		}
 
 	}
