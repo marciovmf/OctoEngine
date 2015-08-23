@@ -64,9 +64,6 @@ namespace octo
 
 		void Transform::update()
 		{
-			// No inicio de cada frame, marcamos este transform como "NAO MODIFICADO" (hasChanged = false)
-			// assim, se alguma transformacao for aplicada neste frame, os transforms filhos saberao que
-			// precisam atualizar suas copias da matriz pai
 			m_HasChanged = false;
 		}
 	}

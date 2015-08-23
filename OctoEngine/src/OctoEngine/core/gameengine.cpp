@@ -32,8 +32,6 @@ namespace octo {
 			// Give to the game a reference to this class
 			game.setEngine(this);
 
-			core::Time::initialize();
-
 			// Initialize the game window and the graphics system
 			m_Window = new Window(width, height, title, monitor);
 			// Setup viewport
@@ -45,13 +43,11 @@ namespace octo {
 			// Initialize all gameObjects created by the game
 			m_RootGameObject->initializeComponents();
 
+			// ----------------------------------
 			// Run the main loop
+			// ----------------------------------
 			while (!m_Window->shouldClose())
 			{
-
-				// Start the frame time
-				Time::setFrameStartTime();
-
 				// Update the game
 				//game.OnUpdate();
 
@@ -72,23 +68,26 @@ namespace octo {
 				// Update the window events and swap buffers
 				m_Window->update();
 
-				// End frame time
-				Time::setFrameEndTime();
+				Time::getInstance().update();
 
-				double deltaTime = Time::getDeltaTime();
-				//std::cout << deltaTime << std::endl;
+				double deltaTime = Time::getInstance().getDeltaTime();
 
+				// measure the number of frames per second
 				oneSecond += deltaTime;
 				frameCount++;
+
 				if (oneSecond >= 1)
 				{
-					// keep the exceeding time if any
 					oneSecond = oneSecond - 1;
-					std::cout << frameCount << std::endl;
+					std::cout << frameCount << " fps" << std::endl;
 					frameCount = 0;
 				}
+				// --
 			}
 
+			// ----------------------------------
+			// Cleanup
+			// ----------------------------------
 			// Let the game do its own cleanup
 			game.OnFinish();
 			core::Time::destroy();

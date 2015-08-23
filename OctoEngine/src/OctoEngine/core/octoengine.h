@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#ifdef _DEBUG ||_DEBUG_ || _DEBUG_ || __DEBUG__
+#if defined _DEBUG ||_DEBUG_ || _DEBUG_ || __DEBUG__
 #define DEBUG
 #define OCTO_ASSERTION 1
 #endif
@@ -15,4 +15,18 @@
 #define OCTO_ASSERT(expr, text)
 #endif
 
+//A type for holding the instance id of an object guaranteed to be unique.
+typedef long long INSTANCEID;
+
+namespace octo
+{
+
+	namespace resources
+	{
+		class Resource;
+		//typedef Resource* (*RESOURCELOADERFUNCPTR)(const char*);
+		typedef unsigned int HANDLE_RESOURCE;
+
+	}
+}
 #endif

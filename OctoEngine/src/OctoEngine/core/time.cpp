@@ -1,20 +1,23 @@
 #include "time.h"
 #include <assert.h>
 #include "octoengine.h"
+#include "exception/exception.h"
 
 namespace octo {
 	namespace core {
 
-#define __TIME_INITIALIZATION_ASSERTION__ OCTO_ASSERT( (Time::m_Instance != nullptr), "Time class was not initialized")
 #define MILISECOND 0.001
-#define MICROSECOND 0.000001
-#define NANOSECOND 0.000000001
+
+
+		//#define RESOLUTION nanoseconds
+#define RESOLUTION milisseconds
+#define IDEAL_FRAME_TIME 1.0/60.0
 
 		Time*  Time::m_Instance = nullptr;
 
 		Time::Time()
 			: m_TimeScale(1),
-			m_FrameDeltaTime(0),
+			m_DeltaTime(IDEAL_FRAME_TIME),
 			m_GameStartTime(std::chrono::high_resolution_clock::now())
 		{
 
@@ -24,76 +27,64 @@ namespace octo {
 		{
 		}
 
-		void Time::initialize()
+		Time& Time::getInstance()
 		{
-			Time::m_Instance = new Time();
+			if (m_Instance == nullptr)
+				m_Instance = new Time();
+			return *m_Instance;
 		}
 
 		void Time::destroy()
 		{
-			delete Time::m_Instance;
+			delete m_Instance;
 		}
 
-		long long Time::getElapsedRealTime()
+		double Time::getElapsedRealTime()
 		{
-			__TIME_INITIALIZATION_ASSERTION__
-				auto now = std::chrono::high_resolution_clock::now();
-			return std::chrono::duration_cast<std::chrono::nanoseconds>(now - m_Instance->m_GameStartTime).count();
+			auto now = std::chrono::high_resolution_clock::now();
+			return std::chrono::duration_cast<std::chrono::nanoseconds>(now - m_Instance->m_GameStartTime).count() * MILISECOND;
 		}
 
-		long long Time::getElapsedGameTime()
+		double Time::getElapsedGameTime()
 		{
-			__TIME_INITIALIZATION_ASSERTION__
-				//TODO: Implement this, considering the timeScale;
-				return -1;
+			//TODO: Implement this, considering the timeScale;
+			return -1;
 		}
 
-		void Time::setFrameStartTime()
+		void Time::update()
 		{
-			__TIME_INITIALIZATION_ASSERTION__
-				Time::m_Instance->m_FrameStartTime = std::chrono::high_resolution_clock::now();
-		}
+			auto now = std::chrono::high_resolution_clock::now();
 
-		void Time::setFrameEndTime()
-		{
-			__TIME_INITIALIZATION_ASSERTION__
-				Time::m_Instance->m_FrameEndTime = std::chrono::high_resolution_clock::now();
+			//---------------------------
+			//update the delta time
+			//---------------------------
+			m_DeltaTime = std::chrono::duration_cast<std::chrono::milliseconds>(
+				now - m_LastUpdateTime).count() * MILISECOND * m_TimeScale;
 
-			//return std::chrono::duration_cast<std::chrono::nanoseconds>(m_Instance->m_FrameEndTime - m_Instance->m_FrameStartTime).count() * NANOSECOND;
-			//return std::chrono::duration_cast<std::chrono::microseconds>(m_Instance->m_FrameEndTime - m_Instance->m_FrameStartTime).count() * MICROSECOND;
-			//return std::chrono::duration_cast<std::chrono::milliseconds>(m_Instance->m_FrameEndTime - m_Instance->m_FrameStartTime).count() * MILISECOND;
+#ifdef DEBUG
+			// If the delta time is too big, this may indicate that we are returning from a breakpoint.
+			// So, to keep things sane, frame-lock this frame time.
+			if (m_DeltaTime > 1.0 / 10.0)
+				m_DeltaTime = IDEAL_FRAME_TIME;
+#endif
 
-			Time::m_Instance->m_FrameDeltaTime =
-				std::chrono::duration_cast<std::chrono::milliseconds>(m_Instance->m_FrameEndTime - m_Instance->m_FrameStartTime).count() * MILISECOND;
 
+			m_LastUpdateTime = now;
 		}
 
 		void Time::setTimeScale(double scale)
 		{
-			Time::m_Instance->m_TimeScale = scale;
+			m_Instance->m_TimeScale = scale;
 		}
 
 		double Time::getTimeScale()
 		{
-			return Time::m_Instance->m_TimeScale;
+			return m_Instance->m_TimeScale;
 		}
 
 		double Time::getDeltaTime()
 		{
-			__TIME_INITIALIZATION_ASSERTION__
-
-			double delta = Time::m_Instance->m_FrameDeltaTime * Time::m_Instance->m_TimeScale;
-#ifdef DEBUG
-			// If the delta time is too big, this may indicate that we are returning from a breakpoint.
-			// So, to keep things sane, frame-lock this frame time.
-			if (delta > 1.0 / 10.0)		// 
-				delta = 1.0 / 30.0;
-#endif
-			
-
-			// If delta is too big, it means we may be returning from a breakpoint. In this case,
-			// returns a resonable delta value for this frame
-			return delta;
+			return m_DeltaTime;
 		}
 
 	}

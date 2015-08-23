@@ -19,6 +19,7 @@ namespace octo {
 			Window* m_Window;
 			Camera* m_MainCamera;
 		public:
+			//
 
 			// Core methods
 			GameEngine();
