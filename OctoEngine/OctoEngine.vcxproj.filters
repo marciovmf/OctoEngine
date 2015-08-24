@@ -67,6 +67,9 @@
     <ClCompile Include="src\OctoEngine\core\time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OctoEngine\resources\shaderresourceloader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\graphics\shader.h">
@@ -121,6 +124,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\core\time.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\resources\shaderresourceloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

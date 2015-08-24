@@ -3,15 +3,16 @@
 #include <string>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "../resources/resource.h"
 
 namespace octo {
 	namespace graphics {
 
-		class Shader
+		class Shader : public octo::resources::Resource
 		{
 		public:
-			Shader(const char* vertexShaderFile, const char* fragmentShaderFile);
-			virtual ~Shader();
+			Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile);
+			~Shader() override;
 			void bind() const;
 			void unbind() const;
 			GLuint getUniformLocation(const GLchar* uniform) const;

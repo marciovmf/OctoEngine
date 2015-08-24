@@ -15,6 +15,8 @@
 #include <glm/vec2.hpp>
 #include <glm/gtc/constants.hpp>
 #include "TestComponent.h"
+#include <OctoEngine/resources/resourcemanager.h>
+#include <OctoEngine/resources/shaderresourceloader.h>
 
 std::vector<octo::graphics::Vertex> vertices{
 	// front
@@ -62,8 +64,13 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
+	octo::resources::ResourceManager::initialize();
+	octo::resources::ResourceManager::registerLoader<octo::graphics::Shader>(new octo::resources::ShaderResourceLoader());
+	std::shared_ptr<octo::graphics::Shader> shaderPtr = octo::resources::ResourceManager::get<octo::graphics::Shader>("assets/default.shader");
+
+	m_Shader = shaderPtr.get();
 	// Resources: Shander and Mesh
-	m_Shader = new octo::graphics::Shader("test.vert", "test.frag");
+	//m_Shader = new octo::graphics::Shader("test.vert", "test.frag");
 	m_Mesh = new octo::graphics::Mesh(vertices, indices);
 
 	// "Root" game object

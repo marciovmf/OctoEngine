@@ -15,7 +15,6 @@ namespace octo {
 		TextureLoader::~TextureLoader()
 		{
 		}
-
 		
 		Resource* TextureLoader::loadResource(const char* resourceName) 
 		{

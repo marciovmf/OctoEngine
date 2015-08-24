@@ -37,7 +37,7 @@ public:
 
 	void update() override
 	{
-		double deltaTime = octo::core::Time::getDeltaTime();
+		double deltaTime = octo::core::Time::getInstance().getDeltaTime();
 		octo::core::Transform& transform = this->gameObject->getTransform();
 		transform.rotate(
 			glm::vec3(0.0, 

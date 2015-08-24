@@ -98,6 +98,7 @@
     <None Include="OctoEngine\standard.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OctoEngine\resources\shaderresourceloader.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\camera.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\meshrenderer.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\component.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="src\OctoEngine\core\time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\OctoEngine\resources\shaderresourceloader.h" />
     <ClInclude Include="src\OctoEngine\core\components\camera.h" />
     <ClInclude Include="src\OctoEngine\core\components\meshrenderer.h" />
     <ClInclude Include="src\OctoEngine\core\components\component.h" />

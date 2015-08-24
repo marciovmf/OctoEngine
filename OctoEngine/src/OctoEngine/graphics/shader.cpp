@@ -4,20 +4,22 @@
 #include <fstream>
 #include <memory>
 #include <sstream>
+#include "../core/utils.h"
 
 namespace octo {
 	namespace graphics {
 
-		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
+//		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
 		GLint CheckShaderCompilation(GLuint shader);
 		GLint CheckProgramLink(GLuint program);
 
-		Shader::Shader(const char* vertexShaderFile, const char* fragmentShaderFile)
+		Shader::Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile) :
+			octo::resources::Resource(reosourceId)
 		{
 			const char* EMPTY_SHADER_SOURCE = "";
 
 			// Set up the Vertex Shader
-			std::unique_ptr<std::string> pShaderSource = LoadShaderSource(vertexShaderFile);
+			std::unique_ptr<std::string> pShaderSource = octo::LoadFile(vertexShaderFile);
 			char* shaderSource = ((pShaderSource) ? (char*)(*pShaderSource).c_str() : (char*)(EMPTY_SHADER_SOURCE));
 			m_VertexShader = glCreateShader(GL_VERTEX_SHADER);
 			glShaderSource(m_VertexShader, 1, &shaderSource, NULL);
@@ -25,7 +27,7 @@ namespace octo {
 			CheckShaderCompilation(m_VertexShader);
 
 			// Set up the Fragment Shader
-			pShaderSource = LoadShaderSource(fragmentShaderFile);
+			pShaderSource = octo::LoadFile(fragmentShaderFile);
 			shaderSource = ((pShaderSource) ? (char*)(*pShaderSource).c_str() : (char*)EMPTY_SHADER_SOURCE);
 			m_FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 			glShaderSource(m_FragmentShader, 1, &shaderSource, NULL);
