@@ -4,7 +4,8 @@ namespace octo {
 
 	namespace resources {
 
-		Resource::Resource(const char * const resourceName) : m_Name(resourceName)
+		Resource::Resource(const char * const resourceName) 
+			: octo::Object(), m_Name(resourceName)
 		{}
 
 		Resource::~Resource()

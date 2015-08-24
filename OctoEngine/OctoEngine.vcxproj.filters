@@ -28,12 +28,6 @@
     <ClCompile Include="src\OctoEngine\resources\resourcemanager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OctoEngine\resources\texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\OctoEngine\resources\textureloader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\OctoEngine\graphics\vertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,7 +61,16 @@
     <ClCompile Include="src\OctoEngine\core\time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\OctoEngine\resources\shaderresourceloader.cpp">
+    <ClCompile Include="src\OctoEngine\graphics\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\core\object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\graphics\material.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\core\exception\exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -78,16 +81,7 @@
     <ClInclude Include="src\OctoEngine\resources\resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\OctoEngine\resources\resourceloader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\OctoEngine\resources\resourcemanager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctoEngine\resources\texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctoEngine\resources\textureloader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\graphics\vertex.h">
@@ -126,7 +120,19 @@
     <ClInclude Include="src\OctoEngine\core\time.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\OctoEngine\resources\shaderresourceloader.h">
+    <ClInclude Include="src\OctoEngine\graphics\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\core\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\core\object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\graphics\material.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\core\exception\exception.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

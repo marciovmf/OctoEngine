@@ -1,9 +1,7 @@
 #pragma once
 
 #include <vector>
-#include <GL\glew.h>
-#include "..\resources\texture.h"
-#include "shader.h"
+#include <GL/glew.h>
 #include "vertex.h"
 
 

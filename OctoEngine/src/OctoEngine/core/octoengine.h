@@ -15,6 +15,11 @@
 #define OCTO_ASSERT(expr, text)
 #endif
 
+
+namespace octo{namespace graphics{
+	class Mesh;
+}}
+
 //A type for holding the instance id of an object guaranteed to be unique.
 typedef long long INSTANCEID;
 
@@ -25,8 +30,10 @@ namespace octo
 	{
 		class Resource;
 		//typedef Resource* (*RESOURCELOADERFUNCPTR)(const char*);
-		typedef unsigned int HANDLE_RESOURCE;
-
+		//typedef unsigned int HANDLE_RESOURCE;
+		/*typedef std::shared_ptr<graphics::Shader> ShaderPtr;
+		typedef std::shared_ptr<graphics::Texture> TexturePtr;
+		typedef std::shared_ptr<graphics::Mesh> MeshPtr;*/
 	}
 }
 #endif

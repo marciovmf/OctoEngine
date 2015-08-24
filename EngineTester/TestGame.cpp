@@ -11,12 +11,11 @@
 #include <OctoEngine/core/components/meshrenderer.h>
 #include <OctoEngine/core/components/camera.h>
 
-
-#include <glm/vec2.hpp>
-#include <glm/gtc/constants.hpp>
 #include "TestComponent.h"
 #include <OctoEngine/resources/resourcemanager.h>
-#include <OctoEngine/resources/shaderresourceloader.h>
+#include "tinyxml2.h"
+#include <OctoEngine/graphics/material.h>
+using namespace tinyxml2;
 
 std::vector<octo::graphics::Vertex> vertices{
 	// front
@@ -64,9 +63,8 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	octo::resources::ResourceManager::initialize();
-	octo::resources::ResourceManager::registerLoader<octo::graphics::Shader>(new octo::resources::ShaderResourceLoader());
 	std::shared_ptr<octo::graphics::Shader> shaderPtr = octo::resources::ResourceManager::get<octo::graphics::Shader>("assets/default.shader");
+	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/default.mat");
 
 	m_Shader = shaderPtr.get();
 	// Resources: Shander and Mesh
@@ -91,8 +89,7 @@ void TestGame::OnStart()
 	m_GameObject3->getTransform().translate(glm::vec3(0.0, 1.5, 5.0));
 	m_GameObject3->getTransform().rotate(glm::vec3(90, 0.5, 90));
 	m_GameObject3->addComponent(new octo::core::MeshRenderer(m_Shader, m_Mesh));
-
-
+	
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();
 	m_CameraGameObject->setName(new std::string("Camera"));
@@ -122,7 +119,5 @@ void TestGame::OnStart()
 void TestGame::OnFinish()
 {
 	delete m_Mesh;
-	delete m_Shader;
-
 	std::cout << "Game Finished!" << std::endl;
 }

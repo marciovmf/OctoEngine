@@ -5,6 +5,7 @@
 #include <memory>
 #include <sstream>
 #include "../core/utils.h"
+#include <glm/gtc/type_ptr.hpp>
 
 namespace octo {
 	namespace graphics {

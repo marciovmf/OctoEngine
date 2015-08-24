@@ -5,6 +5,13 @@
 #include <iostream>
 #include <string>
 #include "time.h"
+#include "../resources/resourcemanager.h"
+#include "../graphics/shader.h"
+#include "../graphics/mesh.h"
+#include "../graphics/texture.h"
+#include "../graphics/material.h"
+
+
 
 namespace octo {
 
@@ -29,6 +36,15 @@ namespace octo {
 		int frameCount = 0;
 		void GameEngine::run(int width, int height, std::string title, Game& game, int monitor)
 		{
+
+
+			// Initialzie the resource manager and assign the default loaders
+			resources::ResourceManager::initialize();			
+			resources::ResourceManager::registerLoader<graphics::Shader>(resources::loadShader);
+			resources::ResourceManager::registerLoader<graphics::Mesh>(resources::loadMesh);
+			resources::ResourceManager::registerLoader<graphics::Texture>(resources::loadTexture);
+			resources::ResourceManager::registerLoader<graphics::Material>(resources::loadMaterial);
+
 			// Give to the game a reference to this class
 			game.setEngine(this);
 
@@ -90,6 +106,7 @@ namespace octo {
 			// ----------------------------------
 			// Let the game do its own cleanup
 			game.OnFinish();
+			resources::ResourceManager::Destroy();
 			core::Time::destroy();
 		}
 
