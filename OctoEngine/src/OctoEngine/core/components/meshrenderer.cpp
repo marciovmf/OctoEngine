@@ -1,14 +1,15 @@
 #include "meshrenderer.h"
 #include "../../graphics/mesh.h"
 #include "../../graphics/shader.h"
+#include "../../graphics/material.h"
 #include "../../core/gameobject.h"
 #include <glm/glm.hpp>
 #include <iostream>
 
 namespace octo{
 	namespace core {
-		MeshRenderer::MeshRenderer(octo::graphics::Shader* shader, octo::graphics::Mesh* mesh)
-			: Component(), m_Shader(shader), m_Mesh(mesh)
+		MeshRenderer::MeshRenderer(std::shared_ptr<graphics::Material> material, graphics::Mesh* mesh)
+			: Component(), m_Material(material), m_Mesh(mesh)
 		{
 		}
 
@@ -22,28 +23,27 @@ namespace octo{
 			return *m_Mesh;
 		}
 
-		void MeshRenderer::setShader(octo::graphics::Shader* shader)
+		std::shared_ptr<graphics::Material> MeshRenderer::getMaterial()
 		{
-			m_Shader = shader;
+			return m_Material;
 		}
-
-		octo::graphics::Shader& MeshRenderer::getShader()
-		{
-			return *m_Shader;
-		}
-
+		
 		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
-			m_Shader->bind();
+			auto shader = m_Material->getShader();
 
 			// Update uniforms
-			m_Shader->setUniform("modelMatrix", gameObject->getTransform().getTransformationMatrix());
-			m_Shader->setUniform("viewMatrix", viewMatrix);
-			m_Shader->setUniform("projectionMatrix", projectionMatrix);
+			shader->setUniform("modelMatrix", gameObject->getTransform().getTransformationMatrix());
+			shader->setUniform("viewMatrix", viewMatrix);
+			shader->setUniform("projectionMatrix", projectionMatrix);
+
+			// pass material's uniforms to the shader
+			m_Material->updateUniforms();
+
 			// Render the mesh
 			m_Mesh->Render();
 
-			m_Shader->unbind();
+			m_Material->getShader()->bind();
 		}
 	}
 }

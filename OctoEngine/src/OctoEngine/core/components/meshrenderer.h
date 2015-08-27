@@ -1,10 +1,13 @@
 #pragma once
+
 #include "component.h"
+#include <memory>
 
 
 namespace octo{
 	namespace graphics {
 		class Shader;
+		class Material;
 		class Mesh;
 	}
 
@@ -13,16 +16,16 @@ namespace octo{
 		class MeshRenderer : public Component
 		{
 		private:
-			graphics::Shader* m_Shader;
+			std::shared_ptr<graphics::Material> m_Material;
 			graphics::Mesh* m_Mesh;
 
 		public:
-			MeshRenderer(graphics::Shader* shader, graphics::Mesh* mesh);
+			MeshRenderer(std::shared_ptr<graphics::Material> material, graphics::Mesh* mesh);
 			void render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix) override;
 			void setMesh(graphics::Mesh* mesh);
 			graphics::Mesh& getMesh();
-			void setShader(graphics::Shader* shader);
-			graphics::Shader& getShader();
+			//void setShader(graphics::Shader* shader);
+			std::shared_ptr<graphics::Material> getMaterial();
 		};
 	}
 }

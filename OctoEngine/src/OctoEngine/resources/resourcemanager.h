@@ -70,10 +70,13 @@ namespace octo {
 			auto resIter = m_Instance->m_Resources.find(resourceName);
 			if (resIter != m_Instance->m_Resources.end())
 			{
+				std::cout << "returning cached asset: " << resourceName << std::endl;
 				//std::cout << "Returning cached resource for:" << resourceName << std::endl;
 				return std::dynamic_pointer_cast<T>(resIter->second);
 			}
 
+
+			std::cout << "loading asset: " << resourceName << std::endl;
 			// There is no cached version of the resource!
 			// Get the resource type's unique hash
 			std::size_t hash = typeid(T).hash_code();

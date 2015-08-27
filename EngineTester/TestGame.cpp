@@ -63,10 +63,10 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Shader> shaderPtr = octo::resources::ResourceManager::get<octo::graphics::Shader>("assets/default.shader");
 	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/default.mat");
+	//std::shared_ptr<octo::graphics::Shader> shaderPtr = octo::resources::ResourceManager::get<octo::graphics::Shader>("assets/default.shader");
+	
 
-	m_Shader = shaderPtr.get();
 	// Resources: Shander and Mesh
 	//m_Shader = new octo::graphics::Shader("test.vert", "test.frag");
 	m_Mesh = new octo::graphics::Mesh(vertices, indices);
@@ -74,21 +74,21 @@ void TestGame::OnStart()
 	// "Root" game object
 	octo::core::GameObject* m_GameObject1 = new octo::core::GameObject();
 	m_GameObject1->setName(new std::string("Root"));
-	m_GameObject1->addComponent(new octo::core::MeshRenderer(m_Shader, m_Mesh));
+	m_GameObject1->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
 	m_GameObject1->addComponent(new TestComponent());
 	
 	// Child game object 1
 	octo::core::GameObject* m_GameObject2 = new octo::core::GameObject();
 	m_GameObject2->setName(new std::string("Child1"));
 	m_GameObject2->getTransform().setPosition(glm::vec3(0.5, 0.0, -5.0));
-	m_GameObject2->addComponent(new octo::core::MeshRenderer(m_Shader, m_Mesh));
+	m_GameObject2->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
 
 	// Child game object 2
 	octo::core::GameObject* m_GameObject3 = new octo::core::GameObject();
 	m_GameObject3->setName(new std::string("Child2"));
 	m_GameObject3->getTransform().translate(glm::vec3(0.0, 1.5, 5.0));
 	m_GameObject3->getTransform().rotate(glm::vec3(90, 0.5, 90));
-	m_GameObject3->addComponent(new octo::core::MeshRenderer(m_Shader, m_Mesh));
+	m_GameObject3->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
 	
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();

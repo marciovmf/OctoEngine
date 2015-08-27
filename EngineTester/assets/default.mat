@@ -1,0 +1,8 @@
+<material>
+	<shader>assets/default.shader</shader>
+	<texture name="diffuse">assets/octopus.jpg</texture>
+	<int name="index">5</int>
+	<float name="intensity">1.0</float>
+	<vec3 name="up"> 0.0 1.0 3 </vec3>
+	<vec4 name="base_color">1.0 1.0 0 0</vec4>
+</material>
