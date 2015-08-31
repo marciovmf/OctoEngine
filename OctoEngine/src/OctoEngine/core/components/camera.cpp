@@ -2,6 +2,7 @@
 #include "../gameobject.h"
 #include "../transform.h"
 #include <iostream>
+#include "../gameengine.h"
 
 namespace octo {
 	namespace core {

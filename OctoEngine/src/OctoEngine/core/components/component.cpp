@@ -43,6 +43,11 @@ namespace octo
 			std::string name = gameObject->getName();
 			std::cout << "Destroying component @" << name << std::endl;
 		}
+
+		GameObject& Component::getGameObject() const
+		{
+			return getGameObject;
+		}
 	
 	
 	}

@@ -27,6 +27,8 @@ namespace octo
 
 			void setEnabled(bool state);
 			inline bool isEnabled() { return m_Enabled; }
+			GameObject& getGameObject() const;
+
 		};
 
 	}
