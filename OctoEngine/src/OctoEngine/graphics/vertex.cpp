@@ -9,6 +9,9 @@ namespace octo {
 		Vertex::Vertex(const glm::vec3& vertex):
 			vertex(vertex){}
 		
+		Vertex::Vertex(const glm::vec3& vertex, const glm::vec2& texCoord) :
+			vertex(vertex), texCoord(texCoord){}
+
 		Vertex::Vertex(const glm::vec3& vertex, const glm::vec3& color):
 			vertex(vertex), color(color){}
 

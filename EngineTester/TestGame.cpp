@@ -19,15 +19,15 @@ using namespace tinyxml2;
 
 std::vector<octo::graphics::Vertex> vertices{
 	// front
-	octo::graphics::Vertex(glm::vec3(-1.0, -1.0, 1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(1.0, -1.0, 1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-1.0, 1.0, 1.0), glm::vec3(1.0, 1.0, 1.0)),
+	octo::graphics::Vertex(glm::vec3(-1.0, -1.0, 1.0), glm::vec2(0.0, 0.0)),
+	octo::graphics::Vertex(glm::vec3(1.0, -1.0, 1.0), glm::vec2(1.0, 0.0)),
+	octo::graphics::Vertex(glm::vec3(1.0, 1.0, 1.0),  glm::vec2(1.0, 1.0)),
+	octo::graphics::Vertex(glm::vec3(-1.0, 1.0, 1.0),  glm::vec2(0.0, 1.0)),
 	// back
-	octo::graphics::Vertex(glm::vec3(-1.0, -1.0, -1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(1.0, -1.0, -1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(1.0, 1.0, -1.0), glm::vec3(1.0, 1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-1.0, 1.0, -1.0), glm::vec3(1.0, 1.0, 1.0))
+	octo::graphics::Vertex(glm::vec3(-1.0, -1.0, -1.0),  glm::vec2(0.0, 0.0)),
+	octo::graphics::Vertex(glm::vec3(1.0, -1.0, -1.0),  glm::vec2(1.0, 0.0)),
+	octo::graphics::Vertex(glm::vec3(1.0, 1.0, -1.0),  glm::vec2(1.0, 1.0)),
+	octo::graphics::Vertex(glm::vec3(-1.0, 1.0, -1.0),  glm::vec2(0.0, 1.0))
 };
 
 std::vector<GLuint> indices{
@@ -48,7 +48,7 @@ std::vector<GLuint> indices{
 	3, 7, 4,
 	// right
 	1, 5, 6,
-	6, 2, 1,
+	6, 2, 1	
 };
 
 TestGame::TestGame()
@@ -63,12 +63,10 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/default.mat");
-	//std::shared_ptr<octo::graphics::Shader> shaderPtr = octo::resources::ResourceManager::get<octo::graphics::Shader>("assets/default.shader");
-	
+	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/diffuse.mat");
+
 
 	// Resources: Shander and Mesh
-	//m_Shader = new octo::graphics::Shader("test.vert", "test.frag");
 	m_Mesh = new octo::graphics::Mesh(vertices, indices);
 
 	// "Root" game object
@@ -107,8 +105,7 @@ void TestGame::OnStart()
 	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
 	engine->setMainCamera(m_Camera);
 	engine->AddGameObject(m_CameraGameObject);
-	engine->AddGameObject(m_GameObject1);
-	
+	engine->AddGameObject(m_GameObject1);	
 }
 
 

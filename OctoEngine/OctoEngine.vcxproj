@@ -108,6 +108,7 @@
     <ClCompile Include="src\OctoEngine\core\gameengine.cpp" />
     <ClCompile Include="src\OctoEngine\core\object.cpp" />
     <ClCompile Include="src\OctoEngine\graphics\mesh.cpp" />
+    <ClCompile Include="src\OctoEngine\input\input.cpp" />
     <ClCompile Include="src\OctoEngine\resources\resource.cpp" />
     <ClCompile Include="src\OctoEngine\resources\resourcemanager.cpp" />
     <ClCompile Include="src\OctoEngine\graphics\shader.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="src\OctoEngine\core\octoengine.h" />
     <ClInclude Include="src\OctoEngine\core\utils.h" />
     <ClInclude Include="src\OctoEngine\graphics\mesh.h" />
+    <ClInclude Include="src\OctoEngine\input\input.h" />
     <ClInclude Include="src\OctoEngine\resources\resource.h" />
     <ClInclude Include="src\OctoEngine\resources\resourcemanager.h" />
     <ClInclude Include="src\OctoEngine\graphics\shader.h" />

@@ -5,12 +5,15 @@
 #include <string>
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+#include "../input/input.h"
 
 namespace octo {
 	namespace core {
 
 		class Window
 		{
+			friend class octo::input::Input;
+
 		private:
 			GLFWwindow* m_Window;
 			int m_Width;
@@ -29,6 +32,7 @@ namespace octo {
 			static void errorCallback(int error, const char *description);
 			Window(Window& other){};
 			Window& operator=(Window& other){};
+
 		};
 	}
 }

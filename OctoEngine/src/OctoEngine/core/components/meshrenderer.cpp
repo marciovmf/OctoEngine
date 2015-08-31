@@ -30,20 +30,21 @@ namespace octo{
 		
 		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
+
+			// pass material's uniforms to the shader
+			m_Material->bind();
+
 			auto shader = m_Material->getShader();
 
-			// Update uniforms
+			// Update teh default uniforms
 			shader->setUniform("modelMatrix", gameObject->getTransform().getTransformationMatrix());
 			shader->setUniform("viewMatrix", viewMatrix);
 			shader->setUniform("projectionMatrix", projectionMatrix);
 
-			// pass material's uniforms to the shader
-			m_Material->updateUniforms();
-
 			// Render the mesh
 			m_Mesh->Render();
 
-			m_Material->getShader()->bind();
+			m_Material->unbind();
 		}
 	}
 }

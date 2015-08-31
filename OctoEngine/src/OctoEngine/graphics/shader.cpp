@@ -10,7 +10,7 @@
 namespace octo {
 	namespace graphics {
 
-//		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
+		//		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
 		GLint CheckShaderCompilation(GLuint shader);
 		GLint CheckProgramLink(GLuint program);
 
@@ -61,47 +61,61 @@ namespace octo {
 			glUseProgram(0);
 		}
 
-		GLuint Shader::getUniformLocation(const GLchar* uniform) const
+		GLuint Shader::getUniformLocation(const GLchar* uniform) 
 		{
-			return glGetUniformLocation(m_ShaderProgram, uniform);
+			if (m_CachedLocations.find(uniform) != m_CachedLocations.end())
+				return m_CachedLocations[uniform];
+
+			GLint location = glGetUniformLocation(m_ShaderProgram, uniform);
+			if ( location > -1)
+				m_CachedLocations[uniform] = location;
+			
+			return location;
 		}
 
-		GLuint Shader::getAttributeLocation(const GLchar* attribute) const
+		GLuint Shader::getAttributeLocation(const GLchar* attribute) 
 		{
-			return glGetAttribLocation(m_ShaderProgram, attribute);
+			if (m_CachedLocations.find(attribute) != m_CachedLocations.end())
+				return m_CachedLocations[attribute];
+
+			GLint location = glGetAttribLocation(m_ShaderProgram, attribute);
+			if (location > -1)
+				m_CachedLocations[attribute] = location;
+
+			return location;
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLint value) const
+		void Shader::setUniform(const GLchar* uniform, GLint value) 
 		{
 			glUniform1i(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec2 value) const
+		void Shader::setUniform(const GLchar* uniform, glm::vec2 value) 
 		{
 			glUniform2f(getUniformLocation(uniform), value.x, value.y);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec3 value) const
+		void Shader::setUniform(const GLchar* uniform, glm::vec3 value) 
 		{
 			glUniform3f(getUniformLocation(uniform), value.x, value.y, value.z);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec4 value) const
+		void Shader::setUniform(const GLchar* uniform, glm::vec4 value) 
 		{
 			glUniform4f(getUniformLocation(uniform), value.x, value.y, value.z, value.w);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLfloat value) const
+		void Shader::setUniform(const GLchar* uniform, GLfloat value) 
 		{
 			glUniform1f(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLuint value) const
+		void Shader::setUniform(const GLchar* uniform, GLuint value) 
 		{
 			glUniform1i(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::mat4 value) const
+		void Shader::setUniform(const GLchar* uniform, glm::mat4 value) 
 		{
 			glUniformMatrix4fv(getUniformLocation(uniform), 1, GL_FALSE, glm::value_ptr(value));
 		}

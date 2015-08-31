@@ -1,0 +1,4 @@
+<material>
+	<shader>assets/diffuse.shader</shader>
+	<texture name="diffuse">assets/octopus.jpg</texture>
+</material>

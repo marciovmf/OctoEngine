@@ -1,6 +1,7 @@
 #include "material.h"
 #include "shader.h"
-
+#include "texture.h"
+#include <GL/glew.h>
 namespace octo
 {
 	namespace graphics
@@ -56,7 +57,7 @@ namespace octo
 		float Material::getFloat(const char* name)
 		{
 			auto it = m_FloatValues.find(name);
-			return ((it == m_FloatValues.end()) ? 0.0 : it->second);
+			return ((it == m_FloatValues.end()) ? 0.0f : it->second);
 		}
 
 		int Material::getInt(const char* name)
@@ -83,9 +84,51 @@ namespace octo
 			return ((it == m_Vec2Values.end()) ? glm::vec2(0, 0) : it->second);
 		}
 
-		void Material::updateUniforms()
+		void Material::bind()
 		{
-			std::cout << "void updateUniforms() not implemented yet" << std::endl;
+			auto it = m_FloatValues.begin();
+			for (std::pair<std::string,float> uniform : m_FloatValues)
+			{
+				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
+			}
+
+			for (std::pair<std::string, int> uniform : m_IntValues)
+			{
+				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
+			}
+
+			for (std::pair<std::string, glm::vec3> uniform : m_Vec3Values)
+			{
+				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
+			}
+
+			for (std::pair<std::string, glm::vec2> uniform : m_Vec2Values)
+			{
+				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
+			}
+
+			for (std::pair<std::string, glm::vec4> uniform : m_Vec4Values)
+			{
+				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
+			}
+
+			GLint textureUnit = 0;
+			for (auto texture : m_Textures)
+			{
+				glActiveTexture(GL_TEXTURE0 + textureUnit);
+				texture.second->bind();
+				textureUnit++;
+				m_Shader->setUniform( texture.first.c_str() ,textureUnit);
+			}
+
+			m_Shader->bind();
+
+		}
+
+
+		void Material::unbind()
+		{
+			m_Shader->unbind();
 		}
 
 		std::shared_ptr<graphics::Texture> Material::getTexture(const char* name)

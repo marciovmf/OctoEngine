@@ -23,9 +23,14 @@ namespace octo {
 				Input::INSTANCE = new Input();
 
 			// Register input callbacks
-			glfwSetKeyCallback((GLFWwindow*)window.GetWindowID(), Input::key_callback);
-			glfwSetMouseButtonCallback((GLFWwindow*)window.GetWindowID(), &Input::mouse_button_callback);
-			glfwSetCursorPosCallback((GLFWwindow*)window.GetWindowID(), &Input::cursor_position_callback);
+			glfwSetKeyCallback(window.m_Window, Input::key_callback);
+			glfwSetMouseButtonCallback(window.m_Window, &Input::mouse_button_callback);
+			glfwSetCursorPosCallback(window.m_Window, &Input::cursor_position_callback);
+		}
+
+		void Input::destroy()
+		{
+			delete Input::INSTANCE;
 		}
 
 		void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)

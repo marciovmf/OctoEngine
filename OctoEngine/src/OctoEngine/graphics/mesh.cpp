@@ -24,6 +24,10 @@ namespace octo {
 			glEnableVertexAttribArray(RENDERER_COLOR_INDEX);
 			glVertexAttribPointer(RENDERER_COLOR_INDEX, 3, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, color));
 
+			// UVs
+			glEnableVertexAttribArray(RENDERER_TEXCOORD_INDEX);
+			glVertexAttribPointer(RENDERER_TEXCOORD_INDEX, 4, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, texCoord));
+
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
@@ -46,20 +50,15 @@ namespace octo {
 
 		void Mesh::Render() const
 		{
-			
+
 			glBindVertexArray(m_VAO);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
 			glDrawElements(GL_TRIANGLES, m_Indices.size(), GL_UNSIGNED_INT, NULL);
 
-			//for (int i = 0; i < m_TextureResources.size(); i++)
-			//{
-			//	m_TextureResources[i].get()->unbind();
-			//}
-
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-			
+
 		}
 	}
 }

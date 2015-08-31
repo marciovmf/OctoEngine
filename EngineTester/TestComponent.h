@@ -1,8 +1,9 @@
 #pragma once
-#include <OctoEngine\core\components\component.h>
-#include <OctoEngine\core\transform.h>
-#include <OctoEngine\core\gameobject.h>
-#include <OctoEngine\core\time.h>
+#include <OctoEngine/core/components/component.h>
+#include <OctoEngine/core/transform.h>
+#include <OctoEngine/core/gameobject.h>
+#include <OctoEngine/core/time.h>
+#include <OctoEngine/input/input.h>
 #include <iomanip>
 class TestComponent :
 	public octo::core::Component
@@ -49,6 +50,12 @@ public:
 			0,
 			glm::radians(90.0) * deltaTime,
 			glm::radians(-360.0) * deltaTime));
+
+		if (octo::input::Input::getKey(KEY_W))
+			transform.translate(vec3(0, 0, 10 * deltaTime));
+		else if (octo::input::Input::getKey(KEY_S))
+			transform.translate(vec3(0, 0, -10 * deltaTime));
+
 	}
 
 	void destroy() override

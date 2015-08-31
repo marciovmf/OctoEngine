@@ -10,6 +10,7 @@
 #include "../graphics/mesh.h"
 #include "../graphics/texture.h"
 #include "../graphics/material.h"
+#include "../input/input.h"
 
 
 
@@ -37,7 +38,6 @@ namespace octo {
 		void GameEngine::run(int width, int height, std::string title, Game& game, int monitor)
 		{
 
-
 			// Initialzie the resource manager and assign the default loaders
 			resources::ResourceManager::initialize();			
 			resources::ResourceManager::registerLoader<graphics::Shader>(resources::loadShader);
@@ -45,11 +45,15 @@ namespace octo {
 			resources::ResourceManager::registerLoader<graphics::Texture>(resources::loadTexture);
 			resources::ResourceManager::registerLoader<graphics::Material>(resources::loadMaterial);
 
+			// Initialize the game window and the graphics system
+			m_Window = new Window(width, height, title, monitor);
+
+			// Initialize the Input system
+			octo::input::Input::init(*m_Window);
+
 			// Give to the game a reference to this class
 			game.setEngine(this);
 
-			// Initialize the game window and the graphics system
-			m_Window = new Window(width, height, title, monitor);
 			// Setup viewport
 			glViewport(0, 0, width, height);
 

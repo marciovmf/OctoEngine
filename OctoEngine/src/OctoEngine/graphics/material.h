@@ -40,10 +40,9 @@ namespace octo
 			glm::vec4 getVec4(const char* name);
 			glm::vec3 getVec3(const char* name);
 			glm::vec2 getVec2(const char* name);
+			void bind();
+			void unbind();
 			std::shared_ptr<graphics::Texture> getTexture(const char* name);
-
-			void updateUniforms();
-
 			~Material();
 		};
 	}
