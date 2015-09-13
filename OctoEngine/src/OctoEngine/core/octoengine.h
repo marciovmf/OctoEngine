@@ -14,6 +14,7 @@
 #else
 #define OCTO_ASSERT(expr, text)
 #endif
+#include <glm/detail/type_vec3.hpp>
 
 
 namespace octo{namespace graphics{
@@ -34,6 +35,17 @@ namespace octo
 		/*typedef std::shared_ptr<graphics::Shader> ShaderPtr;
 		typedef std::shared_ptr<graphics::Texture> TexturePtr;
 		typedef std::shared_ptr<graphics::Mesh> MeshPtr;*/
+	}
+
+
+	inline void print(const char* text)
+	{
+		std::cout << text << std::endl;
+	}
+
+	inline void print(const glm::vec3& v)
+	{
+		std::cout << "(" << v.x << "," << v.y << "," << v.z << ")" << std::endl;
 	}
 }
 #endif

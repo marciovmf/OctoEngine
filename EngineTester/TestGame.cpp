@@ -12,6 +12,7 @@
 #include <OctoEngine/core/components/camera.h>
 
 #include "TestComponent.h"
+#include "TestCamera.h"
 #include <OctoEngine/resources/resourcemanager.h>
 #include "tinyxml2.h"
 #include <OctoEngine/graphics/material.h>
@@ -73,7 +74,8 @@ void TestGame::OnStart()
 	octo::core::GameObject* m_GameObject1 = new octo::core::GameObject();
 	m_GameObject1->setName(new std::string("Root"));
 	m_GameObject1->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
-	m_GameObject1->addComponent(new TestComponent());
+	//m_GameObject1->addComponent(new TestComponent());
+	m_GameObject1->getTransform().setPosition(glm::vec3(0.0, 0.0, -10.0));	
 	
 	// Child game object 1
 	octo::core::GameObject* m_GameObject2 = new octo::core::GameObject();
@@ -84,14 +86,15 @@ void TestGame::OnStart()
 	// Child game object 2
 	octo::core::GameObject* m_GameObject3 = new octo::core::GameObject();
 	m_GameObject3->setName(new std::string("Child2"));
-	m_GameObject3->getTransform().translate(glm::vec3(0.0, 1.5, 5.0));
+	m_GameObject3->getTransform().translate(vec3(0.0, 1.5, 5.0));
 	m_GameObject3->getTransform().rotate(glm::vec3(90, 0.5, 90));
 	m_GameObject3->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
 	
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();
 	m_CameraGameObject->setName(new std::string("Camera"));
-	auto m_Camera = new octo::core::Camera(0.1f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 35.0f);
+	//auto m_Camera = new octo::core::Camera(0.1f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 35.0f);
+	auto m_Camera = new TestCamera(0.1f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 35.0f);
 	m_CameraGameObject->addComponent(m_Camera);
 	
 	// Place the camera
@@ -105,7 +108,7 @@ void TestGame::OnStart()
 	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
 	engine->setMainCamera(m_Camera);
 	engine->AddGameObject(m_CameraGameObject);
-	engine->AddGameObject(m_GameObject1);	
+	engine->AddGameObject(m_GameObject1);
 }
 
 

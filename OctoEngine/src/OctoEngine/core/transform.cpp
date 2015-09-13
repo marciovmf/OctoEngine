@@ -29,6 +29,26 @@ namespace octo
 			m_Position += position;
 		}
 
+		glm::vec3 Transform::getPosition() const
+		{
+			return glm::vec3(m_Transformation[3]);
+		}
+
+		glm::vec3 Transform::right() const
+		{
+			return glm::vec3(m_Transformation[0]);
+		}
+
+		glm::vec3 Transform::up() const
+		{
+			return glm::vec3(m_Transformation[1]);
+		}
+
+		glm::vec3 Transform::forward() const
+		{
+			return glm::vec3(m_Transformation[3]) + glm::vec3(m_Transformation[2]);
+		}
+
 		void Transform::scale(vec3& scale)
 		{
 			m_HasChanged = true;
@@ -57,6 +77,10 @@ namespace octo
 
 			// Scale
 			transformations = glm::scale(transformations, m_Scale);
+
+
+			// store position for future references
+			//m_Position = glm::vec3(m_Transformation[3]);
 
 			m_Transformation = m_ParentMatrix * transformations;
 			return m_Transformation;

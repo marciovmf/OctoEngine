@@ -1,6 +1,7 @@
 #include "camera.h"
 #include "../gameobject.h"
 #include "../transform.h"
+#include "../octoengine.h"
 #include <iostream>
 
 namespace octo {
@@ -9,7 +10,7 @@ namespace octo {
 		Camera::Camera() :
 			Component()
 		{
-			setCameraFrustum(0.1f, 1000.0f, 16/9, 4.5f);
+			setCameraFrustum(0.1f, 1000.0f, 16 / 9, 4.5f);
 		}
 
 		Camera::Camera(float near, float far, float ratio, float fov) :
@@ -30,22 +31,20 @@ namespace octo {
 			if (!t.hasChanged())
 				return m_ViewMatrix;
 
+			// Update the matrix
+			t.getTransformationMatrix();
 
-			mat4 transformations; // Identity
+			glm::vec3 pos = t.getPosition();
+			glm::vec3 dir = t.forward();
 
-			// Translation
-			transformations = glm::translate(transformations, t.getPosition());
+			print("Position");
+			octo::print(pos);
+			print("forward");
+			octo::print(dir);
 
-			// Rotation
-			transformations *= mat4_cast(glm::inverse(t.getRotation()));
-
-			// Scale
-			transformations = glm::scale(transformations, t.getScale());
-
-			// transform the camera viewProjectionMatrix according to the camera position/rotation
-			m_ViewMatrix = transformations;
-
+			m_ViewMatrix =   glm::lookAt(pos, dir, glm::vec3(0, 1, 0));
 			return m_ViewMatrix;
+
 		}
 
 		void Camera::setCameraFrustum(float near, float far, float ratio, float fov)

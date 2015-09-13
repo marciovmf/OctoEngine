@@ -30,7 +30,7 @@ namespace octo
 			Transform();
 			~Transform();
 
-			inline const vec3& getPosition() const { return m_Position; }
+			vec3 getPosition() const;
 			inline const quat& getRotation() const { return m_Rotation; }
 			inline const vec3& getScale() const { return m_Scale; }
 
@@ -41,6 +41,10 @@ namespace octo
 			void rotate(vec3& axis);
 			void translate(vec3& position);
 			void scale(vec3& scale);
+
+			glm::vec3 right() const ;
+			glm::vec3 up() const;
+			glm::vec3 forward() const;
 
 			void setParent(Transform* parent);
 			inline const Transform* getParent() const { return m_Parent; }

@@ -105,6 +105,7 @@
     <None Include="test.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="TestCamera.h" />
     <ClInclude Include="TestComponent.h" />
     <ClInclude Include="TestGame.h" />
   </ItemGroup>
