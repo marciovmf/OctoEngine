@@ -127,9 +127,25 @@ namespace octo {
 			m_RootGameObject->addChild(gameObject);
 		}
 
+		void GameEngine::AddCamera(Camera * camera)
+		{
+			std::hash<std::string> stringHash;
+			// TODO add camera here
+		}
+
 		void GameEngine::setMainCamera(Camera* mainCamera)
 		{
 			m_MainCamera = mainCamera;
 		}
+
+		 Camera& GameEngine::getMainCamera()
+		{
+			// If no camera is tagged MainCamera
+			Camera* mainCamera = m_Cameras[OCTO_MAIN_CAMERA_TAG];
+			OCTO_ASSERT((mainCamera == nullptr), "There is no Camera component tagged \'MainCamera\'");
+			return *mainCamera;
+		}
+
+
 	}
 }

@@ -3,6 +3,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <functional>
 
 namespace octo
 {
@@ -19,6 +20,8 @@ namespace octo
 			std::vector <GameObject* >* m_Children;
 			std::vector<Component* >* m_Components;
 			bool m_Enabled;
+			std::string m_Tag;
+			size_t m_TagHash;
 
 		public:
 			GameObject();
@@ -50,6 +53,12 @@ namespace octo
 			void render(Camera& camera);
 			void setEnabled(bool state);
 			inline bool isEnabled() { return m_Enabled; }
+
+			void setTag(const std::string& tag);
+			std::string getTag(const std::string& tag);
+			bool compareTag(const std::string& tag) const;
+
+
 		};
 
 	}

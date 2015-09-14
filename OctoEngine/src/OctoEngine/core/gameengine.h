@@ -3,6 +3,10 @@
 #include "window.h"
 #include <string>
 #include <glm/vec3.hpp>
+#include <map>
+#include <string>
+
+#define OCTO_MAIN_CAMERA_TAG "MainCamera"
 
 namespace octo {
 
@@ -18,6 +22,7 @@ namespace octo {
 			GameObject* const m_RootGameObject;
 			Window* m_Window;
 			Camera* m_MainCamera;
+			std::vector<std::string,Camera*> m_Cameras;
 		public:
 			//
 
@@ -35,7 +40,9 @@ namespace octo {
 			void AddGameObject(GameObject* const gameObject);
 
 			void setMainCamera(Camera* mainCamera);
-			inline Camera& getMainCamera() { return *m_MainCamera; }
+			//inline Camera& getMainCamera() { return *m_MainCamera; }
+			Camera& getMainCamera();
+			void AddCamera(Camera * camera);
 		};
 	}
 }

@@ -3,6 +3,7 @@
 #include "../transform.h"
 #include "../octoengine.h"
 #include <iostream>
+#include "../gameengine.h"
 
 namespace octo {
 	namespace core {

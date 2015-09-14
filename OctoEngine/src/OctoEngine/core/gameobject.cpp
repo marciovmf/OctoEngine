@@ -154,5 +154,27 @@ namespace octo
 				}
 			}
 		}
+
+
+		void GameObject::setTag(const std::string& tag)
+		{
+			this->m_Tag = tag; // copy
+			std::hash<std::string> stringHash;
+			m_TagHash = stringHash(tag);	// precalc a hash to speed up comparissons
+		}
+
+		std::string GameObject::getTag(const std::string& tag)
+		{
+			return this->m_Tag;
+		}
+
+		bool GameObject::compareTag(const std::string& tag) const
+		{
+			std::hash<std::string> stringHash;
+			size_t other = stringHash(tag);	// precalc a hash to speed up comparissons
+
+			if (other == m_TagHash)		// compar only if hash matches to make sure there is no collision
+				return (tag == m_Tag);
+		}
 	}
 }
