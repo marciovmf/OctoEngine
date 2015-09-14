@@ -46,7 +46,7 @@ namespace octo
 
 		GameObject& Component::getGameObject() const
 		{
-			return getGameObject;
+			return *gameObject;
 		}
 	
 	

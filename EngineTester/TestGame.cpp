@@ -74,7 +74,7 @@ void TestGame::OnStart()
 	octo::core::GameObject* m_GameObject1 = new octo::core::GameObject();
 	m_GameObject1->setName(new std::string("Root"));
 	m_GameObject1->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_Mesh));
-	//m_GameObject1->addComponent(new TestComponent());
+	m_GameObject1->addComponent(new TestComponent());
 	m_GameObject1->getTransform().setPosition(glm::vec3(0.0, 0.0, -10.0));	
 	
 	// Child game object 1

@@ -22,7 +22,6 @@ namespace octo {
 			GameObject* const m_RootGameObject;
 			Window* m_Window;
 			Camera* m_MainCamera;
-			std::vector<std::string,Camera*> m_Cameras;
 		public:
 			//
 
