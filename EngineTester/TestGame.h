@@ -25,7 +25,8 @@ class TestGame : public octo::core::Game
 {
 private:
 	octo::graphics::Shader* m_Shader;
-	octo::graphics::Mesh* m_Mesh;
+	octo::graphics::Mesh* m_boxMesh;
+	octo::graphics::Mesh* m_planeMesh;
 
 	//octo::core::GameObject* m_GameObject1;
 	//octo::core::GameObject* m_GameObject2;

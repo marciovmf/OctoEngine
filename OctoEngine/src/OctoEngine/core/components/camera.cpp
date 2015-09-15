@@ -38,12 +38,12 @@ namespace octo {
 			glm::vec3 pos = t.getPosition();
 			glm::vec3 dir = t.forward();
 
-			print("Position");
-			octo::print(pos);
-			print("forward");
-			octo::print(dir);
+			//print("Position");
+			//octo::print(pos);
+			//print("forward");
+			//octo::print(dir);
 
-			m_ViewMatrix =   glm::lookAt(pos, dir, glm::vec3(0, 1, 0));
+			m_ViewMatrix = glm::lookAt(pos, pos+ dir, glm::vec3(0, 1, 0));
 			return m_ViewMatrix;
 
 		}

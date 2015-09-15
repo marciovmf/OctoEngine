@@ -12,8 +12,6 @@ namespace octo
 {
 	namespace core {
 
-
-
 		class Transform
 		{
 		private:
@@ -50,6 +48,8 @@ namespace octo
 			inline const Transform* getParent() const { return m_Parent; }
 
 			const mat4& getTransformationMatrix();
+
+			void lookAt(glm::vec3& pos);
 
 			// Returns TRUE if this transform changed since the last time the flag was set to 'false';
 			//A change to the transform can be anything that can cause its matrix to be recalculated

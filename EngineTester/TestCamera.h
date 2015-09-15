@@ -23,7 +23,8 @@ public:
 		octo::core::Transform& t = this->gameObject->getTransform();
 		double deltaTime = octo::core::Time::getInstance().getDeltaTime();
 
-		float step = (float)(5.0f * deltaTime);
+		float step = (float)(1.0f * deltaTime);
+
 
 		if (octo::input::Input::getKey(KEY_W))
 			t.translate(glm::normalize(t.forward()) * step);
@@ -39,7 +40,18 @@ public:
 			t.rotate(glm::vec3(0, -2 * deltaTime, 0));
 
 
-
+		//if (octo::input::Input::getKey(KEY_W))
+		//	t.setPosition(t.getPosition() +  glm::normalize(t.forward()) * step);
+		//else if (octo::input::Input::getKey(KEY_S))
+		//	t.setPosition(t.getPosition() + glm::normalize(t.forward()) * -step);
+		//if (octo::input::Input::getKey(KEY_A))
+		//	t.setPosition(t.getPosition() + glm::normalize(t.right()) * step); 
+		//else if (octo::input::Input::getKey(KEY_D))
+		//	t.setPosition(t.getPosition() + glm::normalize(t.right()) * -step);
+		//else if (octo::input::Input::getKey(KEY_Q))
+		//	t.rotate(glm::vec3(0, 2 * deltaTime, 0));
+		//else if (octo::input::Input::getKey(KEY_E))
+		//	t.rotate(glm::vec3(0, -2 * deltaTime, 0));
 	}
 };
 

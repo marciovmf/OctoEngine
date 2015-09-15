@@ -27,7 +27,7 @@ public:
 	void start() override
 	{
 		octo::core::Transform& transform = this->gameObject->getTransform();
-		transform.setPosition(glm::vec3(0, 0, 0));
+		transform.setPosition(glm::vec3(0, 1, 0));
 		transform.setScale(glm::vec3(0.2, 0.2, 0.2));
 
 		std::vector<octo::core::GameObject*> children = gameObject->getChildren();
@@ -45,16 +45,11 @@ public:
 			glm::radians(180.0) * deltaTime, 
 			glm::radians(30.0) * deltaTime));
 		
-		//child1->getTransform().rotate(glm::vec3(0, 0, glm::radians(5.0)));
+		child1->getTransform().rotate(glm::vec3(0, glm::radians(30.0)  * deltaTime, glm::radians(90.0)  * deltaTime));
 		child2->getTransform().rotate(glm::vec3(
 			0,
 			glm::radians(90.0) * deltaTime,
 			glm::radians(-360.0) * deltaTime));
-
-		if (octo::input::Input::getKey(KEY_W))
-			transform.translate(vec3(0, 0, 10 * deltaTime));
-		else if (octo::input::Input::getKey(KEY_S))
-			transform.translate(vec3(0, 0, -10 * deltaTime));
 
 	}
 
