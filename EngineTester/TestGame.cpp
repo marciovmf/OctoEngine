@@ -64,9 +64,9 @@ std::vector<octo::graphics::Vertex> planeVertices{
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
 
+	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
 };
 
 TestGame::TestGame()

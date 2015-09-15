@@ -208,9 +208,12 @@ namespace octo {
 			XMLElement *vertexElement = ShaderElement->FirstChildElement("VERTEX");
 			XMLElement *fragmentElement = ShaderElement->FirstChildElement("FRAGMENT");
 			//XMLElement *GeometryElement = ShaderElement->FirstChildElement("GEOMETRY");
+			XMLElement *capabilityElement = ShaderElement->FirstChildElement("CAPABILITY");
 
 			if (vertexElement == nullptr || fragmentElement == nullptr)
 				return nullptr;
+
+
 
 			return new octo::graphics::Shader(resourceName, vertexElement->GetText(), fragmentElement->GetText());
 		}
