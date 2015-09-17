@@ -201,6 +201,12 @@ namespace octo {
 				return nullptr;
 			}
 
+			std::hash<std::string> strHash;
+			const size_t OFF_HASH = strHash("off");
+			const size_t BACK_HASH = strHash("back");
+			const size_t FRONT_HASH = strHash("front");
+
+			
 			XMLElement *ShaderElement = xmlDoc.FirstChildElement("SHADER");
 			if (ShaderElement == nullptr)
 				return false;
@@ -208,14 +214,43 @@ namespace octo {
 			XMLElement *vertexElement = ShaderElement->FirstChildElement("VERTEX");
 			XMLElement *fragmentElement = ShaderElement->FirstChildElement("FRAGMENT");
 			//XMLElement *GeometryElement = ShaderElement->FirstChildElement("GEOMETRY");
-			XMLElement *capabilityElement = ShaderElement->FirstChildElement("CAPABILITY");
+			XMLElement *capabilityCull = ShaderElement->FirstChildElement("CULL");
+			XMLElement *capabilityZWrite = ShaderElement->FirstChildElement("ZWRITE");
+			XMLElement *capabilityZTest = ShaderElement->FirstChildElement("ZTEST");
+
+
+			octo::graphics::Shader* shader = new octo::graphics::Shader(resourceName, vertexElement->GetText(), fragmentElement->GetText());
+
+			// Parse CULL option
+			
+
+			if ( capabilityCull != nullptr)
+			{
+				std::string s = capabilityCull->GetText();
+				const size_t keyHash = std::hash<std::string>()(s);
+				std::transform(s.begin(), s.end(), s.begin(), tolower);
+
+				if (strHash(s) == BACK_HASH)
+					shader->Cull(octo::graphics::CULL::BACK);
+				else if (strHash(s) == FRONT_HASH)
+					shader->Cull(octo::graphics::CULL::FRONT);
+				else if (strHash(s) == OFF_HASH)
+					shader->Cull(octo::graphics::CULL::OFF);
+				else
+				{
+					std::cout << "ERROR: Invalid value for CULL option" << std::endl;
+					shader->Cull(octo::graphics::CULL::BACK);
+				}
+
+
+			}
 
 			if (vertexElement == nullptr || fragmentElement == nullptr)
 				return nullptr;
 
 
 
-			return new octo::graphics::Shader(resourceName, vertexElement->GetText(), fragmentElement->GetText());
+			return shader;
 		}
 	}
 }

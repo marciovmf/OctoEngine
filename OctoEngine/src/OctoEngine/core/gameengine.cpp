@@ -45,6 +45,10 @@ namespace octo {
 			resources::ResourceManager::registerLoader<graphics::Texture>(resources::loadTexture);
 			resources::ResourceManager::registerLoader<graphics::Material>(resources::loadMaterial);
 
+
+			glDisable(GL_CULL_FACE);
+			glCullFace(GL_BACK );
+
 			// Initialize the game window and the graphics system
 			m_Window = new Window(width, height, title, monitor);
 

@@ -1,6 +1,6 @@
 <material>
-	<shader>assets/default.shader</shader>
-	<texture name="diffuse">assets/octopus.jpg</texture>
+	<shader>assets/shader/default.shader</shader>
+	<texture name="diffuse">assets/texture/octopus.jpg</texture>
 	<float name="ambient_intensity">0.9</float>
 	<vec3 name="base_color">1.0 0.0 0 0</vec3>
 </material>

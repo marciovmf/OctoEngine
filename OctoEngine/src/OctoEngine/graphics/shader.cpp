@@ -6,13 +6,21 @@
 #include <sstream>
 #include "../core/utils.h"
 #include <glm/gtc/type_ptr.hpp>
+#include "../core/exception/exception.h"
 
 namespace octo {
 	namespace graphics {
 
+
 		//		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
 		GLint CheckShaderCompilation(GLuint shader);
 		GLint CheckProgramLink(GLuint program);
+
+		// Default states
+		bool Shader::s_ZWrite = true;
+		ZTEST Shader::s_ZTest = ZTEST::LESS;
+		CULL Shader::s_Cull = CULL::OFF;
+
 
 		Shader::Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile) :
 			octo::resources::Resource(reosourceId)
@@ -53,6 +61,37 @@ namespace octo {
 
 		void Shader::bind() const
 		{
+			// Set FACE CULLING
+			if (m_Cull != s_Cull)
+			{
+				// Enable/Disable face culling
+				if (m_Cull != CULL::OFF)
+					glEnable(GL_CULL_FACE);
+				else
+					glEnable(GL_CULL_FACE);
+
+				// Set face culling mode
+				glCullFace( ((m_Cull == CULL::BACK) ? GL_BACK : GL_FRONT ) );
+
+				// cache the current mode
+				s_Cull = m_Cull;
+			}
+
+			// Enable/disable Z-Writing
+			if (m_ZWrite != s_ZWrite)
+			{
+				glDepthMask(m_ZWrite);
+				s_ZWrite = m_ZWrite;
+			}
+
+			// Set Depth function
+			if ( m_ZTest != s_ZTest)
+			{
+				glDepthFunc((GLenum)m_ZTest);
+				s_ZTest = m_ZTest;
+			}
+
+			// Depth testing
 			glUseProgram(m_ShaderProgram);
 		}
 
@@ -61,19 +100,19 @@ namespace octo {
 			glUseProgram(0);
 		}
 
-		GLuint Shader::getUniformLocation(const GLchar* uniform) 
+		GLuint Shader::getUniformLocation(const GLchar* uniform)
 		{
 			if (m_CachedLocations.find(uniform) != m_CachedLocations.end())
 				return m_CachedLocations[uniform];
 
 			GLint location = glGetUniformLocation(m_ShaderProgram, uniform);
-			if ( location > -1)
+			if (location > -1)
 				m_CachedLocations[uniform] = location;
-			
+
 			return location;
 		}
 
-		GLuint Shader::getAttributeLocation(const GLchar* attribute) 
+		GLuint Shader::getAttributeLocation(const GLchar* attribute)
 		{
 			if (m_CachedLocations.find(attribute) != m_CachedLocations.end())
 				return m_CachedLocations[attribute];
@@ -85,37 +124,67 @@ namespace octo {
 			return location;
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLint value) 
+		void Shader::setUniform(const GLchar* uniform, GLint value)
 		{
 			glUniform1i(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec2 value) 
+		void Shader::setUniform(const GLchar* uniform, glm::vec2 value)
 		{
 			glUniform2f(getUniformLocation(uniform), value.x, value.y);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec3 value) 
+		void Shader::setUniform(const GLchar* uniform, glm::vec3 value)
 		{
 			glUniform3f(getUniformLocation(uniform), value.x, value.y, value.z);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::vec4 value) 
+		void Shader::setUniform(const GLchar* uniform, glm::vec4 value)
 		{
 			glUniform4f(getUniformLocation(uniform), value.x, value.y, value.z, value.w);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLfloat value) 
+		void Shader::setUniform(const GLchar* uniform, GLfloat value)
 		{
 			glUniform1f(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, GLuint value) 
+		void Shader::setUniform(const GLchar* uniform, GLuint value)
 		{
 			glUniform1i(getUniformLocation(uniform), value);
 		}
 
-		void Shader::setUniform(const GLchar* uniform, glm::mat4 value) 
+		bool Shader::ZWrite() const
+		{
+			return m_ZWrite;
+		}
+
+		void Shader::ZWrite(bool b)
+		{
+			m_ZWrite = b;
+		}
+
+		ZTEST Shader::ZTest() const
+		{
+			return m_ZTest;
+		}
+
+		CULL Shader::Cull() const
+		{
+			return m_Cull;
+		}
+
+		void Shader::Cull(CULL mode)
+		{
+			m_Cull = mode;
+		}
+
+		void Shader::ZTest(ZTEST test)
+		{
+			m_ZTest = test;
+		}
+
+		void Shader::setUniform(const GLchar* uniform, glm::mat4 value)
 		{
 			glUniformMatrix4fv(getUniformLocation(uniform), 1, GL_FALSE, glm::value_ptr(value));
 		}

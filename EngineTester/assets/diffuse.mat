@@ -1,4 +1,0 @@
-<material>
-	<shader>assets/diffuse.shader</shader>
-	<texture name="diffuse">assets/checkers.jpg</texture>
-</material>

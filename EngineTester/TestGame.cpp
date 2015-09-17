@@ -60,13 +60,13 @@ std::vector<octo::graphics::Vertex> vertices{
 
 std::vector<octo::graphics::Vertex> planeVertices{
 	// front
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
-
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
+	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
+
+	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
+	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
 };
 
 TestGame::TestGame()
@@ -81,8 +81,8 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/diffuse.mat");
-	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/checkers.mat");
+	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/diffuse.mat");
+	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
 
 	// Resources: Shander and Mesh
 	m_boxMesh = new octo::graphics::Mesh(vertices);
@@ -126,8 +126,8 @@ void TestGame::OnStart()
 	m_CameraGameObject->addComponent(m_Camera);
 	
 	// Place the camera
-	m_CameraGameObject->getTransform().translate(glm::vec3(0.0f, 1.0f, 0));
 	m_CameraGameObject->getTransform().lookAt(glm::vec3(0, 0, 0));
+	m_CameraGameObject->getTransform().translate(glm::vec3(0.0f, 1.0f, -5.0f));
 	// Add the objets to the engine
 	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
 	engine->setMainCamera(m_Camera);
