@@ -9,7 +9,7 @@
 namespace octo{
 	namespace core {
 		MeshRenderer::MeshRenderer(std::shared_ptr<graphics::Material> material, graphics::Mesh* mesh)
-			: Component(), m_Material(material), m_Mesh(mesh)
+			: IRenderer(), m_Material(material), m_Mesh(mesh)
 		{
 		}
 

@@ -18,6 +18,7 @@ namespace octo {
 
 		class GameEngine
 		{
+
 		private:
 			GameObject* const m_RootGameObject;
 			Window* m_Window;

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "component.h"
 #include <memory>
+#include "IRenderer.h"
 
 
 namespace octo{
@@ -13,7 +13,7 @@ namespace octo{
 
 	namespace core {
 
-		class MeshRenderer : public Component
+		class MeshRenderer : public IRenderer
 		{
 		private:
 			std::shared_ptr<graphics::Material> m_Material;

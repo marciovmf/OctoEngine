@@ -98,6 +98,7 @@
     <None Include="OctoEngine\standard.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OctoEngine\core\components\IRenderer.cpp" />
     <ClCompile Include="src\OctoEngine\core\exception\exception.cpp" />
     <ClCompile Include="src\OctoEngine\graphics\material.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\camera.cpp" />
@@ -119,6 +120,8 @@
     <ClCompile Include="src\OctoEngine\core\time.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\OctoEngine\graphics\AmbientLight.h" />
+    <ClInclude Include="src\OctoEngine\core\components\IRenderer.h" />
     <ClInclude Include="src\OctoEngine\core\exception\exception.h" />
     <ClInclude Include="src\OctoEngine\graphics\material.h" />
     <ClInclude Include="src\OctoEngine\core\components\camera.h" />

@@ -20,9 +20,8 @@ namespace octo {
 			//const std::vector<GLuint>& m_Indices;
 			enum {
 				RENDERER_VERTEX_INDEX = 0,
-				RENDERER_COLOR_INDEX,
-				RENDERER_TEXCOORD_INDEX,
 				RENDERER_NORMAL_INDEX,
+				RENDERER_TEXCOORD_INDEX,
 				
 			};
 

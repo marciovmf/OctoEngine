@@ -4,58 +4,60 @@
 #include <OctoEngine/core/gameengine.h>
 #include <OctoEngine/core/game.h>
 #include <OctoEngine/core/transform.h>
-#include <OctoEngine/graphics/shader.h>
 #include <OctoEngine/graphics/mesh.h>
 #include <OctoEngine/graphics/vertex.h>
 #include <OctoEngine/core/gameobject.h>
 #include <OctoEngine/core/components/meshrenderer.h>
-#include <OctoEngine/core/components/camera.h>
 
 #include "TestComponent.h"
 #include "TestCamera.h"
 #include <OctoEngine/resources/resourcemanager.h>
-#include "tinyxml2.h"
 #include <OctoEngine/graphics/material.h>
-using namespace tinyxml2;
 
+std::vector<octo::graphics::Vertex> vertices {
+	// Vertex , Normal, UV
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
 
-std::vector<octo::graphics::Vertex> vertices{
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.000059f, 1.0f - 0.000004f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(1.000023f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.999958f, 1.0f - 0.336064f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.667969f, 1.0f - 0.671889f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(1.000023f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.000059f, 1.0f - 0.000004f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336098f, 1.0f - 0.000071f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(1.000004f, 1.0f - 0.671847f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.999958f, 1.0f - 0.336064f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.336098f, 1.0f - 0.000071f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.000004f, 1.0f - 0.671870f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.667969f, 1.0f - 0.671889f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(1.000004f, 1.0f - 0.671847f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f))
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+	
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+	
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
+	
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f)
+
 };
 
 std::vector<octo::graphics::Vertex> planeVertices{
@@ -63,7 +65,6 @@ std::vector<octo::graphics::Vertex> planeVertices{
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
 	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
 	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
