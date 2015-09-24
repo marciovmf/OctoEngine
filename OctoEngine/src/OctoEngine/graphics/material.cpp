@@ -85,9 +85,22 @@ namespace octo
 		}
 
 		void Material::bind()
-		{
-			auto it = m_FloatValues.begin();
-			for (std::pair<std::string,float> uniform : m_FloatValues)
+		{			
+			// Enable texture units
+			GLint textureUnit = 0;
+			for (auto texture : m_Textures)
+			{
+				glActiveTexture(GL_TEXTURE0 + textureUnit);
+				texture.second->bind();
+				textureUnit++;
+				m_Shader->setUniform( texture.first.c_str() ,textureUnit);
+			}
+			
+			// bind to the shader
+			m_Shader->bind();
+
+			// Set the defined uniforms
+			for (std::pair<std::string, float> uniform : m_FloatValues)
 			{
 				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
 			}
@@ -111,18 +124,6 @@ namespace octo
 			{
 				this->m_Shader->setUniform(uniform.first.c_str(), uniform.second);
 			}
-
-			GLint textureUnit = 0;
-			for (auto texture : m_Textures)
-			{
-				glActiveTexture(GL_TEXTURE0 + textureUnit);
-				texture.second->bind();
-				textureUnit++;
-				m_Shader->setUniform( texture.first.c_str() ,textureUnit);
-			}
-
-			m_Shader->bind();
-
 		}
 
 

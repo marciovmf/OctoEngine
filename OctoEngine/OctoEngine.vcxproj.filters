@@ -79,6 +79,15 @@
     <ClCompile Include="src\OctoEngine\core\components\IRenderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OctoEngine\core\components\lights\LightCaster.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\core\components\lights\directionallight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\OctoEngine\graphics\rendersettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\graphics\shader.h">
@@ -148,6 +157,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\graphics\AmbientLight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\core\components\lights\LightCaster.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\core\components\lights\directionallight.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\graphics\rendersettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

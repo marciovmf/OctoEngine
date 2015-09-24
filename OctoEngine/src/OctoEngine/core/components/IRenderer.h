@@ -9,14 +9,14 @@ namespace octo {
 			public octo::core::Component
 		{
 		private:
-			octo::graphics::AmbientLight m_AmbientLight;
+			//octo::graphics::AmbientLight m_AmbientLight;
 
 		public:
 			IRenderer();
 			virtual ~IRenderer();
 
-			void setAmbientLight(const octo::graphics::AmbientLight& ambientLight);
-			const graphics::AmbientLight& getAmbientLight() const;
+			//void setAmbientLight(const octo::graphics::AmbientLight& ambientLight);
+			//const graphics::AmbientLight& getAmbientLight() const;
 		};
 	}
 }

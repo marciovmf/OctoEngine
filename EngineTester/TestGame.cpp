@@ -13,6 +13,7 @@
 #include "TestCamera.h"
 #include <OctoEngine/resources/resourcemanager.h>
 #include <OctoEngine/graphics/material.h>
+#include <OctoEngine/graphics/rendersettings.h>
 
 std::vector<octo::graphics::Vertex> vertices {
 	// Vertex , Normal, UV
@@ -62,12 +63,12 @@ std::vector<octo::graphics::Vertex> vertices {
 
 std::vector<octo::graphics::Vertex> planeVertices{
 	// front
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
+	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
+	octo::graphics::Vertex(0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 1.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 0.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f,0.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f,0.0, 0.0),
+	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f,1.0, 0.0),
 };
 
 TestGame::TestGame()
@@ -82,8 +83,9 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/diffuse.mat");
+	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.mat");
 	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
+
 
 	// Resources: Shander and Mesh
 	m_boxMesh = new octo::graphics::Mesh(vertices);

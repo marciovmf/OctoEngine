@@ -3,6 +3,7 @@
 #include "../../graphics/shader.h"
 #include "../../graphics/material.h"
 #include "../../core/gameobject.h"
+#include "../../graphics/rendersettings.h"
 #include <glm/glm.hpp>
 #include <iostream>
 
@@ -30,7 +31,6 @@ namespace octo{
 		
 		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
-
 			// pass material's uniforms to the shader
 			m_Material->bind();
 
@@ -40,6 +40,7 @@ namespace octo{
 			shader->setUniform("modelMatrix", gameObject->getTransform().getTransformationMatrix());
 			shader->setUniform("viewMatrix", viewMatrix);
 			shader->setUniform("projectionMatrix", projectionMatrix);
+			shader->setUniform("ambientLight", graphics::RenderSettings::AmbientLightColor);
 
 			// Render the mesh
 			m_Mesh->Render();

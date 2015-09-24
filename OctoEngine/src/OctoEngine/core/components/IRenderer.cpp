@@ -5,7 +5,7 @@ namespace octo {
 	{
 
 		IRenderer::IRenderer():
-			Component(), m_AmbientLight()
+			Component()
 		{
 		}
 
@@ -14,14 +14,14 @@ namespace octo {
 		{
 		}
 
-		void IRenderer::setAmbientLight(const octo::graphics::AmbientLight& ambientLight)
-		{
-			m_AmbientLight = ambientLight;
-		}
+		//void IRenderer::setAmbientLight(const octo::graphics::AmbientLight& ambientLight)
+		//{
+		//	m_AmbientLight = ambientLight;
+		//}
 
-		const octo::graphics::AmbientLight& IRenderer::getAmbientLight() const
-		{
-			return m_AmbientLight;
-		}
+		//const octo::graphics::AmbientLight& IRenderer::getAmbientLight() const
+		//{
+		//	return m_AmbientLight;
+		//}
 	}
 }

@@ -61,6 +61,7 @@ namespace octo {
 
 		void Shader::bind() const
 		{
+			
 			// Set FACE CULLING
 			if (m_Cull != s_Cull)
 			{
@@ -106,8 +107,13 @@ namespace octo {
 				return m_CachedLocations[uniform];
 
 			GLint location = glGetUniformLocation(m_ShaderProgram, uniform);
+
 			if (location > -1)
 				m_CachedLocations[uniform] = location;
+			/*else
+			{
+				std::cout << glGetError() <<  ":ERROR: Could not find location for uniform '" << uniform << "'" << std::endl;
+			}*/
 
 			return location;
 		}

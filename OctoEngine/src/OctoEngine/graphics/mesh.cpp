@@ -32,7 +32,6 @@ namespace octo {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
 
-
 			// Indices
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 			//glBufferData(GL_ELEMENT_ARRAY_BUFFER,				// Just an array of data
