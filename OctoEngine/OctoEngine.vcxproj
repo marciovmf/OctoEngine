@@ -98,6 +98,7 @@
     <None Include="OctoEngine\standard.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OctoEngine\graphics\cubemap.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\lights\directionallight.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\lights\LightCaster.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\IRenderer.cpp" />
@@ -123,6 +124,7 @@
     <ClCompile Include="src\OctoEngine\graphics\rendersettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\OctoEngine\graphics\cubemap.h" />
     <ClInclude Include="src\OctoEngine\graphics\rendersettings.h" />
     <ClInclude Include="src\OctoEngine\core\components\lights\directionallight.h" />
     <ClInclude Include="src\OctoEngine\core\components\lights\LightCaster.h" />

@@ -55,6 +55,6 @@ namespace octo
 			static octo::resources::Resource* load(const char* resourceName);
 		};
 
-		typedef std::shared_ptr<Texture> TextureResource;
+		typedef std::shared_ptr<Texture> TextureResourcePtr;
 	}
 }

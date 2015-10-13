@@ -4,8 +4,9 @@
 #include <GL/glew.h>
 #include "tinyxml2.h"
 #include <algorithm>
-#include "../resources/resourcemanager.h"
 #include <sstream>
+#include "cubemap.h"
+#include "../resources/resourcemanager.h"
 
 namespace octo
 {
@@ -56,6 +57,11 @@ namespace octo
 			m_Textures[name] = textureResource;
 		}
 
+		void Material::addCubeMap(std::string name, std::shared_ptr<CubeMap> cubeMapResource)
+		{
+			m_CubeMaps[name] = cubeMapResource;
+		}
+
 		std::shared_ptr<Shader> Material::getShader()
 		{
 			return m_Shader;
@@ -97,10 +103,19 @@ namespace octo
 			GLint textureUnit = 0;
 			for (auto texture : m_Textures)
 			{
-				glActiveTexture(GL_TEXTURE0 + textureUnit);
+				glActiveTexture(GL_TEXTURE0 + textureUnit );
 				texture.second->bind();
 				textureUnit++;
 				m_Shader->setUniform(texture.first.c_str(), textureUnit);
+			}
+			
+			// Enable texture units for cubemaps
+			for (auto cubemap : m_CubeMaps)
+			{
+				glActiveTexture(GL_TEXTURE0 + textureUnit);
+				cubemap.second->bind();
+				textureUnit++;
+				m_Shader->setUniform(cubemap.first.c_str(), textureUnit);
 			}
 
 			// bind to the shader
@@ -133,7 +148,6 @@ namespace octo
 			}
 		}
 
-
 		void Material::unbind()
 		{
 			m_Shader->unbind();
@@ -143,6 +157,12 @@ namespace octo
 		{
 			auto it = m_Textures.find(name);
 			return ((it == m_Textures.end()) ? nullptr : it->second);
+		}
+
+		std::shared_ptr<graphics::CubeMap>  Material::getCubeMap(const char* name)
+		{
+			auto it = m_CubeMaps.find(name);
+			return ((it == m_CubeMaps.end()) ? nullptr : it->second);
 		}
 
 		Material::~Material()
@@ -174,8 +194,17 @@ namespace octo
 			size_t INT_HASH = strHash("int");
 			size_t SHADER_HASH = strHash("shader");
 			size_t TEXTURE_HASH = strHash("texture");
+			size_t CUBEMAP_HASH = strHash("cubemap");
 
 			short int shaderCount = 0;
+
+			// Pointers for image data
+			unsigned char* dataFront = nullptr;
+			unsigned char* dataBack = nullptr;
+			unsigned char* dataLeft = nullptr;
+			unsigned char* dataRight = nullptr;
+			unsigned char* dataUp = nullptr;
+			unsigned char* dataDown = nullptr;
 
 			// Creates an empty material instance
 			graphics::Material* ptrMaterial = new graphics::Material(resourceName);
@@ -210,6 +239,12 @@ namespace octo
 					ptrMaterial->addTexture(
 						ptrName,
 						resources::ResourceManager::get<graphics::Texture>(child->GetText()));
+				}
+				else if (keyHash == CUBEMAP_HASH)
+				{
+					ptrMaterial->addCubeMap(
+						ptrName,
+						resources::ResourceManager::get<graphics::CubeMap>(child->GetText()));
 				}
 				else if (keyHash == VECTOR4_HASH)
 				{
@@ -256,6 +291,7 @@ namespace octo
 					else
 						ptrMaterial->addInt(ptrName, value);
 				}
+				
 			}
 
 			// make sure this material has exactly ONE shader

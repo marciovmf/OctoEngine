@@ -7,6 +7,7 @@
 #include "../graphics/shader.h"
 #include "../graphics/mesh.h"
 #include "../graphics/texture.h"
+#include "../graphics/cubemap.h"
 #include "../graphics/material.h"
 #include "../input/input.h"
 #include <iostream>
@@ -42,6 +43,7 @@ namespace octo
 			resources::ResourceManager::registerLoader<graphics::Shader>(octo::graphics::Shader::load);
 			resources::ResourceManager::registerLoader<graphics::Mesh>(resources::loadMesh);
 			resources::ResourceManager::registerLoader<graphics::Texture>(octo::graphics::Texture::load);
+			resources::ResourceManager::registerLoader<graphics::CubeMap>(octo::graphics::CubeMap::load);
 			resources::ResourceManager::registerLoader<graphics::Material>(octo::graphics::Material::load);
 
 

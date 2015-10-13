@@ -96,12 +96,11 @@ namespace octo
 			// Loads the resource throu the registered loader
 			//Resource* resourcePtr = ((*it).second)->loadResource(resourceName);
 			Resource* resourcePtr = ((*it).second)(resourceName);
+
 			std::shared_ptr<T> sharedResPtr = std::make_shared<T>(*static_cast<T*>(resourcePtr));
 
 			// Add the newly loaded resource to the cache
 			m_Instance->m_Resources[resourceName] = sharedResPtr;
-
-			//std::cout << "Returning just loaded resource for:" << resourceName << std::endl;
 
 			// Return the resource
 			return sharedResPtr;

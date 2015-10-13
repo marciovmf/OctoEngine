@@ -10,6 +10,7 @@ namespace octo
 	namespace graphics
 	{
 		class Texture;
+		class CubeMap;
 
 		class Material :
 			public octo::resources::Resource
@@ -22,6 +23,7 @@ namespace octo
 			std::map<std::string, glm::vec3> m_Vec3Values;
 			std::map<std::string, glm::vec2> m_Vec2Values;
 			std::map<std::string, std::shared_ptr<graphics::Texture>> m_Textures;
+			std::map<std::string, std::shared_ptr<graphics::CubeMap>> m_CubeMaps;
 
 			Material(const char* resourceName, std::shared_ptr<Shader> shaderResourcePtr);
 
@@ -34,6 +36,7 @@ namespace octo
 			void addVec4(std::string name, glm::vec4 value);
 			void addVec2(std::string name, glm::vec2 value);
 			void addTexture(std::string name, std::shared_ptr<Texture> textureResource);
+			void addCubeMap(std::string name, std::shared_ptr<CubeMap> cubeMapResource);
 
 			std::shared_ptr<Shader> getShader();
 			float getFloat(const char* name);
@@ -44,6 +47,8 @@ namespace octo
 			void bind();
 			void unbind();
 			std::shared_ptr<graphics::Texture> getTexture(const char* name);
+			std::shared_ptr<graphics::CubeMap> getCubeMap(const char* name);
+
 			~Material();
 
 			static octo::resources::Resource* load(const char* resourceName);

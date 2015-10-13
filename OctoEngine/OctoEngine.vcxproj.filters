@@ -88,6 +88,9 @@
     <ClCompile Include="src\OctoEngine\graphics\rendersettings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\OctoEngine\graphics\cubemap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\OctoEngine\graphics\shader.h">
@@ -166,6 +169,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\OctoEngine\graphics\rendersettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\OctoEngine\graphics\cubemap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
