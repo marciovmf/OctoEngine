@@ -3,9 +3,10 @@
 #include "octoengine.h"
 #include "exception/exception.h"
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 #define MILISECOND 0.001
 
 
@@ -13,14 +14,13 @@ namespace octo {
 #define RESOLUTION milisseconds
 #define IDEAL_FRAME_TIME 1.0/60.0
 
-		Time*  Time::m_Instance = nullptr;
+		Time* Time::m_Instance = nullptr;
 
 		Time::Time()
 			: m_TimeScale(1),
-			m_DeltaTime(IDEAL_FRAME_TIME),
-			m_GameStartTime(std::chrono::high_resolution_clock::now())
+			  m_DeltaTime(IDEAL_FRAME_TIME),
+			  m_GameStartTime(std::chrono::high_resolution_clock::now())
 		{
-
 		}
 
 		Time::~Time()
@@ -86,6 +86,5 @@ namespace octo {
 		{
 			return m_DeltaTime;
 		}
-
 	}
 }

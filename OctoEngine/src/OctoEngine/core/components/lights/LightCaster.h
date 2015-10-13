@@ -5,7 +5,6 @@ namespace octo
 {
 	namespace core
 	{
-
 		class LightCaster : public octo::core::Component
 		{
 		protected:
@@ -20,9 +19,6 @@ namespace octo
 			void setIntensity(float intensity);
 			const glm::vec3& getColor() const;
 			float getIntensity() const;
-
 		};
-
 	}
 }
-

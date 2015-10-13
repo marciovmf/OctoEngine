@@ -7,12 +7,13 @@
 
 namespace octo
 {
-	// loads the conte
-	inline std::unique_ptr<std::string> LoadFile(const char* fileName)
+	// loads content of a file
+	std::unique_ptr<std::string> LoadFile(const char* fileName)
 	{
-		std::unique_ptr <std::string> result(nullptr);
+		std::unique_ptr<std::string> result(nullptr);
 
-		try {
+		try
+		{
 			std::ifstream file;
 			file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 			file.open(fileName);

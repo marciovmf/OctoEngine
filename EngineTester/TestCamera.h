@@ -54,4 +54,3 @@ public:
 		//	t.rotate(glm::vec3(0, -2 * deltaTime, 0));
 	}
 };
-

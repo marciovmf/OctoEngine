@@ -2,9 +2,10 @@
 
 #include "lightcaster.h"
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		class DirectionalLight : public octo::core::LightCaster
 		{
 		public:
@@ -13,4 +14,3 @@ namespace octo {
 		};
 	}
 }
-

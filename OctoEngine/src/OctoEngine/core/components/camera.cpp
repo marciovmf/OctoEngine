@@ -1,13 +1,11 @@
 #include "camera.h"
 #include "../gameobject.h"
 #include "../transform.h"
-#include "../octoengine.h"
-#include <iostream>
-#include "../gameengine.h"
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		Camera::Camera() :
 			Component()
 		{
@@ -43,9 +41,8 @@ namespace octo {
 			//print("forward");
 			//octo::print(dir);
 
-			m_ViewMatrix = glm::lookAt(pos, pos+ dir, glm::vec3(0, 1, 0));
+			m_ViewMatrix = glm::lookAt(pos, pos + dir, glm::vec3(0, 1, 0));
 			return m_ViewMatrix;
-
 		}
 
 		void Camera::setCameraFrustum(float near, float far, float ratio, float fov)

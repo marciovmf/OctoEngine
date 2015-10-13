@@ -4,8 +4,8 @@
 
 namespace octo
 {
-	namespace core {
-
+	namespace core
+	{
 		Component::Component() : gameObject(nullptr), m_Enabled(true)
 		{
 		}
@@ -31,7 +31,6 @@ namespace octo
 
 		void Component::update()
 		{
-
 		}
 
 		void Component::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
@@ -48,7 +47,5 @@ namespace octo
 		{
 			return *gameObject;
 		}
-	
-	
 	}
 }

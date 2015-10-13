@@ -7,13 +7,16 @@
 
 #include <OctoEngine/core/game.h>
 
-namespace octo {
-	namespace graphics {
+namespace octo
+{
+	namespace graphics
+	{
 		class Shader;
 		class Mesh;
 	}
 
-	namespace core {
+	namespace core
+	{
 		class Transform;
 		class GameObject;
 		class MeshRenderer;
@@ -36,4 +39,3 @@ public:
 	//void OnUpdate() override;
 	void OnFinish() override;
 };
-

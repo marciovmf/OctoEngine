@@ -1,12 +1,12 @@
 #pragma once
 
 #include "component.h"
-#include <glm/glm.hpp>
 
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		class Camera : public Component
 		{
 		private:
@@ -23,8 +23,11 @@ namespace octo {
 			virtual ~Camera();
 			void setCameraFrustum(float near, float far, float ratio, float fov);
 			const glm::mat4& getViewMatrix();
-			inline const glm::mat4& getProjectionMatrix() { return m_ProjectionMatrix; }
+
+			inline const glm::mat4& getProjectionMatrix()
+			{
+				return m_ProjectionMatrix;
+			}
 		};
 	}
 }
-

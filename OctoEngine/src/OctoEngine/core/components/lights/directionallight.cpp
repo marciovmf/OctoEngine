@@ -1,8 +1,9 @@
 #include "directionallight.h"
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		DirectionalLight::DirectionalLight()
 		{
 		}

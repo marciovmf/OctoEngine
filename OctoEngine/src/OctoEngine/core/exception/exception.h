@@ -13,4 +13,3 @@ namespace octo
 		const std::string& getMessage() const;
 	};
 }
-

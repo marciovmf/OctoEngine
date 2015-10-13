@@ -1,9 +1,9 @@
 #include "IRenderer.h"
 
-namespace octo {
+namespace octo
+{
 	namespace core
 	{
-
 		IRenderer::IRenderer():
 			Component()
 		{

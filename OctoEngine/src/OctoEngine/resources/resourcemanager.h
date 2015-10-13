@@ -5,9 +5,10 @@
 #include <memory>
 #include "resource.h"
 
-namespace octo {
-	namespace resources {
-
+namespace octo
+{
+	namespace resources
+	{
 		//class Resource;
 		typedef std::shared_ptr<Resource> ResourcePtr;
 		typedef Resource* (*RESOURCELOADFUNCPTR)(const char*);
@@ -15,14 +16,14 @@ namespace octo {
 
 		class ResourceManager
 		{
-		// Private Members
+			// Private Members
 		private:
 			std::map<const char*, std::shared_ptr<Resource>> m_Resources;
 			//std::map<const std::size_t, octo::resources::ResourceLoader* > m_Loaders;
 			std::map<const std::size_t, RESOURCELOADFUNCPTR> m_Loaders;
 			static ResourceManager* m_Instance;
 
-		// Private Methods
+			// Private Methods
 		public:
 			ResourceManager();
 			~ResourceManager();
@@ -31,14 +32,17 @@ namespace octo {
 
 			// Register a Loader class for a given type. Returns false if there is already a loader getistered for the same type;
 			//template <typename T> static bool registerLoader(ResourceLoader* const loader);
-			template <typename T> static bool registerLoader(RESOURCELOADFUNCPTR loader);
+			template <typename T>
+			static bool registerLoader(RESOURCELOADFUNCPTR loader);
 
 			// Gets a resource of type T identifyed by the name in resourceName
-			template <typename T> static std::shared_ptr<T> get(const char* resourceName);
+			template <typename T>
+			static std::shared_ptr<T> get(const char* resourceName);
 
 			// Returns true it there is a loader set up for the given type. False otherwise.
-			template <typename T> bool hasLoaderForType() const;
-			
+			template <typename T>
+			bool hasLoaderForType() const;
+
 			// Releases a resource pointer AND removes it from the cache if it is nobe being referenced anymore
 			static bool ReleaseResource(ResourcePtr& resourcePtr);
 		};
@@ -49,20 +53,20 @@ namespace octo {
 		{
 			// Get the resource type's hash 
 			std::size_t hash = typeid(T).hash_code();
-			
+
 			// check if there is already a loader registered for this type
 			auto it = m_Instance->m_Loaders.find(hash);
 
 			// Return FALSE if there is already a loader for this type.
 			if (it != m_Instance->m_Loaders.end())
 				return false;
-			
+
 			// Add the loader to the list
 			m_Instance->m_Loaders[hash] = loader;
 
 			return true;
 		}
-	
+
 		template <typename T>
 		std::shared_ptr<T> ResourceManager::get(const char* resourceName)
 		{
@@ -101,7 +105,6 @@ namespace octo {
 
 			// Return the resource
 			return sharedResPtr;
-			
 		}
 
 		template <typename T>
@@ -111,9 +114,7 @@ namespace octo {
 		}
 
 		// default resource loading implementations
-		octo::resources::Resource* loadTexture(const char* resourceName);
-		octo::resources::Resource* loadMaterial(const char* resourceName);
+
 		octo::resources::Resource* loadMesh(const char* resourceName);
-		octo::resources::Resource* loadShader(const char* resourceName);
 	}
 }

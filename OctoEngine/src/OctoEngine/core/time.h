@@ -2,9 +2,10 @@
 
 #include <chrono>
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		class Time
 		{
 		private:
@@ -42,8 +43,6 @@ namespace octo {
 			*/
 			void setTimeScale(double scale);
 			double getTimeScale();
-
 		};
-
 	}
 }

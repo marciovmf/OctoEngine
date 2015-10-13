@@ -1,10 +1,11 @@
 #include "texture.h"
 #include <SOIL.h>
 
-namespace octo {
-	namespace graphics {
-
-		Texture::Texture(const char* name, unsigned char* data, int width, int height) 
+namespace octo
+{
+	namespace graphics
+	{
+		Texture::Texture(const char* name, unsigned char* data, int width, int height)
 			:Resource(name), m_Data(data), m_Width(width), m_Height(height)
 		{
 			glGenTextures(1, &m_TextureID);
@@ -20,8 +21,13 @@ namespace octo {
 
 		Texture::~Texture()
 		{
-			
 		}
 
+		octo::resources::Resource* Texture::load(const char* resourceName)
+		{
+			int w = 0, h = 0;
+			unsigned char* data = SOIL_load_image(resourceName, &w, &h, 0, SOIL_LOAD_RGBA);
+			return new graphics::Texture(resourceName, data, w, h);
+		}
 	}
 }

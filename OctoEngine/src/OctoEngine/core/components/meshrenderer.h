@@ -4,15 +4,17 @@
 #include "IRenderer.h"
 
 
-namespace octo{
-	namespace graphics {
+namespace octo
+{
+	namespace graphics
+	{
 		class Shader;
 		class Material;
 		class Mesh;
 	}
 
-	namespace core {
-
+	namespace core
+	{
 		class MeshRenderer : public IRenderer
 		{
 		private:
@@ -29,4 +31,3 @@ namespace octo{
 		};
 	}
 }
-

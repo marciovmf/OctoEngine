@@ -1,9 +1,7 @@
-#include "game.h"
 #include "gameengine.h"
+#include "game.h"
 #include "gameobject.h"
 #include "components/camera.h"
-#include <iostream>
-#include <string>
 #include "time.h"
 #include "../resources/resourcemanager.h"
 #include "../graphics/shader.h"
@@ -11,13 +9,14 @@
 #include "../graphics/texture.h"
 #include "../graphics/material.h"
 #include "../input/input.h"
+#include <iostream>
+#include <string>
 
 
-
-namespace octo {
-
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		GameEngine::GameEngine()
 			: m_Window(NULL), m_RootGameObject(new GameObject()), m_MainCamera(nullptr)
 		{
@@ -35,19 +34,19 @@ namespace octo {
 
 		double oneSecond = 0;
 		int frameCount = 0;
+
 		void GameEngine::run(int width, int height, std::string title, Game& game, int monitor)
 		{
-
 			// Initialzie the resource manager and assign the default loaders
-			resources::ResourceManager::initialize();			
-			resources::ResourceManager::registerLoader<graphics::Shader>(resources::loadShader);
+			resources::ResourceManager::initialize();
+			resources::ResourceManager::registerLoader<graphics::Shader>(octo::graphics::Shader::load);
 			resources::ResourceManager::registerLoader<graphics::Mesh>(resources::loadMesh);
-			resources::ResourceManager::registerLoader<graphics::Texture>(resources::loadTexture);
-			resources::ResourceManager::registerLoader<graphics::Material>(resources::loadMaterial);
+			resources::ResourceManager::registerLoader<graphics::Texture>(octo::graphics::Texture::load);
+			resources::ResourceManager::registerLoader<graphics::Material>(octo::graphics::Material::load);
 
 
 			glDisable(GL_CULL_FACE);
-			glCullFace(GL_BACK );
+			glCullFace(GL_BACK);
 
 			// Initialize the game window and the graphics system
 			m_Window = new Window(width, height, title, monitor);
@@ -100,13 +99,14 @@ namespace octo {
 				oneSecond += deltaTime;
 				frameCount++;
 
+				// Make sure too long frames (maybe debugging ?) still behave properly
 				if (oneSecond >= 1)
 				{
 					oneSecond = oneSecond - 1;
 					std::cout << frameCount << " fps" << std::endl;
 					frameCount = 0;
 				}
-				// --
+
 			}
 
 			// ----------------------------------
@@ -119,8 +119,16 @@ namespace octo {
 		}
 
 		// Window Facade methods
-		int GameEngine::getWindowWidth() const { return m_Window->getWidth(); }
-		int GameEngine::getWindowHeight() const { return m_Window->getHeight(); }
+		int GameEngine::getWindowWidth() const
+		{
+			return m_Window->getWidth();
+		}
+
+		int GameEngine::getWindowHeight() const
+		{
+			return m_Window->getHeight();
+		}
+
 		void GameEngine::setClearColor(glm::vec3& color)
 		{
 			m_Window->setClearColor(color);
@@ -142,7 +150,7 @@ namespace octo {
 			m_MainCamera = mainCamera;
 		}
 
-		 Camera& GameEngine::getMainCamera()
+		Camera& GameEngine::getMainCamera()
 		{
 			//// If no camera is tagged MainCamera
 			//Camera* mainCamera = m_Cameras[OCTO_MAIN_CAMERA_TAG];
@@ -151,7 +159,5 @@ namespace octo {
 
 			return *m_MainCamera;
 		}
-
-
 	}
 }

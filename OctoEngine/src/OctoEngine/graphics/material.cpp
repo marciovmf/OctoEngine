@@ -2,17 +2,24 @@
 #include "shader.h"
 #include "texture.h"
 #include <GL/glew.h>
+#include "tinyxml2.h"
+#include <algorithm>
+#include "../resources/resourcemanager.h"
+#include <sstream>
+
 namespace octo
 {
 	namespace graphics
 	{
 		Material::Material(const char* resourceName, std::shared_ptr<Shader> shaderResourcePtr)
 			: Resource(resourceName), m_Shader(shaderResourcePtr)
-		{	}
+		{
+		}
 
 		Material::Material(const char* resourceName)
 			: Resource(resourceName)
-		{	}
+		{
+		}
 
 		void Material::setShader(std::shared_ptr<Shader> shader)
 		{
@@ -69,7 +76,7 @@ namespace octo
 		glm::vec4 Material::getVec4(const char* name)
 		{
 			auto it = m_Vec4Values.find(name);
-			return ((it == m_Vec4Values.end()) ? glm::vec4(0,0,0,0) : it->second);
+			return ((it == m_Vec4Values.end()) ? glm::vec4(0, 0, 0, 0) : it->second);
 		}
 
 		glm::vec3 Material::getVec3(const char* name)
@@ -85,7 +92,7 @@ namespace octo
 		}
 
 		void Material::bind()
-		{			
+		{
 			// Enable texture units
 			GLint textureUnit = 0;
 			for (auto texture : m_Textures)
@@ -93,9 +100,9 @@ namespace octo
 				glActiveTexture(GL_TEXTURE0 + textureUnit);
 				texture.second->bind();
 				textureUnit++;
-				m_Shader->setUniform( texture.first.c_str() ,textureUnit);
+				m_Shader->setUniform(texture.first.c_str(), textureUnit);
 			}
-			
+
 			// bind to the shader
 			m_Shader->bind();
 
@@ -142,5 +149,131 @@ namespace octo
 		{
 		}
 
+		octo::resources::Resource* Material::load(const char* resourceName)
+		{
+			tinyxml2::XMLDocument xmlDoc;
+			//std::cout << "Loading material '" << resourceName << "'" << std::endl;
+
+			tinyxml2::XMLError error = xmlDoc.LoadFile(resourceName);
+
+			if (error != tinyxml2::XMLError::XML_SUCCESS)
+			{
+				// TODO: Log that could not load the asset
+				std::cout << "ERROR: Error loading xml file:" << error << std::endl;
+				return nullptr;
+			}
+
+			tinyxml2::XMLElement* root = xmlDoc.FirstChildElement("material");
+
+			// Precalculate hash values for faster name comparing
+			std::hash<std::string> strHash;
+			size_t VECTOR4_HASH = strHash("vec4");
+			size_t VECTOR3_HASH = strHash("vec3");
+			size_t VECTOR2_HASH = strHash("vec2");
+			size_t FLOAT_HASH = strHash("float");
+			size_t INT_HASH = strHash("int");
+			size_t SHADER_HASH = strHash("shader");
+			size_t TEXTURE_HASH = strHash("texture");
+
+			short int shaderCount = 0;
+
+			// Creates an empty material instance
+			graphics::Material* ptrMaterial = new graphics::Material(resourceName);
+
+			for (tinyxml2::XMLElement* child = root->FirstChildElement();
+			     child != nullptr; child = child->NextSiblingElement())
+			{
+				std::string s = child->Name();
+				std::transform(s.begin(), s.end(), s.begin(), tolower);
+				size_t keyHash = std::hash<std::string>()(s);
+
+				// get the node name attrubte
+				//const char* name = child->FirstChildElement();// ->Attribute("name");
+				const char* ptrName = child->Attribute("name");
+
+				if (ptrName == NULL && keyHash != SHADER_HASH)
+				{
+					std::cout << child->Name() << "Warning: ignoring unnamed node." << std::endl;
+					continue;
+				}
+
+				// Parse node value
+
+				if (keyHash == SHADER_HASH)
+				{
+					shaderCount++;
+					ptrMaterial->setShader(
+						resources::ResourceManager::get<graphics::Shader>(child->GetText()));
+				}
+				else if (keyHash == TEXTURE_HASH)
+				{
+					ptrMaterial->addTexture(
+						ptrName,
+						resources::ResourceManager::get<graphics::Texture>(child->GetText()));
+				}
+				else if (keyHash == VECTOR4_HASH)
+				{
+					std::stringstream input(child->GetText());
+					glm::vec4 vec;
+					input >> vec.x;
+					input >> vec.y;
+					input >> vec.z;
+					input >> vec.w;
+
+					ptrMaterial->addVec4(ptrName, vec);
+				}
+				else if (keyHash == VECTOR3_HASH)
+				{
+					std::stringstream input(child->GetText());
+					glm::vec3 vec;
+					input >> vec.x;
+					input >> vec.y;
+					input >> vec.z;
+					ptrMaterial->addVec3(ptrName, vec);
+				}
+				else if (keyHash == VECTOR2_HASH)
+				{
+					std::stringstream input(child->GetText());
+					glm::vec2 vec;
+					input >> vec.x;
+					input >> vec.y;
+
+					ptrMaterial->addVec2(ptrName, vec);
+				}
+				else if (keyHash == FLOAT_HASH)
+				{
+					float value = 0;
+					if (child->QueryFloatText(&value) != tinyxml2::XML_SUCCESS)
+						std::cout << ptrName << ":" << " invlid float value '" << child->GetText() << "'" << std::endl;
+					else
+						ptrMaterial->addFloat(ptrName, value);
+				}
+				else if (keyHash == INT_HASH)
+				{
+					int value = 0;
+					if (child->QueryIntText(&value) != tinyxml2::XML_SUCCESS)
+						std::cout << ptrName << ":" << " invlid int value '" << child->GetText() << "'" << std::endl;
+					else
+						ptrMaterial->addInt(ptrName, value);
+				}
+			}
+
+			// make sure this material has exactly ONE shader
+			if (shaderCount == 0)
+			{
+				std::cout << "Error: No shader defined for this material!" << std::endl;
+				delete ptrMaterial;
+				return nullptr;
+			}
+			else if (shaderCount > 1)
+			{
+				std::cout << "Error: Multiple shaders defined for this material." << std::endl;
+				delete ptrMaterial;
+				return nullptr;
+			}
+
+			//std::cout << "Material loaded..." << std::endl;
+			return ptrMaterial;
+		}
 	}
 }

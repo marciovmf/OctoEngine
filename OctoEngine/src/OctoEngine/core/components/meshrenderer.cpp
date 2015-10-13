@@ -7,8 +7,10 @@
 #include <glm/glm.hpp>
 #include <iostream>
 
-namespace octo{
-	namespace core {
+namespace octo
+{
+	namespace core
+	{
 		MeshRenderer::MeshRenderer(std::shared_ptr<graphics::Material> material, graphics::Mesh* mesh)
 			: IRenderer(), m_Material(material), m_Mesh(mesh)
 		{
@@ -28,7 +30,7 @@ namespace octo{
 		{
 			return m_Material;
 		}
-		
+
 		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
 			// pass material's uniforms to the shader

@@ -7,14 +7,11 @@ namespace octo
 {
 	namespace graphics
 	{
-
 		// Stores global settings that affects rendering systemwide
 		struct RenderSettings
 		{
 		public:
 			static glm::vec3 AmbientLightColor;
-
 		};
 	}
-
 }

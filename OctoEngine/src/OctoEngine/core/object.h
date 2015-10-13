@@ -13,9 +13,8 @@ namespace octo
 	public:
 		Object();
 		virtual ~Object();
-		
+
 		//The instance id of an object is always guaranteed to be unique.
 		INSTANCEID getInstanceID();
 	};
 }
-

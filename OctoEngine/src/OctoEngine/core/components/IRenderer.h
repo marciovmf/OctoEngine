@@ -2,7 +2,8 @@
 #include "../components/component.h"
 #include "../../graphics/AmbientLight.h"
 
-namespace octo {
+namespace octo
+{
 	namespace core
 	{
 		class IRenderer :

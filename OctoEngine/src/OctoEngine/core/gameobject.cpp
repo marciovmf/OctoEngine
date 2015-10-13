@@ -8,8 +8,8 @@
 
 namespace octo
 {
-	namespace core {
-
+	namespace core
+	{
 		GameObject::GameObject() : m_Enabled(true)
 		{
 			m_Children = new std::vector<GameObject*>();
@@ -29,7 +29,7 @@ namespace octo
 			{
 				delete i;
 			}
-			
+
 			std::cout << "Destroying game object: " << *m_Name << std::endl;
 
 			delete m_Children;
@@ -61,7 +61,7 @@ namespace octo
 			auto iter = m_Children->erase(
 				std::remove(m_Children->begin(), m_Children->end(), child),
 				m_Children->end()
-				);
+			);
 
 			// Child transformations no longer depends on this object transformations
 			if (iter != m_Children->end())
@@ -83,7 +83,7 @@ namespace octo
 			auto iter = m_Components->erase(
 				std::remove(m_Components->begin(), m_Components->end(), component),
 				m_Components->end()
-				);
+			);
 
 			//if we successfully removed the component,
 			// remove its reference to this game object
@@ -126,18 +126,16 @@ namespace octo
 				if (component->isEnabled())
 					component->update();
 			}
-
-
 		}
 
-		void GameObject::setEnabled(bool state){
+		void GameObject::setEnabled(bool state)
+		{
 			m_Enabled = state;
 		}
 
 		//void GameObject::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		void GameObject::render(Camera& camera)
 		{
-
 			// Render child objects
 			for (GameObject* child : *m_Children)
 			{
@@ -148,19 +146,20 @@ namespace octo
 			}
 
 			// Render all components
-			for (Component* component : *m_Components){
-				if (component->isEnabled()){
+			for (Component* component : *m_Components)
+			{
+				if (component->isEnabled())
+				{
 					component->render(camera.getProjectionMatrix(), camera.getViewMatrix());
 				}
 			}
 		}
 
-
 		void GameObject::setTag(const std::string& tag)
 		{
 			this->m_Tag = tag; // copy
 			std::hash<std::string> stringHash;
-			m_TagHash = stringHash(tag);	// precalc a hash to speed up comparissons
+			m_TagHash = stringHash(tag); // precalc a hash to speed up comparissons
 		}
 
 		std::string GameObject::getTag(const std::string& tag)
@@ -171,10 +170,12 @@ namespace octo
 		bool GameObject::compareTag(const std::string& tag) const
 		{
 			std::hash<std::string> stringHash;
-			size_t other = stringHash(tag);	// precalc a hash to speed up comparissons
+			size_t other = stringHash(tag); // precalc a hash to speed up comparissons
 
-			if (other == m_TagHash)		// compar only if hash matches to make sure there is no collision
+			if (other == m_TagHash) // compar only if hash matches to make sure there is no collision
 				return (tag == m_Tag);
+
+			return false;
 		}
 	}
 }

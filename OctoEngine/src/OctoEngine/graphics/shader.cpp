@@ -1,47 +1,38 @@
 #include "shader.h"
-#include <string>
 #include <iostream>
 #include <fstream>
 #include <memory>
 #include <sstream>
-#include "../core/utils.h"
 #include <glm/gtc/type_ptr.hpp>
-#include "../core/exception/exception.h"
+#include <tinyxml2.h>
+#include <algorithm>
 
-namespace octo {
-	namespace graphics {
-
-
+namespace octo
+{
+	namespace graphics
+	{
 		//		std::unique_ptr<std::string> LoadShaderSource(const char* fileName);
-		GLint CheckShaderCompilation(GLuint shader);
-		GLint CheckProgramLink(GLuint program);
+		GLint checkShaderCompilation(GLuint shader);
+		GLint checkProgramLink(GLuint program);
 
 		// Default states
 		bool Shader::s_ZWrite = true;
 		ZTEST Shader::s_ZTest = ZTEST::LESS;
 		CULL Shader::s_Cull = CULL::OFF;
 
-
-		Shader::Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile) :
+		Shader::Shader(const char* reosourceId, const char* vertexShader, const char* fragmentShader) :
 			octo::resources::Resource(reosourceId)
 		{
-			const char* EMPTY_SHADER_SOURCE = "";
-
-			// Set up the Vertex Shader
-			std::unique_ptr<std::string> pShaderSource = octo::LoadFile(vertexShaderFile);
-			char* shaderSource = ((pShaderSource) ? (char*)(*pShaderSource).c_str() : (char*)(EMPTY_SHADER_SOURCE));
+			
 			m_VertexShader = glCreateShader(GL_VERTEX_SHADER);
-			glShaderSource(m_VertexShader, 1, &shaderSource, NULL);
+			glShaderSource(m_VertexShader, 1, &vertexShader, NULL);
 			glCompileShader(m_VertexShader);
-			CheckShaderCompilation(m_VertexShader);
+			checkShaderCompilation(m_VertexShader);
 
-			// Set up the Fragment Shader
-			pShaderSource = octo::LoadFile(fragmentShaderFile);
-			shaderSource = ((pShaderSource) ? (char*)(*pShaderSource).c_str() : (char*)EMPTY_SHADER_SOURCE);
 			m_FragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-			glShaderSource(m_FragmentShader, 1, &shaderSource, NULL);
+			glShaderSource(m_FragmentShader, 1, &fragmentShader, NULL);
 			glCompileShader(m_FragmentShader);
-			CheckShaderCompilation(m_FragmentShader);
+			checkShaderCompilation(m_FragmentShader);
 
 			// Shader Program
 			m_ShaderProgram = glCreateProgram();
@@ -51,7 +42,7 @@ namespace octo {
 			glDeleteShader(m_FragmentShader);
 
 			glLinkProgram(m_ShaderProgram);
-			CheckProgramLink(m_ShaderProgram);
+			checkProgramLink(m_ShaderProgram);
 		}
 
 		Shader::~Shader()
@@ -61,7 +52,6 @@ namespace octo {
 
 		void Shader::bind() const
 		{
-			
 			// Set FACE CULLING
 			if (m_Cull != s_Cull)
 			{
@@ -72,7 +62,7 @@ namespace octo {
 					glEnable(GL_CULL_FACE);
 
 				// Set face culling mode
-				glCullFace( ((m_Cull == CULL::BACK) ? GL_BACK : GL_FRONT ) );
+				glCullFace(((m_Cull == CULL::BACK) ? GL_BACK : GL_FRONT));
 
 				// cache the current mode
 				s_Cull = m_Cull;
@@ -86,7 +76,7 @@ namespace octo {
 			}
 
 			// Set Depth function
-			if ( m_ZTest != s_ZTest)
+			if (m_ZTest != s_ZTest)
 			{
 				glDepthFunc((GLenum)m_ZTest);
 				s_ZTest = m_ZTest;
@@ -197,9 +187,10 @@ namespace octo {
 
 		std::unique_ptr<std::string> LoadShaderSource(const char* fileName)
 		{
-			std::unique_ptr <std::string> result(nullptr);
+			std::unique_ptr<std::string> result(nullptr);
 
-			try {
+			try
+			{
 				std::ifstream file;
 				file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 				file.open(fileName);
@@ -216,7 +207,7 @@ namespace octo {
 			return result;
 		}
 
-		GLint CheckShaderCompilation(GLuint shader)
+		GLint checkShaderCompilation(GLuint shader)
 		{
 			GLint success = 0;
 			GLchar infoLog[512];
@@ -232,7 +223,7 @@ namespace octo {
 			return success;
 		}
 
-		GLint CheckProgramLink(GLuint program)
+		GLint checkProgramLink(GLuint program)
 		{
 			GLint success = 0;
 			GLchar infoLog[512];
@@ -248,5 +239,64 @@ namespace octo {
 			return success;
 		}
 
+		octo::resources::Resource* Shader::load(const char* resourceName)
+		{
+			tinyxml2::XMLDocument xmlDoc;
+			tinyxml2::XMLError error = xmlDoc.LoadFile(resourceName);
+
+			if (error != tinyxml2::XMLError::XML_SUCCESS)
+			{
+				// TODO: Log that could not load the asset
+				return nullptr;
+			}
+
+			std::hash<std::string> strHash;
+			const size_t OFF_HASH = strHash("off");
+			const size_t BACK_HASH = strHash("back");
+			const size_t FRONT_HASH = strHash("front");
+
+
+			tinyxml2::XMLElement* ShaderElement = xmlDoc.FirstChildElement("SHADER");
+			if (ShaderElement == nullptr)
+				return false;
+
+			tinyxml2::XMLElement* vertexElement = ShaderElement->FirstChildElement("VERTEX");
+			tinyxml2::XMLElement* fragmentElement = ShaderElement->FirstChildElement("FRAGMENT");
+			//tinyxml2::XMLElement *GeometryElement = ShaderElement->FirstChildElement("GEOMETRY");
+			tinyxml2::XMLElement* capabilityCull = ShaderElement->FirstChildElement("CULL");
+			//tinyxml2::XMLElement* capabilityZWrite = ShaderElement->FirstChildElement("ZWRITE");
+			//tinyxml2::XMLElement* capabilityZTest = ShaderElement->FirstChildElement("ZTEST");
+
+			// create a Shader object
+			octo::graphics::Shader* shader = new octo::graphics::Shader(
+				resourceName, 
+				vertexElement->GetText(), 
+				fragmentElement->GetText());
+
+			// Parse CULL option
+			if (capabilityCull != nullptr)
+			{
+				std::string s = capabilityCull->GetText();
+				const size_t keyHash = std::hash<std::string>()(s);
+				std::transform(s.begin(), s.end(), s.begin(), tolower);
+
+				if (strHash(s) == BACK_HASH)
+					shader->Cull(octo::graphics::CULL::BACK);
+				else if (strHash(s) == FRONT_HASH)
+					shader->Cull(octo::graphics::CULL::FRONT);
+				else if (strHash(s) == OFF_HASH)
+					shader->Cull(octo::graphics::CULL::OFF);
+				else
+				{
+					std::cout << "ERROR: Invalid value for CULL option" << std::endl;
+					shader->Cull(octo::graphics::CULL::BACK);
+				}
+			}
+
+			if (vertexElement == nullptr || fragmentElement == nullptr)
+				return nullptr;
+
+			return shader;
+		}
 	}
 }

@@ -6,10 +6,11 @@ namespace octo
 	namespace core
 	{
 		LightCaster::LightCaster():
-			Component(), 
-			m_Color(glm::vec3(1.0f, 1.0f, 1.0f)), 
+			Component(),
+			m_Color(glm::vec3(1.0f, 1.0f, 1.0f)),
 			m_Intensity(0.3f)
-		{}
+		{
+		}
 
 		void LightCaster::setColor(glm::vec3& color)
 		{
@@ -42,6 +43,5 @@ namespace octo
 		LightCaster::~LightCaster()
 		{
 		}
-
 	}
 }

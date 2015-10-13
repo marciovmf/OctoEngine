@@ -15,7 +15,7 @@
 #include <OctoEngine/graphics/material.h>
 #include <OctoEngine/graphics/rendersettings.h>
 
-std::vector<octo::graphics::Vertex> vertices {
+std::vector<octo::graphics::Vertex> vertices{
 	// Vertex , Normal, UV
 	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
 	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
@@ -30,14 +30,14 @@ std::vector<octo::graphics::Vertex> vertices {
 	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
-	
+
 	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
 	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
-	
+
 	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
 	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
 	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
@@ -51,7 +51,7 @@ std::vector<octo::graphics::Vertex> vertices {
 	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f),
 	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
-	
+
 	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
 	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
 	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
@@ -66,9 +66,9 @@ std::vector<octo::graphics::Vertex> planeVertices{
 	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
 	octo::graphics::Vertex(0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 1.0, 1.0),
 	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 0.0, 1.0),
-	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f,0.0, 1.0),
-	octo::graphics::Vertex(-0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f,0.0, 0.0),
-	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f,1.0, 0.0),
+	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 0.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 0.0, 0.0),
+	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
 };
 
 TestGame::TestGame()
@@ -83,8 +83,10 @@ void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.mat");
-	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
+	std::shared_ptr<octo::graphics::Material> MaterialPtr =
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.mat");
+	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr =
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
 
 
 	// Resources: Shander and Mesh
@@ -116,7 +118,7 @@ void TestGame::OnStart()
 	m_BoxChild2->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_boxMesh));
 	//m_Box->getTransform().scale(glm::vec3(10.0f, 10.0f, 10.0f));
 	m_BoxChild2->getTransform().setPosition(glm::vec3(3.0f, 2.0f, -1.0f));
-	
+
 	m_Box->addChild(m_BoxChild1);
 	m_Box->addChild(m_BoxChild2);
 
@@ -127,7 +129,7 @@ void TestGame::OnStart()
 	//auto m_Camera = new octo::core::Camera(0.1f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 35.0f);
 	auto m_Camera = new TestCamera(0.01f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 45.0f);
 	m_CameraGameObject->addComponent(m_Camera);
-	
+
 	// Place the camera
 	m_CameraGameObject->getTransform().lookAt(glm::vec3(0, 0, 0));
 	m_CameraGameObject->getTransform().translate(glm::vec3(0.0f, 1.0f, -5.0f));
@@ -137,7 +139,6 @@ void TestGame::OnStart()
 	engine->AddGameObject(m_Ground);
 	engine->AddGameObject(m_Box);
 	engine->AddGameObject(m_CameraGameObject);
-
 }
 
 

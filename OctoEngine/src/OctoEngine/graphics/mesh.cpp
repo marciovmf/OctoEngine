@@ -1,9 +1,10 @@
 #include "mesh.h"
 #include <iostream>
 
-namespace octo {
-	namespace graphics {
-
+namespace octo
+{
+	namespace graphics
+	{
 		Mesh::Mesh(const std::vector<Vertex>& vertices/*, const std::vector<GLuint>& indices*/)
 			:m_Vertices(vertices) //, m_Indices(indices)
 		{
@@ -49,7 +50,6 @@ namespace octo {
 
 		void Mesh::Render() const
 		{
-
 			glBindVertexArray(m_VAO);
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
@@ -58,7 +58,6 @@ namespace octo {
 
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-
 		}
 	}
 }

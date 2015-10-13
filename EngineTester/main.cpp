@@ -1,4 +1,3 @@
-
 #define GLM_FORCE_RADIANS 1
 
 #include <OctoEngine/core/gameengine.h>
@@ -19,4 +18,3 @@ int main(int argc, char** argv)
 	delete game;
 	return 0;
 }
-
