@@ -46,9 +46,12 @@ namespace octo
 			resources::ResourceManager::registerLoader<graphics::CubeMap>(octo::graphics::CubeMap::load);
 			resources::ResourceManager::registerLoader<graphics::Material>(octo::graphics::Material::load);
 
-
-			glDisable(GL_CULL_FACE);
+			//By default cull back faces
+			glEnable(GL_CULL_FACE);
 			glCullFace(GL_BACK);
+			// By default enable depth testing
+			glEnable(GL_DEPTH_TEST);	// Depth test enabled by default
+			glDepthMask(GL_TRUE);
 
 			// Initialize the game window and the graphics system
 			m_Window = new Window(width, height, title, monitor);
@@ -73,6 +76,8 @@ namespace octo
 			// ----------------------------------
 			while (!m_Window->shouldClose())
 			{
+
+				
 				// Update the game
 				//game.OnUpdate();
 
@@ -80,7 +85,9 @@ namespace octo
 				m_RootGameObject->update();
 
 				// Render all game objects
-				m_Window->clear();
+				//m_Window->clear();
+				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 				if (m_MainCamera != nullptr)
 				{
 					m_RootGameObject->render(*m_MainCamera);
@@ -91,6 +98,7 @@ namespace octo
 				}
 
 				// Update the window events and swap buffers
+				
 				m_Window->update();
 
 				Time::getInstance().update();

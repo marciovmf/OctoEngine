@@ -148,7 +148,7 @@ void TestGame::OnStart()
 	engine->AddGameObject(m_Box);
 	engine->AddGameObject(m_CameraGameObject);
 
-	engine->AddGameObject(skybox);
+	//engine->AddGameObject(skybox);
 }
 
 

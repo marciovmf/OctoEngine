@@ -59,7 +59,7 @@ namespace octo
 				if (m_Cull != CULL::OFF)
 					glEnable(GL_CULL_FACE);
 				else
-					glEnable(GL_CULL_FACE);
+					glDisable(GL_CULL_FACE);
 
 				// Set face culling mode
 				glCullFace(((m_Cull == CULL::BACK) ? GL_BACK : GL_FRONT));
@@ -69,18 +69,18 @@ namespace octo
 			}
 
 			// Enable/disable Z-Writing
-			if (m_ZWrite != s_ZWrite)
+			/*if (m_ZWrite != s_ZWrite)
 			{
-				glDepthMask(m_ZWrite);
+				glDepthMask((GLboolean)m_ZWrite);
 				s_ZWrite = m_ZWrite;
-			}
+			}*/
 
-			// Set Depth function
-			if (m_ZTest != s_ZTest)
-			{
-				glDepthFunc((GLenum)m_ZTest);
-				s_ZTest = m_ZTest;
-			}
+			// Set Depth function (only if zwrite is enabled)
+			//if (m_ZTest != s_ZTest /* && m_ZWrite*/)
+			//{
+			//	glDepthFunc((GLenum)m_ZTest);
+			//	s_ZTest = m_ZTest;
+			//}
 
 			// Depth testing
 			glUseProgram(m_ShaderProgram);
@@ -251,10 +251,6 @@ namespace octo
 			}
 
 			std::hash<std::string> strHash;
-			const size_t OFF_HASH = strHash("off");
-			const size_t BACK_HASH = strHash("back");
-			const size_t FRONT_HASH = strHash("front");
-
 
 			tinyxml2::XMLElement* ShaderElement = xmlDoc.FirstChildElement("SHADER");
 			if (ShaderElement == nullptr)
@@ -264,8 +260,8 @@ namespace octo
 			tinyxml2::XMLElement* fragmentElement = ShaderElement->FirstChildElement("FRAGMENT");
 			//tinyxml2::XMLElement *GeometryElement = ShaderElement->FirstChildElement("GEOMETRY");
 			tinyxml2::XMLElement* capabilityCull = ShaderElement->FirstChildElement("CULL");
-			//tinyxml2::XMLElement* capabilityZWrite = ShaderElement->FirstChildElement("ZWRITE");
-			//tinyxml2::XMLElement* capabilityZTest = ShaderElement->FirstChildElement("ZTEST");
+			tinyxml2::XMLElement* capabilityZWrite = ShaderElement->FirstChildElement("ZWRITE");
+			tinyxml2::XMLElement* capabilityZTest = ShaderElement->FirstChildElement("ZTEST");
 
 			// create a Shader object
 			octo::graphics::Shader* shader = new octo::graphics::Shader(
@@ -273,22 +269,87 @@ namespace octo
 				vertexElement->GetText(), 
 				fragmentElement->GetText());
 
+			
 			// Parse CULL option
 			if (capabilityCull != nullptr)
 			{
 				std::string s = capabilityCull->GetText();
-				const size_t keyHash = std::hash<std::string>()(s);
 				std::transform(s.begin(), s.end(), s.begin(), tolower);
+				const size_t keyHash = std::hash<std::string>()(s);
 
-				if (strHash(s) == BACK_HASH)
+				if (keyHash == strHash("back"))
 					shader->Cull(octo::graphics::CULL::BACK);
-				else if (strHash(s) == FRONT_HASH)
+				else if (keyHash == strHash("front"))
 					shader->Cull(octo::graphics::CULL::FRONT);
-				else if (strHash(s) == OFF_HASH)
+				else if (keyHash == strHash("off"))
 					shader->Cull(octo::graphics::CULL::OFF);
 				else
 				{
-					std::cout << "ERROR: Invalid value for CULL option" << std::endl;
+					std::cout << "ERROR: Invalid value for CULL option." << std::endl;
+					shader->Cull(octo::graphics::CULL::BACK);
+				}
+			}
+
+			// Parse ZWRITE options
+			if (capabilityZWrite != nullptr)
+			{
+				std::string s = capabilityZWrite->GetText();
+				std::transform(s.begin(), s.end(), s.begin(), tolower);
+				const size_t keyHash = std::hash<std::string>()(s);
+
+				if (keyHash == strHash("off"))
+					shader->ZWrite(false);
+				else if (keyHash == strHash("on") || keyHash == strHash("enabled"))
+					shader->ZWrite(true);
+				else
+				{
+					std::cout << "ERROR: Invalid value for ZWRITE option." << std::endl;
+					shader->Cull(octo::graphics::CULL::BACK);
+				}
+			}
+
+			// Parse ZTEST options only if ZWRITE is enabled
+			if (capabilityZTest != nullptr && shader->ZWrite())
+			{
+				std::string s = capabilityZTest->GetText();
+				std::transform(s.begin(), s.end(), s.begin(), tolower);
+				const size_t keyHash = std::hash<std::string>()(s);
+
+				if (keyHash == strHash("never"))
+				{
+					shader->ZTest(ZTEST::NEVER);
+				}
+				else if (keyHash == strHash("less")) 
+				{
+					shader->ZTest(ZTEST::LESS);
+				}
+				else if (keyHash == strHash("greater"))
+				{
+					shader->ZTest(ZTEST::GREATER);
+				}
+				else if (keyHash == strHash("equal"))
+				{
+					shader->ZTest(ZTEST::EQUAL);
+				}
+				else if (keyHash == strHash("always"))
+				{
+					shader->ZTest(ZTEST::ALWAYS);
+				}
+				else if (keyHash == strHash("lequal"))
+				{
+					shader->ZTest(ZTEST::LEQUAL);
+				}
+				else if (keyHash == strHash("gequal"))
+				{
+					shader->ZTest(ZTEST::GEQUAL);
+				}
+				else if (keyHash == strHash("notequal"))
+				{
+					shader->ZTest(ZTEST::NOTEQUAL);
+				}
+				else
+				{
+					std::cout << "ERROR: Invalid value for ZTEST option." << std::endl;
 					shader->Cull(octo::graphics::CULL::BACK);
 				}
 			}

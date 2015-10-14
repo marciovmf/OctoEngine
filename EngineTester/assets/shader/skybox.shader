@@ -1,4 +1,6 @@
 <SHADER>
+ <ZWRITE>on</ZWRITE>
+ <ZTEST>less</ZTEST>
 <VERTEX>
 #version 330 core
 
@@ -35,9 +37,6 @@ void main()
 {
 	color = texture(skyboxCubemap, textCoord);
 }
- 
+
  </FRAGMENT>
- <CULL>BACK</CULL>
- <ZWRITE>OFF</ZWRITE>
- <ZTEST>LESS</ZTEST>
 </SHADER>

@@ -1,7 +1,7 @@
 <SHADER>
- <CULL>BACK</CULL>
- <ZWRITE>OFF</ZWRITE>
- <ZTEST>LESS</ZTEST>
+ <CULL>back</CULL>
+ <ZWRITE>on</ZWRITE>
+ <ZTEST>less</ZTEST>
  <VERTEX>
 #version 330 core
 
@@ -73,5 +73,6 @@ void main()
 	
 	color = vec4(result, 1.0) * texture(diffuse, textCoord);
 	
-}</FRAGMENT>
+}
+</FRAGMENT>
 </SHADER>
