@@ -23,7 +23,7 @@ namespace octo
 		Shader::Shader(const char* reosourceId, const char* vertexShader, const char* fragmentShader) :
 			octo::resources::Resource(reosourceId)
 		{
-			
+
 			m_VertexShader = glCreateShader(GL_VERTEX_SHADER);
 			glShaderSource(m_VertexShader, 1, &vertexShader, NULL);
 			glCompileShader(m_VertexShader);
@@ -52,7 +52,7 @@ namespace octo
 
 		void Shader::bind() const
 		{
-			// Set FACE CULLING
+			// set FACE CULLING
 			if (m_Cull != s_Cull)
 			{
 				// Enable/Disable face culling
@@ -69,18 +69,25 @@ namespace octo
 			}
 
 			// Enable/disable Z-Writing
-			/*if (m_ZWrite != s_ZWrite)
+			if (m_ZWrite != s_ZWrite)
 			{
 				glDepthMask((GLboolean)m_ZWrite);
+
+				if (m_ZWrite)
+					glEnable(GL_DEPTH_TEST);
+				else
+					glDisable(GL_DEPTH_TEST);
+
 				s_ZWrite = m_ZWrite;
-			}*/
+			}
 
 			// Set Depth function (only if zwrite is enabled)
-			//if (m_ZTest != s_ZTest /* && m_ZWrite*/)
-			//{
-			//	glDepthFunc((GLenum)m_ZTest);
-			//	s_ZTest = m_ZTest;
-			//}
+			if (m_ZTest != s_ZTest  && m_ZWrite)
+			{
+
+				glDepthFunc((GLenum)m_ZTest);
+				s_ZTest = m_ZTest;
+			}
 
 			// Depth testing
 			glUseProgram(m_ShaderProgram);
@@ -102,7 +109,7 @@ namespace octo
 				m_CachedLocations[uniform] = location;
 			/*else
 			{
-				std::cout << glGetError() <<  ":ERROR: Could not find location for uniform '" << uniform << "'" << std::endl;
+			std::cout << glGetError() <<  ":ERROR: Could not find location for uniform '" << uniform << "'" << std::endl;
 			}*/
 
 			return location;
@@ -265,11 +272,11 @@ namespace octo
 
 			// create a Shader object
 			octo::graphics::Shader* shader = new octo::graphics::Shader(
-				resourceName, 
-				vertexElement->GetText(), 
+				resourceName,
+				vertexElement->GetText(),
 				fragmentElement->GetText());
 
-			
+
 			// Parse CULL option
 			if (capabilityCull != nullptr)
 			{
@@ -315,13 +322,13 @@ namespace octo
 				std::transform(s.begin(), s.end(), s.begin(), tolower);
 				const size_t keyHash = std::hash<std::string>()(s);
 
-				if (keyHash == strHash("never"))
-				{
-					shader->ZTest(ZTEST::NEVER);
-				}
-				else if (keyHash == strHash("less")) 
+				if (keyHash == strHash("less"))
 				{
 					shader->ZTest(ZTEST::LESS);
+				}
+				else if (keyHash == strHash("never"))
+				{
+					shader->ZTest(ZTEST::NEVER);
 				}
 				else if (keyHash == strHash("greater"))
 				{

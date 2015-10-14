@@ -1,4 +1,5 @@
 <SHADER>
+<CULL>back</CULL>
  <ZWRITE>on</ZWRITE>
  <ZTEST>less</ZTEST>
 <VERTEX>

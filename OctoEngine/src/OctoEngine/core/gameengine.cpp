@@ -85,9 +85,8 @@ namespace octo
 				m_RootGameObject->update();
 
 				// Render all game objects
-				//m_Window->clear();
-				glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+				m_Window->clear();
+				
 				if (m_MainCamera != nullptr)
 				{
 					m_RootGameObject->render(*m_MainCamera);

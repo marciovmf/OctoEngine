@@ -89,8 +89,7 @@ void TestGame::OnStart()
 		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
 
 	// Loads the skybox
-	std::shared_ptr<octo::graphics::Material> skyboxMaterialPtr =
-		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/skybox.mat");
+	//std::shared_ptr<octo::graphics::Material> skyboxMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/skybox.mat");
 
 	// Resources: Shander and Mesh
 	m_boxMesh = new octo::graphics::Mesh(vertices);
@@ -129,7 +128,7 @@ void TestGame::OnStart()
 	// "SKYBOX" game object
 	octo::core::GameObject* skybox = new octo::core::GameObject();
 	skybox->setName(new std::string("SKYBOX"));
-	skybox->addComponent(new octo::core::MeshRenderer(skyboxMaterialPtr,m_boxMesh));
+	//skybox->addComponent(new octo::core::MeshRenderer(skyboxMaterialPtr,m_boxMesh));
 
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();
