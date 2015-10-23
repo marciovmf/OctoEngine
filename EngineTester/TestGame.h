@@ -29,6 +29,7 @@ class TestGame : public octo::core::Game
 private:
 	octo::graphics::Shader* m_Shader;
 	octo::graphics::Mesh* m_boxMesh;
+	octo::graphics::Mesh* m_SkyBoxMesh;
 	octo::graphics::Mesh* m_planeMesh;
 	octo::core::Camera* m_Camera;
 

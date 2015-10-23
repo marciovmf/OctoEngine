@@ -1,7 +1,7 @@
 <SHADER>
-<CULL>back</CULL>
- <ZWRITE>on</ZWRITE>
- <ZTEST>less</ZTEST>
+ <CULL>back</CULL>
+ <ZWRITE>off</ZWRITE>
+ <ZTEST>lequal</ZTEST>
 <VERTEX>
 #version 330 core
 
@@ -17,10 +17,10 @@ uniform mat4 viewMatrix;
 uniform mat4 projectionMatrix;
 
 void main()
-{
-	gl_Position = projectionMatrix * viewMatrix * vec4(vPosition,1.0);
-		
-	// fix the image because soil loads it flipped verticaly
+{	
+	mat4 untranslatedViewMatrix = mat4(mat3(viewMatrix));	// Remove translation from view matrix
+	vec4 pos = projectionMatrix * untranslatedViewMatrix * vec4(vPosition,1.0);
+	gl_Position = pos.xyww;
 	textCoord = vPosition;
 
 }

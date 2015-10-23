@@ -1,8 +1,0 @@
-<cubemap>
-<back>assets/cubemap/sunny2/Sunny2_back.tif</back>
- <down>assets/cubemap/sunny2/Sunny2_down.tif</down>
- <front>assets/cubemap/sunny2/Sunny2_front.tif</front>
- <up>assets/cubemap/sunny2/Sunny2_up.tif</up> 
- <left>assets/cubemap/sunny2/Sunny2_left.tif</left>
- <right>assets/cubemap/sunny2/Sunny2_right.tif</right>
-</cubemap>

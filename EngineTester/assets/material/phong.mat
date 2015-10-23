@@ -1,5 +1,5 @@
 <material>
-	<shader>assets/shader/phong.shader</shader>
+	<shader>assets/shader/phong.shader</shader>	
 	<texture name="diffuse">assets/texture/octopus.jpg</texture>
 	<float name="ambientIntensity">0.2</float>
 </material>
