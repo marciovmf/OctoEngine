@@ -71,9 +71,10 @@ std::vector<octo::graphics::Vertex> planeVertices{
 	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
 };
 
-std::vector<octo::graphics::Vertex> skyboxVertices{
+std::vector<octo::graphics::Vertex> skyboxVertices
+{
+	// Positions
 
-	// Positions          
 	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
 	octo::graphics::Vertex(-1.0f, -1.0f, -1.0f),
 	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
@@ -117,6 +118,12 @@ std::vector<octo::graphics::Vertex> skyboxVertices{
 	octo::graphics::Vertex(1.0f, -1.0f, 1.0f)
 };
 
+
+std::vector<octo::graphics::Vertex> GrassVertices{
+	octo::graphics::Vertex(0,0.01,0),
+};
+
+
 TestGame::TestGame()
 {
 }
@@ -125,17 +132,20 @@ TestGame::~TestGame()
 {
 }
 
+
 void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
 	std::shared_ptr<octo::graphics::Material> MaterialPtr =
-		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.mat");
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.material");
 	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr =
-		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.material");
+
+	std::shared_ptr<octo::graphics::Material> GrassMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/grass.material");
 
 	// Loads the skybox
-	std::shared_ptr<octo::graphics::Material> skyboxMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/skybox1.mat");
+	std::shared_ptr<octo::graphics::Material> skyboxMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/skybox1.material");
 
 	// Resources: Shander and Mesh
 	m_boxMesh = new octo::graphics::Mesh(vertices);
@@ -190,19 +200,33 @@ void TestGame::OnStart()
 	// Add the objets to the engine
 	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
 
-	engine->AddGameObject(skybox);
+	
+	
+
 	engine->setMainCamera(m_Camera);
+	
+	
+	engine->AddGameObject(m_CameraGameObject);
+
 	engine->AddGameObject(m_Ground);
 	engine->AddGameObject(m_Box);
-	engine->AddGameObject(m_CameraGameObject);
 	
 	
+	
+	// Grass
+	/*octo::core::GameObject* grass = new octo::core::GameObject();
+	grass->addComponent(new octo::core::MeshRenderer(MaterialPtr, new octo::graphics::Mesh(GrassVertices)));
+	engine->AddGameObject(grass);*/
+	//
+
+	engine->AddGameObject(skybox);
 }
 
 
-//void TestGame::OnUpdate()
-//{
-//}
+void TestGame::OnUpdate()
+{
+
+}
 
 void TestGame::OnFinish()
 {

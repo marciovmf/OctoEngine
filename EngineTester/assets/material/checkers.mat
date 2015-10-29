@@ -1,5 +1,0 @@
-<material>
-	<shader>assets/shader/phong.shader</shader>
-	<texture name="diffuse">assets/texture/checkers.png</texture>
-	<float name="ambientIntensity">0.2</float>
-</material>

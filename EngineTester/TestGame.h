@@ -4,7 +4,6 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
 #include <OctoEngine/core/game.h>
 
 namespace octo
@@ -37,6 +36,6 @@ public:
 	TestGame();
 	~TestGame();
 	void OnStart() override;
-	//void OnUpdate() override;
+	void OnUpdate() override;
 	void OnFinish() override;
 };

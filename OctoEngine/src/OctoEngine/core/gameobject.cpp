@@ -104,7 +104,7 @@ namespace octo
 				i->start();
 			}
 
-			std::cout << "Game object " << m_Name->c_str() << " initialized." << std::endl;
+			std::cout << "Game object '" << m_Name->c_str() << "' initialized." << std::endl;
 		}
 
 		// Updates this game object

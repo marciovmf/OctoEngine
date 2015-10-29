@@ -77,10 +77,6 @@ namespace octo
 			while (!m_Window->shouldClose())
 			{
 
-				
-				// Update the game
-				//game.OnUpdate();
-
 				// Update all game objects and components
 				m_RootGameObject->update();
 
@@ -107,6 +103,9 @@ namespace octo
 				// measure the number of frames per second
 				oneSecond += deltaTime;
 				frameCount++;
+
+				// Update the game
+				game.OnUpdate();
 
 				// Make sure too long frames (maybe debugging ?) still behave properly
 				if (oneSecond >= 1)

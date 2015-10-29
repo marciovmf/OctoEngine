@@ -33,14 +33,13 @@ namespace octo
 		class Shader : public octo::resources::Resource
 		{
 		private:
-			Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile);
+			Shader(const char* reosourceId, const char* vertexShaderSource, const char* geometryShaderSource, const char* fragmentShaderSource);
 		public:
 			~Shader() override;
 			void bind() const;
 			void unbind() const;
 			GLuint getUniformLocation(const GLchar* uniform);
 			GLuint getAttributeLocation(const GLchar* attribute);
-
 
 			void setUniform(const GLchar* uniform, GLint value);
 			void setUniform(const GLchar* uniform, glm::vec2 value);
@@ -61,6 +60,7 @@ namespace octo
 		private:
 			GLuint m_VertexShader;
 			GLuint m_FragmentShader;
+			GLuint m_GeometryShader;
 			GLuint m_ShaderProgram;
 			std::map<const GLchar*, GLuint> m_CachedLocations;
 

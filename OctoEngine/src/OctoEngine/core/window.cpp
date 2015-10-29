@@ -8,11 +8,12 @@ namespace octo
 #define MAJOR_GL_VERSION 3
 #define MINOR_GL_VERSION 2
 
-
 		//Window::Window(int width, int height, const std::string& title)
 		Window::Window(int width, int height, const std::string& title, int monitorID)
 			: m_Width(width), m_Height(height)
 		{
+			
+
 			// start GL context and O/S window using the GLFW helper library
 			if (!glfwInit())
 			{
@@ -23,8 +24,8 @@ namespace octo
 
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, MAJOR_GL_VERSION);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, MINOR_GL_VERSION);
-			//glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 #ifdef __APPLE__
@@ -46,6 +47,8 @@ namespace octo
 			m_Window = glfwCreateWindow(width, height, title.c_str(),
 			                            ((monitorID > -1) ? monitorList[monitorID] : NULL),
 			                            NULL);
+
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 			if (!m_Window)
 			{

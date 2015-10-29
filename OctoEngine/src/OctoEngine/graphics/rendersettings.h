@@ -12,6 +12,7 @@ namespace octo
 		{
 		public:
 			static glm::vec3 AmbientLightColor;
+			// FOG settings goes here
 		};
 	}
 }

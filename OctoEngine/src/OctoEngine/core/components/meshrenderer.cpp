@@ -33,6 +33,8 @@ namespace octo
 
 		void MeshRenderer::render(const glm::mat4& projectionMatrix, const glm::mat4& viewMatrix)
 		{
+			//std::cout << "Drawing: " << this->gameObject->getName().c_str() << std::endl;
+
 			// pass material's uniforms to the shader
 			m_Material->bind();
 
