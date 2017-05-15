@@ -1,11 +1,14 @@
 #pragma once
 
+#ifndef GLM_FORCE_RADIANS
+#define GLM_FORCE_RADIANS
+#endif
 #include <glm/glm.hpp>
 
 namespace octo
 {
-	namespace core {
-
+	namespace core
+	{
 		class GameObject;
 
 		class Component
@@ -26,10 +29,13 @@ namespace octo
 			virtual void destroy();
 
 			void setEnabled(bool state);
-			inline bool isEnabled() { return m_Enabled; }
+
+			inline bool isEnabled()
+			{
+				return m_Enabled;
+			}
+
 			GameObject& getGameObject() const;
-
 		};
-
 	}
 }

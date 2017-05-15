@@ -5,6 +5,7 @@
 #include <OctoEngine/core/time.h>
 #include <OctoEngine/input/input.h>
 #include <iomanip>
+
 class TestComponent :
 	public octo::core::Component
 {
@@ -13,15 +14,14 @@ private:
 	octo::core::GameObject* child2;
 public:
 
-	
-	TestComponent() 
+
+	TestComponent()
 		: octo::core::Component()
 	{
 	}
 
 	~TestComponent()
 	{
-
 	}
 
 	void start() override
@@ -41,16 +41,15 @@ public:
 		double deltaTime = octo::core::Time::getInstance().getDeltaTime();
 		octo::core::Transform& transform = this->gameObject->getTransform();
 		transform.rotate(
-			glm::vec3(0.0, 
-			glm::radians(180.0) * deltaTime, 
-			glm::radians(30.0) * deltaTime));
-		
-		child1->getTransform().rotate(glm::vec3(0, glm::radians(30.0)  * deltaTime, glm::radians(90.0)  * deltaTime));
+			glm::vec3(0.0,
+			          glm::radians(180.0) * deltaTime,
+			          glm::radians(30.0) * deltaTime));
+
+		child1->getTransform().rotate(glm::vec3(0, glm::radians(30.0) * deltaTime, glm::radians(90.0) * deltaTime));
 		child2->getTransform().rotate(glm::vec3(
 			0,
 			glm::radians(90.0) * deltaTime,
 			glm::radians(-360.0) * deltaTime));
-
 	}
 
 	void destroy() override
@@ -58,4 +57,3 @@ public:
 		std::cout << "Finalizando TestComponent" << std::endl;
 	}
 };
-

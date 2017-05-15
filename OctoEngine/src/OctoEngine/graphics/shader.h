@@ -4,9 +4,10 @@
 #include "../resources/resource.h"
 #include <map>
 
-namespace octo {
-	namespace graphics {
-
+namespace octo
+{
+	namespace graphics
+	{
 		// Controls which sides of polygons should be culled (not drawn)
 		enum CULL
 		{
@@ -29,39 +30,42 @@ namespace octo {
 			ALWAYS = GL_ALWAYS
 		};
 
-
 		class Shader : public octo::resources::Resource
 		{
-
+		private:
+			Shader(const char* reosourceId, const char* vertexShaderSource, const char* geometryShaderSource, const char* fragmentShaderSource);
 		public:
-			Shader(const char* reosourceId, const char* vertexShaderFile, const char* fragmentShaderFile);
 			~Shader() override;
 			void bind() const;
 			void unbind() const;
-			GLuint getUniformLocation(const GLchar* uniform) ;
+			GLuint getUniformLocation(const GLchar* uniform);
 			GLuint getAttributeLocation(const GLchar* attribute);
-			
 
-			void setUniform(const GLchar* uniform, GLint value) ;
-			void setUniform(const GLchar* uniform, glm::vec2 value) ;
-			void setUniform(const GLchar* uniform, glm::vec3 value) ;
-			void setUniform(const GLchar* uniform, glm::vec4 value) ;
-			void setUniform(const GLchar* uniform, GLfloat value) ;
-			void setUniform(const GLchar* uniform, GLuint value) ;
-			void setUniform(const GLchar* uniform, glm::mat4 value) ;
+			void setUniform(const GLchar* uniform, GLint value);
+			void setUniform(const GLchar* uniform, glm::vec2 value);
+			void setUniform(const GLchar* uniform, glm::vec3 value);
+			void setUniform(const GLchar* uniform, glm::vec4 value);
+			void setUniform(const GLchar* uniform, GLfloat value);
+			void setUniform(const GLchar* uniform, GLuint value);
+			void setUniform(const GLchar* uniform, glm::mat4 value);
 			bool ZWrite() const;
-			void ZWrite(bool b) ;
+			void ZWrite(bool b);
 			ZTEST ZTest() const;
-			void ZTest(ZTEST test) ;
+			void ZTest(ZTEST test);
 			CULL Cull() const;
 			void Cull(CULL mode);
+
+			static octo::resources::Resource* load(const char* resourceName);
 
 		private:
 			GLuint m_VertexShader;
 			GLuint m_FragmentShader;
+			GLuint m_GeometryShader;
 			GLuint m_ShaderProgram;
 			std::map<const GLchar*, GLuint> m_CachedLocations;
-			Shader& operator=(Shader& other){}
+
+			Shader& operator=(Shader& other) = delete;
+
 			bool m_ZWrite;
 			ZTEST m_ZTest;
 			CULL m_Cull;
@@ -70,6 +74,5 @@ namespace octo {
 			static ZTEST s_ZTest;
 			static CULL s_Cull;
 		};
-
 	}
 }

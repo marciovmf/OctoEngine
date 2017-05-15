@@ -17,16 +17,19 @@
 #include <glm/detail/type_vec3.hpp>
 
 
-namespace octo{namespace graphics{
-	class Mesh;
-}}
+namespace octo
+{
+	namespace graphics
+	{
+		class Mesh;
+	}
+}
 
 //A type for holding the instance id of an object guaranteed to be unique.
 typedef long long INSTANCEID;
 
 namespace octo
 {
-
 	namespace resources
 	{
 		class Resource;

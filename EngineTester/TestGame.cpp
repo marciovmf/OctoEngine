@@ -4,70 +4,125 @@
 #include <OctoEngine/core/gameengine.h>
 #include <OctoEngine/core/game.h>
 #include <OctoEngine/core/transform.h>
-#include <OctoEngine/graphics/shader.h>
 #include <OctoEngine/graphics/mesh.h>
 #include <OctoEngine/graphics/vertex.h>
 #include <OctoEngine/core/gameobject.h>
 #include <OctoEngine/core/components/meshrenderer.h>
-#include <OctoEngine/core/components/camera.h>
 
 #include "TestComponent.h"
 #include "TestCamera.h"
 #include <OctoEngine/resources/resourcemanager.h>
-#include "tinyxml2.h"
 #include <OctoEngine/graphics/material.h>
-using namespace tinyxml2;
-
+#include <OctoEngine/graphics/rendersettings.h>
 
 std::vector<octo::graphics::Vertex> vertices{
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.000059f, 1.0f - 0.000004f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(1.000023f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.999958f, 1.0f - 0.336064f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.667969f, 1.0f - 0.671889f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(1.000023f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.000059f, 1.0f - 0.000004f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336098f, 1.0f - 0.000071f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(1.000004f, 1.0f - 0.671847f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, -1.0f, 1.0f), glm::vec2(0.999958f, 1.0f - 0.336064f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, -1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.668104f, 1.0f - 0.000013f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.336098f, 1.0f - 0.000071f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, -1.0f), glm::vec2(0.000004f, 1.0f - 0.671870f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.000103f, 1.0f - 0.336048f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, -1.0f), glm::vec2(0.336024f, 1.0f - 0.671877f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(0.335973f, 1.0f - 0.335903f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.667969f, 1.0f - 0.671889f)),
-	octo::graphics::Vertex(glm::vec3(-1.0f, 1.0f, 1.0f), glm::vec2(1.000004f, 1.0f - 0.671847f)),
-	octo::graphics::Vertex(glm::vec3(1.0f, -1.0f, 1.0f), glm::vec2(0.667979f, 1.0f - 0.335851f))
+	// Vertex , Normal, UV
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, -1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, 0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(-0.5f, -0.5f, -0.5f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f),
+
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f),
+	octo::graphics::Vertex(-0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f)
+
 };
 
 std::vector<octo::graphics::Vertex> planeVertices{
 	// front
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, -0.5), glm::vec2(1.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, -0.5), glm::vec2(0.0, 1.0)),
-	octo::graphics::Vertex(glm::vec3(-0.5, 0.0, 0.5), glm::vec2(0.0, 0.0)),
-	octo::graphics::Vertex(glm::vec3(0.5, 0.0, 0.5), glm::vec2(1.0, 0.0)),
+	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
+	octo::graphics::Vertex(0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 1.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 0.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, -0.5, 0.0f, 1.0f, 0.0f, 0.0, 1.0),
+	octo::graphics::Vertex(-0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 0.0, 0.0),
+	octo::graphics::Vertex(0.5, 0.0, 0.5, 0.0f, 1.0f, 0.0f, 1.0, 0.0),
 };
+
+std::vector<octo::graphics::Vertex> skyboxVertices
+{
+	// Positions
+
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, 1.0f),
+	octo::graphics::Vertex(-1.0f, 1.0f, -1.0f),
+
+	octo::graphics::Vertex(-1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, -1.0f),
+	octo::graphics::Vertex(-1.0f, -1.0f, 1.0f),
+	octo::graphics::Vertex(1.0f, -1.0f, 1.0f)
+};
+
+
+std::vector<octo::graphics::Vertex> GrassVertices{
+	octo::graphics::Vertex(0,0.01,0),
+};
+
 
 TestGame::TestGame()
 {
@@ -77,16 +132,25 @@ TestGame::~TestGame()
 {
 }
 
+
 void TestGame::OnStart()
 {
 	std::cout << "Game Started" << std::endl;
 
-	std::shared_ptr<octo::graphics::Material> MaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/diffuse.mat");
-	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.mat");
+	std::shared_ptr<octo::graphics::Material> MaterialPtr =
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/phong.material");
+	std::shared_ptr<octo::graphics::Material> GroundMaterialPtr =
+		octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/checkers.material");
+
+	std::shared_ptr<octo::graphics::Material> GrassMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/grass.material");
+
+	// Loads the skybox
+	std::shared_ptr<octo::graphics::Material> skyboxMaterialPtr = octo::resources::ResourceManager::get<octo::graphics::Material>("assets/material/skybox1.material");
 
 	// Resources: Shander and Mesh
 	m_boxMesh = new octo::graphics::Mesh(vertices);
 	m_planeMesh = new octo::graphics::Mesh(planeVertices);
+	m_SkyBoxMesh = new octo::graphics::Mesh(skyboxVertices);
 
 	// "Ground" game object
 	octo::core::GameObject* m_Ground = new octo::core::GameObject();
@@ -113,10 +177,15 @@ void TestGame::OnStart()
 	m_BoxChild2->addComponent(new octo::core::MeshRenderer(MaterialPtr, m_boxMesh));
 	//m_Box->getTransform().scale(glm::vec3(10.0f, 10.0f, 10.0f));
 	m_BoxChild2->getTransform().setPosition(glm::vec3(3.0f, 2.0f, -1.0f));
-	
+
 	m_Box->addChild(m_BoxChild1);
 	m_Box->addChild(m_BoxChild2);
 
+
+	// "SKYBOX" game object
+	octo::core::GameObject* skybox = new octo::core::GameObject();
+	skybox->setName(new std::string("SKYBOX"));
+	skybox->addComponent(new octo::core::MeshRenderer(skyboxMaterialPtr,m_SkyBoxMesh));
 
 	// Create the CAMERA
 	octo::core::GameObject* m_CameraGameObject = new octo::core::GameObject();
@@ -124,27 +193,45 @@ void TestGame::OnStart()
 	//auto m_Camera = new octo::core::Camera(0.1f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 35.0f);
 	auto m_Camera = new TestCamera(0.01f, 1000.0f, (float)(engine->getWindowWidth() / engine->getWindowHeight()), 45.0f);
 	m_CameraGameObject->addComponent(m_Camera);
-	
+
 	// Place the camera
 	m_CameraGameObject->getTransform().lookAt(glm::vec3(0, 0, 0));
 	m_CameraGameObject->getTransform().translate(glm::vec3(0.0f, 1.0f, -5.0f));
 	// Add the objets to the engine
 	engine->setClearColor(glm::vec3(0.4, 0.4, 0.4));
+
+	
+	
+
 	engine->setMainCamera(m_Camera);
-	engine->AddGameObject(m_Ground);
-	engine->AddGameObject(m_Box);
+	
+	
 	engine->AddGameObject(m_CameraGameObject);
 
+	engine->AddGameObject(m_Ground);
+	engine->AddGameObject(m_Box);
+	
+	
+	
+	// Grass
+	/*octo::core::GameObject* grass = new octo::core::GameObject();
+	grass->addComponent(new octo::core::MeshRenderer(MaterialPtr, new octo::graphics::Mesh(GrassVertices)));
+	engine->AddGameObject(grass);*/
+	//
+
+	engine->AddGameObject(skybox);
 }
 
 
-//void TestGame::OnUpdate()
-//{
-//}
+void TestGame::OnUpdate()
+{
+
+}
 
 void TestGame::OnFinish()
 {
 	delete m_boxMesh;
 	delete m_planeMesh;
+	delete m_SkyBoxMesh;
 	std::cout << "Game Finished!" << std::endl;
 }

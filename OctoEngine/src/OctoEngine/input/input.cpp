@@ -1,12 +1,14 @@
 #include "input.h"
 #include "../core/window.h"
 
-namespace octo {
-	namespace input {
-
+namespace octo
+{
+	namespace input
+	{
 		Input* Input::INSTANCE = nullptr;
 
-		Input::Input(){
+		Input::Input()
+		{
 			// initialize all the buttons and keys to false
 			memset(m_Keys, false, MAX_KEYBOARD_KEYS);
 			memset(m_MouseButtons, false, MAX_MOUSE_BUTTONS);
@@ -54,7 +56,7 @@ namespace octo {
 		bool Input::getKey(int key)
 		{
 			if (key >= 0 && key < MAX_KEYBOARD_KEYS)
-			return  (Input::INSTANCE->m_Keys[key] != GLFW_RELEASE);
+				return (Input::INSTANCE->m_Keys[key] != GLFW_RELEASE);
 
 			return false;
 		}
@@ -78,7 +80,7 @@ namespace octo {
 		bool Input::getMouseButton(int key)
 		{
 			if (key >= 0 && key < MAX_MOUSE_BUTTONS)
-			return  Input::INSTANCE->m_MouseButtons[key] != GLFW_RELEASE;
+				return Input::INSTANCE->m_MouseButtons[key] != GLFW_RELEASE;
 
 			return false;
 		}
@@ -86,10 +88,9 @@ namespace octo {
 		bool Input::getMouseButtonDown(int key)
 		{
 			if (key >= 0 && key < MAX_MOUSE_BUTTONS)
-			return  Input::INSTANCE->m_MouseButtons[key] == GLFW_PRESS;
+				return Input::INSTANCE->m_MouseButtons[key] == GLFW_PRESS;
 
 			return false;
 		}
-
 	}
 }

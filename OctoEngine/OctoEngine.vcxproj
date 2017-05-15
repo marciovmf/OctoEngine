@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -25,7 +25,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -98,6 +98,10 @@
     <None Include="OctoEngine\standard.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\OctoEngine\graphics\cubemap.cpp" />
+    <ClCompile Include="src\OctoEngine\core\components\lights\directionallight.cpp" />
+    <ClCompile Include="src\OctoEngine\core\components\lights\LightCaster.cpp" />
+    <ClCompile Include="src\OctoEngine\core\components\IRenderer.cpp" />
     <ClCompile Include="src\OctoEngine\core\exception\exception.cpp" />
     <ClCompile Include="src\OctoEngine\graphics\material.cpp" />
     <ClCompile Include="src\OctoEngine\core\components\camera.cpp" />
@@ -117,8 +121,15 @@
     <ClCompile Include="src\OctoEngine\graphics\vertex.cpp" />
     <ClCompile Include="src\OctoEngine\core\transform.cpp" />
     <ClCompile Include="src\OctoEngine\core\time.cpp" />
+    <ClCompile Include="src\OctoEngine\graphics\rendersettings.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\OctoEngine\graphics\cubemap.h" />
+    <ClInclude Include="src\OctoEngine\graphics\rendersettings.h" />
+    <ClInclude Include="src\OctoEngine\core\components\lights\directionallight.h" />
+    <ClInclude Include="src\OctoEngine\core\components\lights\LightCaster.h" />
+    <ClInclude Include="src\OctoEngine\graphics\AmbientLight.h" />
+    <ClInclude Include="src\OctoEngine\core\components\IRenderer.h" />
     <ClInclude Include="src\OctoEngine\core\exception\exception.h" />
     <ClInclude Include="src\OctoEngine\graphics\material.h" />
     <ClInclude Include="src\OctoEngine\core\components\camera.h" />

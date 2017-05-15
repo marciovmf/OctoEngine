@@ -1,9 +1,10 @@
 #include "mesh.h"
 #include <iostream>
 
-namespace octo {
-	namespace graphics {
-
+namespace octo
+{
+	namespace graphics
+	{
 		Mesh::Mesh(const std::vector<Vertex>& vertices/*, const std::vector<GLuint>& indices*/)
 			:m_Vertices(vertices) //, m_Indices(indices)
 		{
@@ -18,20 +19,19 @@ namespace octo {
 
 			// Vertices
 			glEnableVertexAttribArray(RENDERER_VERTEX_INDEX);
-			glVertexAttribPointer(RENDERER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)0);
+			glVertexAttribPointer(RENDERER_VERTEX_INDEX, 3, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, vertex));
 
-			// Colors
-			glEnableVertexAttribArray(RENDERER_COLOR_INDEX);
-			glVertexAttribPointer(RENDERER_COLOR_INDEX, 3, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, color));
+			// Normal
+			glEnableVertexAttribArray(RENDERER_NORMAL_INDEX);
+			glVertexAttribPointer(RENDERER_NORMAL_INDEX, 3, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, normal));
 
 			// UVs
 			glEnableVertexAttribArray(RENDERER_TEXCOORD_INDEX);
-			glVertexAttribPointer(RENDERER_TEXCOORD_INDEX, 4, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, texCoord));
+			glVertexAttribPointer(RENDERER_TEXCOORD_INDEX, 2, GL_FLOAT, GL_FALSE, sizeof(octo::graphics::Vertex), (const GLvoid*)offsetof(Vertex, texCoord));
 
 
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-
 
 			// Indices
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -50,7 +50,6 @@ namespace octo {
 
 		void Mesh::Render() const
 		{
-
 			glBindVertexArray(m_VAO);
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
@@ -59,7 +58,6 @@ namespace octo {
 
 			//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 			glBindVertexArray(0);
-
 		}
 	}
 }

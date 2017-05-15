@@ -8,10 +8,10 @@
 
 #define OCTO_MAIN_CAMERA_TAG "MainCamera"
 
-namespace octo {
-
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 		class Game;
 		class GameObject;
 		class Camera;
@@ -41,7 +41,7 @@ namespace octo {
 			void setMainCamera(Camera* mainCamera);
 			//inline Camera& getMainCamera() { return *m_MainCamera; }
 			Camera& getMainCamera();
-			void AddCamera(Camera * camera);
+			void AddCamera(Camera* camera);
 		};
 	}
 }

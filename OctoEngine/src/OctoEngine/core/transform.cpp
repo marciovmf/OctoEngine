@@ -4,11 +4,11 @@ using namespace glm;
 
 namespace octo
 {
-	namespace core {
-
+	namespace core
+	{
 		Transform::Transform()
 			: m_HasChanged(true), m_Parent(nullptr), m_Scale(vec3(1.0, 1.0, 1.0)),
-			m_Position(vec3(0.0, 0.0, 0.0))
+			  m_Position(vec3(0.0, 0.0, 0.0))
 		{
 		}
 
@@ -68,7 +68,7 @@ namespace octo
 				m_ParentMatrix = m_Parent->getTransformationMatrix();
 
 			mat4 transformations; // Identity
-			
+
 			// Translation
 			transformations = glm::translate(transformations, m_Position);
 

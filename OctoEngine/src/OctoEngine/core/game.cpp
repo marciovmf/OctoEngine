@@ -1,10 +1,10 @@
 #include "game.h"
 #include "gameengine.h"
 
-namespace octo {
-	namespace core {
-
-
+namespace octo
+{
+	namespace core
+	{
 		//Game::Game(GameEngine &gameEngine)
 		//	:engine(gameEngine)
 		//{
@@ -18,8 +18,9 @@ namespace octo {
 		{
 		}
 
-		void Game::setEngine(GameEngine* engine) 
-		{ this->engine = engine; }
-
+		void Game::setEngine(GameEngine* engine)
+		{
+			this->engine = engine;
+		}
 	}
 }

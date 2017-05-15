@@ -1,20 +1,22 @@
 #include "window.h"
 #include <iostream>
 
-namespace octo {
-	namespace core {
-
+namespace octo
+{
+	namespace core
+	{
 #define MAJOR_GL_VERSION 3
 #define MINOR_GL_VERSION 2
-
 
 		//Window::Window(int width, int height, const std::string& title)
 		Window::Window(int width, int height, const std::string& title, int monitorID)
 			: m_Width(width), m_Height(height)
 		{
 			
+
 			// start GL context and O/S window using the GLFW helper library
-			if (!glfwInit()) {
+			if (!glfwInit())
+			{
 				fprintf(stderr, "ERROR: could not start GLFW3\n");
 				glfwTerminate();
 				return;
@@ -22,19 +24,19 @@ namespace octo {
 
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, MAJOR_GL_VERSION);
 			glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, MINOR_GL_VERSION);
-			//glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-			//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+			glfwWindowHint (GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 #ifdef __APPLE__
 			glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 			glfwSetErrorCallback(Window::errorCallback);
-			
+
 			// Create the window
 
 			int monitorCount;
-			GLFWmonitor** monitorList =   glfwGetMonitors(&monitorCount);
+			GLFWmonitor** monitorList = glfwGetMonitors(&monitorCount);
 
 			if (monitorID > monitorCount - 1)
 			{
@@ -42,11 +44,14 @@ namespace octo {
 				monitorID = -1;
 			}
 
-			m_Window = glfwCreateWindow(width, height, title.c_str(), 
-				((monitorID > -1) ? monitorList[monitorID] : NULL), 
-				NULL);
+			m_Window = glfwCreateWindow(width, height, title.c_str(),
+			                            ((monitorID > -1) ? monitorList[monitorID] : NULL),
+			                            NULL);
 
-			if (!m_Window) {
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+
+			if (!m_Window)
+			{
 				fprintf(stderr, "ERROR: could not open window with GLFW3\n");
 				glfwTerminate();
 			}
@@ -88,7 +93,7 @@ namespace octo {
 			glfwSwapBuffers(m_Window);
 		}
 
-		void Window::errorCallback(int error, const char *description)
+		void Window::errorCallback(int error, const char* description)
 		{
 			std::cerr << "GLFW error " << error << ": " << description << std::endl;
 		}

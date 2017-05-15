@@ -1,19 +1,21 @@
 #pragma once
 
-#include "component.h"
 #include <memory>
+#include "IRenderer.h"
 
 
-namespace octo{
-	namespace graphics {
+namespace octo
+{
+	namespace graphics
+	{
 		class Shader;
 		class Material;
 		class Mesh;
 	}
 
-	namespace core {
-
-		class MeshRenderer : public Component
+	namespace core
+	{
+		class MeshRenderer : public IRenderer
 		{
 		private:
 			std::shared_ptr<graphics::Material> m_Material;
@@ -29,4 +31,3 @@ namespace octo{
 		};
 	}
 }
-
