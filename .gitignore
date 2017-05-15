@@ -1,3 +1,6 @@
+#
+*.suo
+
 # Compiled Object files
 *.slo
 *.lo
@@ -26,3 +29,13 @@
 *.exe
 *.out
 *.app
+
+dependencies/*
+*/intermediate/*
+*.log
+*.tlog
+*.sdf
+*.idb
+*.xdc
+*.ilk
+*.pdb

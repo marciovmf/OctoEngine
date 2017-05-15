@@ -1,0 +1,8 @@
+<cubemap>
+ <back>assets/cubemap/skybox1/back.png</back>
+ <down>assets/cubemap/skybox1/down.png</down>
+ <front>assets/cubemap/skybox1/front.png</front>
+ <up>assets/cubemap/skybox1/up.png</up> 
+ <left>assets/cubemap/skybox1/left.png</left>
+ <right>assets/cubemap/skybox1/right.png</right>
+</cubemap>

@@ -1,0 +1,24 @@
+﻿Build started 14/08/2014 12:49:18.
+     1>Project "C:\libs\glm\build\ZERO_CHECK.vcxproj" on node 2 (build target(s)).
+     1>PrepareForBuild:
+         Creating directory "C:\libs\glm\build\Debug\".
+       InitializeBuildStatus:
+         Creating "Win32\Debug\ZERO_CHECK\ZERO_CHECK.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       CustomBuild:
+         Checking Build System
+         CMake does not need to re-run because C:/libs/glm/build/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/glm/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/test/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/test/bug/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/test/core/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/test/gtc/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/test/gtx/CMakeFiles/generate.stamp is up-to-date.
+         CMake does not need to re-run because C:/libs/glm/build/util/CMakeFiles/generate.stamp is up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Win32\Debug\ZERO_CHECK\ZERO_CHECK.unsuccessfulbuild".
+         Touching "Win32\Debug\ZERO_CHECK\ZERO_CHECK.lastbuildstate".
+     1>Done Building Project "C:\libs\glm\build\ZERO_CHECK.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.50
