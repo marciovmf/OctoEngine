@@ -1,0 +1,4 @@
+<material>
+	<shader>assets/shader/skybox.shader</shader>
+	<cubemap name="skyboxCubemap">assets/cubemap/skybox1/skybox1.cube</cubemap>
+</material>
