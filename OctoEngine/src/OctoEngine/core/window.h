@@ -19,6 +19,7 @@ namespace octo
 			GLFWwindow* m_Window;
 			int m_Width;
 			int m_Height;
+			int m_forceCloseWindow = 0;
 		public:
 			//Window(int width, int height, const std::string& title);
 			Window(int width, int height, const std::string& title, int monitorID = -1);
@@ -35,7 +36,12 @@ namespace octo
 
 			inline int shouldClose() const
 			{
-				return glfwWindowShouldClose(m_Window);
+				return glfwWindowShouldClose(m_Window) | m_forceCloseWindow;
+			}
+
+			inline void forceCloseWindow()
+			{
+				m_forceCloseWindow = 1;
 			}
 
 			void update();

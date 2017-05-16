@@ -34,6 +34,11 @@ namespace octo
 
 			int getWindowWidth() const;
 			int getWindowHeight() const;
+			inline void quitGame()
+			{
+				m_Window->forceCloseWindow();
+			}
+
 			void setClearColor(glm::vec3& color);
 
 			void AddGameObject(GameObject* const gameObject);
