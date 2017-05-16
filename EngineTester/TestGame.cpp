@@ -210,7 +210,10 @@ void TestGame::OnStart()
 
 void TestGame::OnUpdate()
 {
-
+	if (octo::input::Input::getKeyDown(KEY_ESCAPE))
+	{
+		engine->quitGame();
+	}
 }
 
 void TestGame::OnFinish()
