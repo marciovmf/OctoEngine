@@ -79,10 +79,11 @@ namespace octo
 			transformations = glm::scale(transformations, m_Scale);
 
 
-			// store position for future references
-			//m_Position = glm::vec3(m_Transformation[3]);
-
 			m_Transformation = m_ParentMatrix * transformations;
+
+			// store position for future references
+			m_Position = glm::vec3(m_Transformation[3]);
+
 			return m_Transformation;
 		}
 
